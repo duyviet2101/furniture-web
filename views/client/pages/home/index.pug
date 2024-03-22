@@ -1,0 +1,142 @@
+extends ../../layouts/default.pug
+include ../../mixins/wall.pug
+
+block main 
+  +wall('Chào mừng bạn đến với không gian nội thất hoàn hảo!', "Chào mừng bạn đến với không gian mua sắm nội thất đa dạng và đẳng cấp. Chúng tôi cung cấp những sản phẩm nội thất tinh tế và độc đáo, từ các bộ sưu tập cổ điển đến các thiết kế hiện đại, giúp bạn tạo ra không gian sống hoàn hảo theo phong cách riêng của mình. Hãy khám phá bộ sưu tập đa dạng của chúng tôi và biến ý tưởng trang trí của bạn thành hiện thực ngay hôm nay.")
+
+  .product-container
+    .container.product-flex
+      .column-flex-4.intro-section
+        .intro-section
+          h2.section-title Những sản phẩm nổi bật.
+          p.sub-content-dark
+            | Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quaerat est ex magnam expedita distinctio
+            | voluptatibus temporibus ipsum tempora veritatis quos, minima architecto hic debitis ipsam odio delectus quo
+            | deserunt asperiores?
+          p
+            a.button-hightlight-2.button(href='products.html') Khám phá thêm
+      .column-flex-4
+        .product-item
+          a(href='product-detail.html')
+            img.product-thumbnail(src='img/product-1.png' alt='')
+            h3.product-title Nordic Chair
+            strong.product-price $50.00
+          a(href='cart.html')
+            span.icon-add
+              img(src='img/icon_add.svg' alt='')
+      .column-flex-4
+        .product-item
+          a(href='product-detail.html')
+            img.product-thumbnail(src='img/product-2.png' alt='')
+            h3.product-title Kruzo Aero Chair
+            strong.product-price $78.00
+            a(href='cart.html')
+              span.icon-add
+                img(src='img/icon_add.svg' alt='')
+      .column-flex-4
+        .product-item
+          a(href='product-detail.html')
+            img.product-thumbnail(src='img/product-3.png' alt='')
+            h3.product-title Ergonomic Chair
+            strong.product-price $43.00
+            a(href='cart.html')
+              span.icon-add
+                img(src='img/icon_add.svg' alt='')
+  // end sản phẩm nổi bật
+  // sales
+  .banner
+    .container
+      div
+        h2.section-title(style='text-align: center;') Chương trình giảm giá
+        .slideshow
+          .slide
+            img(src='img/sale-1.jpg' alt='')
+          .slide
+            img(src='img/sale-2.jpg' alt='')
+          a.prev &#10094;
+          a.next &#10095;
+        .dots
+          span.dot
+          span.dot
+  // end sales
+  // why choose us
+  .why-choose
+    .container.why-choose-flex
+      .column.column-1
+        h2.section-title
+          | Tại sao bạn nên chọn chúng tôi?
+        p.sub-content-dark
+          | Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Quisquam, voluptatum.
+        .container-flex-4-item
+          .item
+            .content-item
+              .icon
+                img(src='img/truck.svg' alt='')
+              h6
+                b Vận chuyển nhanh & miễn phí
+              p.sub-content-dark
+                | Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet laboriosam,
+                | libero molestias accusantium sit ullam rerum maxime.
+          .item
+            .content-item
+              .icon
+                img(src='img/bag.svg' alt='')
+              h6
+                b Dễ dàng mua sắm
+              p.sub-content-dark
+                | Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet laboriosam,
+                | libero molestias accusantium sit ullam rerum maxime.
+          .item
+            .content-item
+              .icon
+                img(src='img/support.svg' alt='')
+              h6
+                b Hỗ trợ 24/7
+              p.sub-content-dark
+                | Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet laboriosam,
+                | libero molestias accusantium sit ullam rerum maxime.
+          .item
+            .content-item
+              .icon
+                img(src='img/return.svg' alt='')
+              h6
+                b Đổi trả miễn phí
+              p.sub-content-dark
+                | Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet laboriosam,
+                | libero molestias accusantium sit ullam rerum maxime.
+      .column.column-2
+        .img-decor
+          img(src='img/why-choose-us-img.jpg' alt='')
+  // end why choose us
+  // we help
+  .we-help
+    .container.we-help-flex
+      .column.column-1
+        .imgs-grid
+          .grid.grid-1
+            img(src='img/img-grid-1.jpg' alt='')
+          .grid.grid-2
+            img(src='img/img-grid-2.jpg' alt='')
+          .grid.grid-3
+            img(src='img/img-grid-3.jpg' alt='')
+      .column.column-2
+        h2.section-title
+          | Chúng tôi giúp bạn sở hữu những thiết kế nội thất hiện đại.
+        p.sub-content-dark
+          | Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur non assumenda omnis eaque fugit numquam
+          | perspiciatis vitae, ullam libero ad nulla debitis repellat accusamus deserunt consequatur optio voluptatem
+          | placeat sunt!
+        ul.list-4
+          li.sub-content-dark
+            | Donec vitae odio quis nisl dapibus malesuada
+          li.sub-content-dark
+            | Donec vitae odio quis nisl dapibus malesuada
+          li.sub-content-dark
+            | Donec vitae odio quis nisl dapibus malesuada
+          li.sub-content-dark
+            | Donec vitae odio quis nisl dapibus malesuada
+        p
+          a.button.button-hightlight-2(href='products.html') Khám phá thêm
+
+block script 
+  script(src="js/index.js") 

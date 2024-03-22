@@ -1,0 +1,27 @@
+.topnav
+  .container.topnav-flex
+    .brandNav
+      a(href='#')
+        img(src='img/logo/shop.svg' alt='logoShop' style='height: 30px;')
+        span.brandName Furniture.
+    .toggle-button-navbar
+      img(src='img/logo/toggle-menu.svg' alt='toggle' style='height: 30px; display: none')
+    .collapseNav.collapse
+      .navigation
+        a#home(href='#')
+          | Trang chủ
+        a#products(href='')  Sản phẩm
+        a#introduction(href='#') Giới thiệu
+        a#contact(href='#') Liên hệ
+        a#sitemap(href='#') Sitemap
+      .userNav
+        a(href='#')
+          img(src='img/logo/user.svg' alt='logoUser')
+        a(href='#')
+          img(src='img/logo/cart.svg' alt='logoCart')
+      .search-input
+        form(action='#' method='get')
+          input(type='text' placeholder='Nhập từ khoá' name='searchKeyWord')
+          button
+            a.search-button
+              img(src='img/logo/search.svg' alt='' style='width: 24px; padding: 0')
