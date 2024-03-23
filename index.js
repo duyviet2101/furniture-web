@@ -10,8 +10,11 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
-
 //! end middlewares
+
+//! databases
+const mongoDatabase = require('./databases/database.js');
+//! end databases
 
 //! view, static
 app.use(express.static(`${__dirname}/public`));
