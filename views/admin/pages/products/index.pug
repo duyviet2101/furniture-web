@@ -1,0 +1,45 @@
+extends ../../layouts/default.pug
+
+block main
+  // Recent Sales Start
+  .container-fluid.pt-4.px-4
+    .bg-light.text-center.rounded.p-4
+      .d-flex.align-items-center.justify-content-between.mb-4
+        h6.mb-0 Sản phẩm
+      .table-responsive
+        table.table.text-start.align-middle.table-bordered.table-hover.mb-0.products-table
+          thead
+            tr.text-dark
+              th(scope='col')
+                input.form-check-input(type='checkbox')
+              th(scope='col') STT
+              th(scope='col') Hình ảnh
+              th(scope='col') Sản phẩm
+              th(scope='col') Danh mục
+              th(scope='col') Giá
+              th(scope='col') Vị trí
+              th(scope='col') Trạng thái
+              th(scope='col') Người tạo
+              th(scope='col') Người cập nhật
+              th(scope='col') Hành động
+          tbody
+            each product, index in products
+              tr
+                td
+                  input.form-check-input(type='checkbox')
+                td #{index + 1}
+                td.product-thumb
+                  img(src=product.thumbnail alt='')
+                td= product.title
+                td= product.category.title
+                td= product.price
+                td.product-position
+                  input.form-control(type='text' value=product.position)
+                td
+                  a.btn.btn-sm.btn-primary(href='#') Active
+                td= product.createdBy
+                td= product.updatedBy
+                td
+                  a.btn.btn-sm.btn-primary(href='#') Edit
+                  a.btn.btn-sm.btn-danger(href='#') Delete
+  // Recent Sales End

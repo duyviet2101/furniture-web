@@ -4,18 +4,21 @@
     a.navbar-brand.mx-4.mb-3(href='index.html')
       h3.text-primary
         i.fa.fa-hashtag.me-2
-        | DASHMIN
+        | furniture-web
     .d-flex.align-items-center.ms-4.mb-4
       .position-relative
         img.rounded-circle(src='/admin/img/user.jpg' alt='' style='width: 40px; height: 40px;')
         .bg-success.rounded-circle.border.border-2.border-white.position-absolute.end-0.bottom-0.p-1
       .ms-3
-        h6.mb-0 Jhon Doe
-        span /admin
+        h6.mb-0 Duy Viet
+        span admin
     .navbar-nav.w-100
-      a.nav-item.nav-link.active(href='index.html')
+      a.nav-item.nav-link(href='/admin/dashboard' class = `${activeTab === 'dashboard' ? 'active' : ''}`)
         i.fa.fa-tachometer-alt.me-2
         | Dashboard
+      a.nav-item.nav-link(href='/admin/products' class = `${activeTab === 'products' ? 'active' : ''}`)
+        i.fa.fa-shopping-cart.me-2
+        | Products
       .nav-item.dropdown
         a.nav-link.dropdown-toggle(href='#' data-bs-toggle='dropdown')
           i.fa.fa-laptop.me-2

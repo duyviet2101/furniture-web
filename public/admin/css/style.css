@@ -275,3 +275,18 @@
     background: var(--dark);
     border-color: var(--primary);
 }
+
+/* product table */
+.products-table .product-thumb img {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.products-table .product-position input {
+    width: 50px;
+    height: 40px;
+    text-align: center;
+    border: 1px solid #E5E5E5;
+    border-radius: 10px;
+}
