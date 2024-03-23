@@ -1,0 +1,10 @@
+mixin product-item(item)
+  .column-flex-4
+    .product-item
+      a(href=`/products/detail/${item.slug}`)
+        img.product-thumbnail(src=item.thumbnail alt=item.title)
+        h3.product-title #{item.title}
+        strong.product-price #{item.price} $
+      a(href='#')
+        span.icon-add
+          img(src='img/icon_add.svg' alt='')

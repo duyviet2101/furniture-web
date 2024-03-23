@@ -1,5 +1,7 @@
 extends ../../layouts/default.pug
 include ../../mixins/wall.pug
+include ../../mixins/product-item.pug
+include ../../mixins/product-layout.pug
 
 block main 
   +wall('Chào mừng bạn đến với không gian nội thất hoàn hảo!', "Chào mừng bạn đến với không gian mua sắm nội thất đa dạng và đẳng cấp. Chúng tôi cung cấp những sản phẩm nội thất tinh tế và độc đáo, từ các bộ sưu tập cổ điển đến các thiết kế hiện đại, giúp bạn tạo ra không gian sống hoàn hảo theo phong cách riêng của mình. Hãy khám phá bộ sưu tập đa dạng của chúng tôi và biến ý tưởng trang trí của bạn thành hiện thực ngay hôm nay.")
@@ -15,33 +17,8 @@ block main
             | deserunt asperiores?
           p
             a.button-hightlight-2.button(href='products.html') Khám phá thêm
-      .column-flex-4
-        .product-item
-          a(href='product-detail.html')
-            img.product-thumbnail(src='img/product-1.png' alt='')
-            h3.product-title Nordic Chair
-            strong.product-price $50.00
-          a(href='cart.html')
-            span.icon-add
-              img(src='img/icon_add.svg' alt='')
-      .column-flex-4
-        .product-item
-          a(href='product-detail.html')
-            img.product-thumbnail(src='img/product-2.png' alt='')
-            h3.product-title Kruzo Aero Chair
-            strong.product-price $78.00
-            a(href='cart.html')
-              span.icon-add
-                img(src='img/icon_add.svg' alt='')
-      .column-flex-4
-        .product-item
-          a(href='product-detail.html')
-            img.product-thumbnail(src='img/product-3.png' alt='')
-            h3.product-title Ergonomic Chair
-            strong.product-price $43.00
-            a(href='cart.html')
-              span.icon-add
-                img(src='img/icon_add.svg' alt='')
+      each product in featuredProducts
+        +product-item(product)
   // end sản phẩm nổi bật
   // sales
   .banner

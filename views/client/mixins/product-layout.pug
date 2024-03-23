@@ -1,0 +1,7 @@
+include product-item.pug
+
+mixin product-grid(items)
+  .product-container
+    .container.product-flex
+      each item in items
+        +product-item(item)
