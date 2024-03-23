@@ -23,6 +23,7 @@ app.set('views', `${__dirname}/views`);
 //! end view, static
 
 //! routes
+app.use('/admin', require('./routes/admin/index.route.js'));
 app.use(require('./routes/client/index.route.js'));
 //! end routes
 
