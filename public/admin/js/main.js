@@ -209,3 +209,24 @@
     
 })(jQuery);
 
+// signin
+const signInForm = document.querySelector('.signInForm');
+if (signInForm) {
+    const alert = document.querySelector('.alert');
+
+    signInForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        alert.innerHTML = '';
+        if (!email.value.trim() || !password.value.trim()) {
+            alert.innerHTML = 'Vui lòng nhập đầy đủ thông tin';
+            alert.style.display = 'block';
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 3000);
+            return;
+        }
+        signInForm.action = '/admin/auth/login';
+        signInForm.submit();
+    });
+}
+// end signin

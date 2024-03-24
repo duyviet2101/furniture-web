@@ -5,10 +5,7 @@ const adminSchema = new mongoose.Schema(
     fullName: String,
     email: String,
     password: String,
-    token: {
-        type: String,
-        default: crypto.randomUUID()
-    },
+    refreshToken: String,
     phone: String,
     avatar: String,
     status: String,

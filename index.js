@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
-
+const configSystem = require('./config/system.config.js')
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -23,7 +23,7 @@ app.set('views', `${__dirname}/views`);
 //! end view, static
 
 //! routes
-app.use('/admin', require('./routes/admin/index.route.js'));
+app.use(`/${configSystem.prefixAdmin}`, require('./routes/admin/index.route.js'));
 app.use(require('./routes/client/index.route.js'));
 //! end routes
 
