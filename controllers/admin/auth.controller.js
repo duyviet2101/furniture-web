@@ -33,6 +33,7 @@ module.exports.postLogin = async (req, res, next) => {
   }, systemConfig.secretKeyAccessToken, {
     algorithm: 'HS256',
     expiresIn: systemConfig.accessTokenLife
+    // expiresIn: "30s"
   });
 
   let refreshToken = jwt.sign({
@@ -41,22 +42,30 @@ module.exports.postLogin = async (req, res, next) => {
   }, systemConfig.secretKeyRefreshToken, {
     algorithm: 'HS256',
     expiresIn: systemConfig.refreshTokenLife
+    // expiresIn: "1m"
   });
 
   if (!admin.refreshToken) { 
     admin.refreshToken = refreshToken;
     await admin.save();
   } else {
+    try {
+      jwt.verify(admin.refreshToken, systemConfig.secretKeyRefreshToken);
+    } catch (error) {
+      admin.refreshToken = refreshToken;
+      await admin.save();
+    }
     refreshToken = admin.refreshToken;
   }
 
   res.cookie('accessToken', accessToken, {
-    maxAge: maxAge,
+    maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000,
     httpOnly: true
   });
 
   res.cookie('refreshToken', refreshToken, {
-    maxAge: 7 * 24 * 60 * 60 * 1000,
+    maxAge: systemConfig.refreshTokenLife,
+    // maxAge: 60 * 60 * 1000,
     httpOnly: true
   });
 

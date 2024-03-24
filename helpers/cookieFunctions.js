@@ -1,4 +1,4 @@
-module.exports.cookieParse = (request) => {
+module.exports.cookieParser = (request) => {
   const list = {};
   const cookieHeader = request.headers?.cookie;
   if (!cookieHeader) return list;
