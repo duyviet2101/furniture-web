@@ -27,6 +27,7 @@ module.exports.requiredAuth = async (req, res, next) => {
     }
 
     req.admin = admin;
+    res.locals.admin = admin;
 
     next();
   } catch (error) {

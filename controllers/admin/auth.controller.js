@@ -64,10 +64,17 @@ module.exports.postLogin = async (req, res, next) => {
   });
 
   res.cookie('refreshToken', refreshToken, {
-    maxAge: systemConfig.refreshTokenLife,
+    maxAge: 7 * 24 * 60 * 60 * 1000 || systemConfig.refreshTokenLife,
     // maxAge: 60 * 60 * 1000,
     httpOnly: true
   });
 
   res.redirect(`/${systemConfig.prefixAdmin}/dashboard`);
+}
+
+// [GET] /admin/auth/logout
+module.exports.logout = async (req, res, next) => {
+  res.clearCookie('accessToken');
+  res.clearCookie('refreshToken');
+  res.redirect(`/${systemConfig.prefixAdmin}/auth/login`);
 }
