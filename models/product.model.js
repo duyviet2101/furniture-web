@@ -12,7 +12,7 @@ const productSchema = new mongoose.Schema({
   price: Number,
   discountPercentage: Number,
   stock: Number,
-  thumbnail: String,
+  thumbnail: [String],
   status: String,
   featured: Boolean, // san pham noi bat
   position: Number,

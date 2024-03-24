@@ -2,6 +2,9 @@ require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
+const flash = require('express-flash');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const configSystem = require('./config/system.config.js')
 const path = require('path');
 
@@ -35,6 +38,17 @@ app.locals.prefixAdmin = configSystem.prefixAdmin;
 //! method override
 app.use(methodOverride('_method'));
 //! end method override
+
+//! flash
+app.use(cookieParser((process.env.SECRET_KEY_COOKIE)));
+app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(flash());
+// app.use((req, res, next) => {
+//     res.locals.success = req.flash('success');
+//     res.locals.error = req.flash('error');
+//     next();
+// });
+//! end flash
 
 //! routes
 app.use(`/${configSystem.prefixAdmin}`, require('./routes/admin/index.route.js'));

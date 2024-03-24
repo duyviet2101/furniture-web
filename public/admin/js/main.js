@@ -267,3 +267,60 @@ if (uploadMultipleImages) {
         }
     });
 }
+// end preview multiple images
+
+// currency converter
+var currencyInput = document.querySelectorAll( 'input[type="currency"]' );
+
+for ( var i = 0; i < currencyInput.length; i++ ) {
+
+    var currency = 'VND'
+    onBlur( {
+        target: currencyInput[ i ]
+    } )
+
+    currencyInput[ i ].addEventListener( 'focus', onFocus )
+    currencyInput[ i ].addEventListener( 'blur', onBlur )
+
+    function localStringToNumber( s ) {
+        return Number( String( s ).replace( /[^0-9.-]+/g, "" ) )
+    }
+
+    function onFocus( e ) {
+        var value = e.target.value;
+        e.target.value = value ? localStringToNumber( value ) : ''
+    }
+
+    function onBlur( e ) {
+        var value = e.target.value
+
+        var options = {
+            maximumFractionDigits: 2,
+            currency: currency,
+            style: "currency",
+            currencyDisplay: "symbol"
+        }
+
+        e.target.value = ( value || value === 0 ) ?
+            localStringToNumber( value ).toLocaleString( undefined, options ) : ''
+    }
+}
+// end currency converter
+
+//! show alert
+
+const showAlert = document.querySelector("[show-alert]");
+if (showAlert) {
+    const time = parseInt(showAlert.getAttribute("data-time")) || 3000;
+    const closeAlert = showAlert.querySelector("[close-alert]");
+
+    setTimeout(() => {
+        showAlert.classList.add("alert-hidden")
+    }, time);
+
+    closeAlert.addEventListener("click", () => {
+        showAlert.classList.add("alert-hidden")
+    })
+}
+
+//! end show alert
