@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
+const methodOverride = require('method-override');
 const configSystem = require('./config/system.config.js')
 
 const app = express();
@@ -21,6 +22,14 @@ app.use(express.static(`${__dirname}/public`));
 app.set('view engine', 'pug');
 app.set('views', `${__dirname}/views`);
 //! end view, static
+
+//! locals
+app.locals.prefixAdmin = configSystem.prefixAdmin;
+//! end locals
+
+//! method override
+app.use(methodOverride('_method'));
+//! end method override
 
 //! routes
 app.use(`/${configSystem.prefixAdmin}`, require('./routes/admin/index.route.js'));

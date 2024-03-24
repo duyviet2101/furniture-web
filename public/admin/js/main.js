@@ -230,3 +230,19 @@ if (signInForm) {
     });
 }
 // end signin
+
+// preview single image
+const uploadSingleImage = document.querySelector('.upload-single-image');
+if (uploadSingleImage) {
+    const input = document.querySelector('.upload-single-image input[type="file"]');
+    const preview = document.querySelector('.upload-single-image img');
+    input.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = () => {
+            preview.src = reader.result;
+        }
+        reader.readAsDataURL(file);
+    });
+}
+// end preview single image

@@ -16,7 +16,6 @@ module.exports.requiredAuth = async (req, res, next) => {
     
     const admin = await Admin.findOne({
       _id: data.id,
-      email: data.email,
       refreshToken: refreshToken
     }).select('-_id -password -refreshToken -deleted -createdAt -updatedAt -__v').lean();
 
@@ -38,8 +37,7 @@ module.exports.requiredAuth = async (req, res, next) => {
       
       const admin = await Admin.findOne
       ({
-        _id: data.id,
-        email: data.email
+        _id: data.id
       });
 
       if (!admin) {

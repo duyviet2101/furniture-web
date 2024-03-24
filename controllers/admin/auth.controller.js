@@ -22,12 +22,12 @@ module.exports.postLogin = async (req, res, next) => {
     return res.redirect("back");
   }
 
-  const checkPassword = bcrypt.compare(password, admin.password);
+  const checkPassword = await bcrypt.compare(password, admin.password);
   if (!checkPassword) {
     return res.redirect("back");
   }
 
-  const accessToken = jwt.sign({ 
+  const accessToken = await jwt.sign({ 
     id: admin._id,
     email: admin.email
   }, systemConfig.secretKeyAccessToken, {
@@ -36,7 +36,7 @@ module.exports.postLogin = async (req, res, next) => {
     // expiresIn: "30s"
   });
 
-  let refreshToken = jwt.sign({
+  let refreshToken = await jwt.sign({
     id: admin._id,
     email: admin.email
   }, systemConfig.secretKeyRefreshToken, {
@@ -50,7 +50,7 @@ module.exports.postLogin = async (req, res, next) => {
     await admin.save();
   } else {
     try {
-      jwt.verify(admin.refreshToken, systemConfig.secretKeyRefreshToken);
+      await jwt.verify(admin.refreshToken, systemConfig.secretKeyRefreshToken);
     } catch (error) {
       admin.refreshToken = refreshToken;
       await admin.save();

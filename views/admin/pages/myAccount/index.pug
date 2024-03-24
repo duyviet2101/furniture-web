@@ -2,34 +2,36 @@ extends ../../layouts/default.pug
 
 block main
   .container-fluid.pt-4.px-4
-    form.bg-light.rounded.h-100.p-4
+    form.bg-light.rounded.h-100.p-4(method='POST' action=`/${prefixAdmin}/myAccount?_method=PATCH` enctype='multipart/form-data')
       h6.mb-4 My information
       .input-group.mb-3
         span#basic-addon1.input-group-text
           i.fa-solid.fa-address-card.fa
-        input.form-control(type='text' placeholder='Full Name' aria-label='Full Name' aria-describedby='basic-addon1' autocomplete='off' value=admin.fullName)
+        input.form-control(type='text' placeholder='Full Name' aria-label='Full Name' aria-describedby='basic-addon1' autocomplete='off' value=admin.fullName name='fullName')
       .input-group.mb-3
         span#basic-addon1.input-group-text
           i.fa-regular.fa-envelope.fa
-        input.form-control(type='text' placeholder='Email' aria-label='Email' aria-describedby='basic-addon1' autocomplete='off' value=admin.email)
+        input.form-control(type='text' placeholder='Email' aria-label='Email' aria-describedby='basic-addon1' autocomplete='off' value=admin.email name='email')
       .mb-3
-        label.form-label(for='formFile') Avatar
-        input#formFile.form-control(type='file')
+        label.form-label(for='formFile' style='display: block') Avatar
+        .d-flex.align-items-center.mb-3.upload-single-image
+          img(src=admin.avatar alt='Avatar' style='width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;' upload-single-image-preview)
+          input.form-control.form-control-sm(type='file' id='formFile' name='avatar' accept='image/*' style='width: auto;' upload-single-image-input)
       .input-group.mb-3
         span#basic-addon1.input-group-text
           i.fa-regular.fa-phone.fa
-        input.form-control(type='text' placeholder='Phone Number' aria-label='Phone Number' aria-describedby='basic-addon1' value=admin.phone)
+        input.form-control(type='text' placeholder='Phone Number' aria-label='Phone Number' aria-describedby='basic-addon1' value=admin.phone name='phone')
       h6.mb-4 Change Password
       .input-group.mb-3
         span#basic-addon1.input-group-text
           i.fa-solid.fa-lock.fa
-        input.form-control(type='password' placeholder='Old Password' aria-label='Old Password' aria-describedby='basic-addon1' autocomplete='off' value='')
+        input.form-control(type='password' placeholder='Old Password' aria-label='Old Password' aria-describedby='basic-addon1' autocomplete='off' value='' name='oldPassword')
       .input-group.mb-3
         span#basic-addon1.input-group-text
           i.fa-solid.fa-lock.fa
-        input.form-control(type='password' placeholder='New Password' aria-label='New Password' aria-describedby='basic-addon1')
+        input.form-control(type='password' placeholder='New Password' aria-label='New Password' aria-describedby='basic-addon1' name='newPassword' autocomplete='off')
       .input-group.mb-3
         span#basic-addon1.input-group-text
           i.fa-solid.fa-lock.fa
-        input.form-control(type='password' placeholder='Confirm New Password' aria-label='Confirm New Password' aria-describedby='basic-addon1')
-      button.btn.btn-primary(type='button') Update
+        input.form-control(type='password' placeholder='Confirm New Password' aria-label='Confirm New Password' aria-describedby='basic-addon1' name='confirmNewPassword' autocomplete='off')
+      button.btn.btn-primary(type='submit') Update

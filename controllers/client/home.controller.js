@@ -6,7 +6,6 @@ module.exports.index = async (req, res, next) => {
         status: 'active',
         featured: true
     }).lean();
-    console.log(featuredProducts);
     res.render('client/pages/home/index', {
         pageTitle: 'Trang chủ',
         featuredProducts
