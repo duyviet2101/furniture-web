@@ -18,3 +18,18 @@ module.exports.index = async (req, res, next) => {
     products
   });
 }
+
+// [GET] /admin/products/create
+module.exports.create = async (req, res, next) => {
+  const categories = await ProductCategory.find({}).lean();
+  const countProducts = await Product.countDocuments({
+    deleted: false
+  });
+
+  res.render('admin/pages/products/create', {
+    pageTitle: 'Create Product',
+    activeTab: 'products',
+    categories,
+    countProducts
+  });
+}

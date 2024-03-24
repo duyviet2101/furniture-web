@@ -1,11 +1,15 @@
 extends ../../layouts/default.pug
 
 block main
+  .container-fluid.pt-4.px-4
+    .bg-light.text-center.rounded.p-4
+      .d-flex.align-items-center.justify-content-between
   // Recent Sales Start
   .container-fluid.pt-4.px-4
     .bg-light.text-center.rounded.p-4
       .d-flex.align-items-center.justify-content-between.mb-4
         h6.mb-0 Sản phẩm
+        a.btn.btn-primary(href=`/${prefixAdmin}/products/create`) Add Product
       .table-responsive
         table.table.text-start.align-middle.table-bordered.table-hover.mb-0.products-table
           thead

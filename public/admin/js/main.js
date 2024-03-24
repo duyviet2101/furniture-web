@@ -246,3 +246,24 @@ if (uploadSingleImage) {
     });
 }
 // end preview single image
+
+// preview multiple images
+const uploadMultipleImages = document.querySelector('.upload-multiple-images');
+if (uploadMultipleImages) {
+    const input = document.querySelector('.upload-multiple-images input[type="file"]');
+    const preview = document.querySelector('.upload-multiple-images .preview');
+    input.addEventListener('change', async (e) => {
+        preview.innerHTML = '';
+        const files = e.target.files;
+        for (const file of files) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const img = document.createElement('img');
+                img.src = reader.result;
+                img.classList.add('img-fluid', 'm-2');
+                preview.appendChild(img);
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+}

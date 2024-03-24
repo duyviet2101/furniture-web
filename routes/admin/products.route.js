@@ -6,4 +6,6 @@ const controller = require('../../controllers/admin/products.controller.js');
 
 router.get('/', asyncHandler(controller.index));
 
+router.get('/create', asyncHandler(controller.create));
+
 module.exports = router;

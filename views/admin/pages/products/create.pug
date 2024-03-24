@@ -1,0 +1,51 @@
+extends ../../layouts/default.pug
+
+block main 
+  form.container-fluid.pt-4.px-4(method='POST' action=`/${prefixAdmin}/products` enctype='multipart/form-data')
+    .bg-light.rounded.h-100.p-4
+      h6.mb-4 Tạo sản phẩm
+      .form-floating.mb-3
+        input#title.form-control(type='text' name='title' placeholder='')
+        label(for='title') Tên sản phẩm
+      .mb-3
+        label.form-label(for='product-images') Ảnh sản phẩm
+        .mb-3.upload-multiple-images
+          input#product-images.form-control(type='file' name='product-images' accept='image/*' multiple='multiple')
+          .preview.mt-3
+      .form-floating.mb-3
+        input#price.form-control(type='currency' name='price' value='0' min='0')
+        label(for='price') Giá sản phẩm (đ)
+      .form-floating.mb-3
+        input#quantity.form-control(type='number' name='quantity' value='0' min='0')
+        label(for='quantity') Số lượng sản phẩm
+      .form-floating.mb-3
+        input#discount.form-control(type='number' name='discount' value='0' min='0')
+        label(for='discount') Discount
+      .form-floating.mb-3
+        select#category.form-select(name='category' aria-label='Floating label select example')
+          option(selected='') Chọn phân loại
+          option(value='1') One
+          option(value='2') Two
+          option(value='3') Three
+        label(for='category') Phân loại sản phẩm
+      hr
+      .form-check.form-check-inline
+        input#active.form-check-input(type='radio' name='active' checked='' value='option1')
+        label.form-check-label(for='active') Active
+      .form-check.form-check-inline
+        input#inactive.form-check-input(type='radio' name='active' value='option2')
+        label.form-check-label(for='inactive') Inactive
+      hr
+      .form-check
+        input#featured.form-check-input(type='checkbox' value='' name='featured')
+        label.form-check-label(for='featured')
+          | Sản phẩm nổi bật
+      hr
+      .form-floating.mb-3
+        input#position.form-control(type='number' name='position' value=`${countProducts + 1}` min='0')
+        label(for='quantity') Vị trí (lớn nhất hiển thị đầu tiên)
+      .form-floating
+        textarea#description.textarea-mce.form-control(placeholder='' style='height: 150px;')
+        label(for='description') Mô tả sản phẩm
+      .d-flex.justify-content-end.mt-4
+        button.btn.btn-primary(type='submit') Tạo sản phẩm
