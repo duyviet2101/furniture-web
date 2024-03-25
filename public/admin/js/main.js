@@ -342,3 +342,32 @@ if (btnsPagination && btnsPagination.length > 0) {
     });
 }
 //! end pagination
+
+//! sort
+const sort = document.querySelector('[sort]');
+if (sort) {
+    const url = new URL(window.location.href);
+    const sortSubmit = sort.querySelector('[sort-submit]');
+    const sortBy = sort.querySelector('#sortBy');
+    const sortValue = sort.querySelector('#sortValue');
+
+    sortSubmit.addEventListener('click', async (e) => {
+        if (!sortBy.value.trim() || !sortValue.value.trim()) {
+            return;
+        }
+        url.searchParams.set('sortBy', sortBy.value);
+        url.searchParams.set('sortValue', sortValue.value);
+        window.location.href = url.href;
+    })
+
+    const sortReset = sort.querySelector('[sort-reset]');
+    sortReset.addEventListener('click', async (e) => {
+        url.searchParams.delete('sortBy');
+        url.searchParams.delete('sortValue');
+        window.location.href = url.href;
+
+        sortBy.value = '';
+        sortValue.value = '';
+    });
+}
+//! end sort

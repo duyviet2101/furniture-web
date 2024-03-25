@@ -8,6 +8,14 @@ const pagination = require('../../helpers/pagination.js');
 
 // [GET] /admin/products
 module.exports.index = async (req, res, next) => {
+
+  //! sort
+  const sort = {};
+  if (req.query.sortBy && req.query.sortValue) {
+    sort[req.query.sortBy] = req.query.sortValue === 'asc' ? 1 : -1;
+  }
+  //! end sort
+
   //! find object
   const find = {
     deleted: false
@@ -23,6 +31,7 @@ module.exports.index = async (req, res, next) => {
   //end pagination
 
   const products = await Product.find(find)
+    .sort(sort)
     .skip(paginationObject.skipItems)
     .limit(paginationObject.limitItems)
     .lean();
@@ -50,7 +59,8 @@ module.exports.index = async (req, res, next) => {
     pageTitle: 'Products Management',
     activeTab: 'products',
     products,
-    paginationObject
+    paginationObject,
+    sort
   });
 }
 

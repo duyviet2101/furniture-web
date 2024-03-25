@@ -4,8 +4,24 @@ include ../../mixins/pagination.pug
 
 block main
   .container-fluid.pt-4.px-4
-    .bg-light.text-center.rounded.p-4
-      .d-flex.align-items-center.justify-content-between
+    .bg-light.rounded.h-100.p-4(sort)
+      h6.mb-3 Sắp xếp
+      .d-flex
+        .form-floating.w-50.me-3
+          select#sortBy.form-select(name='sortBy' aria-label='Floating label select example')
+            option(selected='' value="") Chọn thuộc tính
+            option(value="title" selected = ("title" in sort)) Tên sản phẩm
+            option(value="price" selected = ("price" in sort)) Giá sản phẩm
+            option(value="position" selected = ("position" in sort)) Vị trí
+          label(for='sortBy') Chọn thuộc tính
+        .form-floating.w-50.me-3
+          select#sortValue.form-select(name='sortValue' aria-label='Floating label select example')
+            option(selected='' value="") Chọn cách sắp xếp
+            option(value="asc" selected = (Object.values(sort).includes(1))) Tăng dần
+            option(value="desc" selected = (Object.values(sort).includes(-1))) Giảm dần
+          label(for='sortValue') Sắp xếp theo
+      button.btn.btn-primary.mt-3.me-3(type='button' sort-submit) Sắp xếp
+      button.btn.btn-danger.mt-3(type='button' sort-reset) Reset
   // Recent Sales Start
   .container-fluid.pt-4.px-4
     .bg-light.text-center.rounded.p-4
