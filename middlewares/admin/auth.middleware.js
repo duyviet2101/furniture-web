@@ -17,7 +17,7 @@ module.exports.requiredAuth = async (req, res, next) => {
     const admin = await Admin.findOne({
       _id: data.id,
       refreshToken: refreshToken
-    }).select('-_id -password -refreshToken -deleted -createdAt -updatedAt -__v').lean();
+    }).select('-password -refreshToken -deleted -createdAt -updatedAt -__v').lean();
 
     if (!admin) {
       res.clearCookie('accessToken');

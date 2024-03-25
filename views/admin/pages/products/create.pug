@@ -27,7 +27,7 @@ block main
         label(for='discountPercentage') Discount percentage
       .form-floating.mb-3
         select#categoryId.form-select(name='categoryId' aria-label='Floating label select example')
-          option(selected='') Chọn phân loại
+          option(selected='' value="") Chọn phân loại
           +select-tree(categoriesTree)
         label(for='categoryId') Phân loại sản phẩm
       hr

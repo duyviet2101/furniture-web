@@ -5,6 +5,7 @@ const methodOverride = require('method-override');
 const flash = require('express-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const moment = require('moment');
 const configSystem = require('./config/system.config.js')
 const path = require('path');
 
@@ -33,6 +34,7 @@ app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce
 
 //! locals
 app.locals.prefixAdmin = configSystem.prefixAdmin;
+app.locals.moment = moment;
 //! end locals
 
 //! method override
