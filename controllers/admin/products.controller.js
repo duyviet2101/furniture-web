@@ -3,13 +3,34 @@ const Admin = require('../../models/admin.model');
 const ProductCategory = require('../../models/product-category.model');
 const mongoose = require('mongoose');
 
-const createTree = require('../../helpers/createTree.js')
+const createTree = require('../../helpers/createTree.js');
+const pagination = require('../../helpers/pagination.js');
 
 // [GET] /admin/products
 module.exports.index = async (req, res, next) => {
-  const products = await Product.find({
+  //! find object
+  const find = {
     deleted: false
-  }).lean();
+  };
+  //! end find object
+
+  //pagination
+  const paginationObject = pagination({
+    query: req.query,
+    limitItems: 5,
+    totalItems: await Product.countDocuments(find),
+  });
+  //end pagination
+
+  const products = await Product.find(find)
+    .skip(paginationObject.skipItems)
+    .limit(paginationObject.limitItems)
+    .lean();
+
+  if (products.length === 0 && paginationObject.currentPage > 1) {
+    req.flash('error', 'Trang không tồn tại!');
+    return res.redirect('/admin/products');
+  }
 
   for (let product of products) {
     const category = await ProductCategory.findById(product.product_category_id).lean();
@@ -28,7 +49,8 @@ module.exports.index = async (req, res, next) => {
   res.render('admin/pages/products/index', {
     pageTitle: 'Products Management',
     activeTab: 'products',
-    products
+    products,
+    paginationObject
   });
 }
 

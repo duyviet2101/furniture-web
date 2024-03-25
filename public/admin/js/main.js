@@ -324,3 +324,21 @@ if (showAlert) {
 }
 
 //! end show alert
+
+//! pagination
+const btnsPagination = document.querySelectorAll('[button-page]');
+if (btnsPagination && btnsPagination.length > 0) {
+
+    const url = new URL(window.location.href);
+    
+    btnsPagination.forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            e.preventDefault();
+            const page = btn.getAttribute('button-page');
+            
+            url.searchParams.set('page', page);
+            window.location.href = url.href;
+        });
+    });
+}
+//! end pagination

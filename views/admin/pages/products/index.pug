@@ -1,5 +1,6 @@
 extends ../../layouts/default.pug
 include ../../mixins/moment.pug
+include ../../mixins/pagination.pug
 
 block main
   .container-fluid.pt-4.px-4
@@ -50,4 +51,5 @@ block main
                 td
                   a.btn.btn-sm.btn-primary(href='#') Edit
                   a.btn.btn-sm.btn-danger(href='#') Delete
+      +pagination(paginationObject)
   // Recent Sales End
