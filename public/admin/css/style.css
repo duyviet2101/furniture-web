@@ -341,3 +341,28 @@
 }
 
 /* End Show Alert */
+
+/* Hide the default spinner arrows */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  margin: 0;
+}
+
+/* Style the wrapper of the spinner */
+input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+    appearance: textfield; /* Other browsers */
+    border: 1px solid #ccc;
+    padding: 5px;
+    width: 100px; /* Adjust width as needed */
+    text-align: right; /* Align the text to the right */
+}
+
+/* Style the wrapper of the spinner */
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+  appearance: textfield; /* Other browsers */
+  border: 1px solid #ccc;
+  padding: 2px;
+  width: 100px; /* Adjust width as needed */
+}
