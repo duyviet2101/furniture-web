@@ -3,10 +3,34 @@ include ../../mixins/moment.pug
 include ../../mixins/pagination.pug
 include ../../mixins/alert.pug
 include ../../mixins/currencyConverter.pug
+include ../../mixins/select-tree.pug
 
 block main
   +alert-error(5000)
   +alert-success(5000)
+  .container-fluid.pt-4.px-4
+    .bg-light.rounded.h-100.p-4
+      form.input-group.mb-3(search)
+        input#searchInput.form-control(type='text' placeholder="Tìm kiếm sản phẩm" aria-label="Tìm kiếm sản phẩm" value=searchKey)
+        button.btn.btn-primary(type='submit' search-submit).input-group-text
+          i.fas.fa-search
+
+      h6.mb-3 Bộ lọc
+      .d-flex(filter)
+        .form-floating.w-50.me-3
+          select#category.form-select(name='category' aria-label='')
+            option(selected='' value="") Tất cả
+            +select-tree(categoriesTree)
+          label(for='category') Chọn danh mục
+        .form-floating.w-50.me-3
+          select#status.form-select(name='status' aria-label='')
+            option(selected='' value="") Tất cả
+            option(value="active" selected = (status == 'active')) Active
+            option(value="inactive" selected = (status == 'inactive')) Inactive
+          label(for='status') Chọn trạng thái
+      button.btn.btn-primary.mt-3.me-3(type='button' filter-submit) Lọc
+      button.btn.btn-danger.mt-3(type='button' filter-reset) Reset
+
   .container-fluid.pt-4.px-4
     .bg-light.rounded.h-100.p-4(sort)
       h6.mb-3 Sắp xếp

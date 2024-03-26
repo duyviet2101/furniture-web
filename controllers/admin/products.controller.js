@@ -5,9 +5,35 @@ const mongoose = require('mongoose');
 
 const createTree = require('../../helpers/createTree.js');
 const pagination = require('../../helpers/pagination.js');
+const convertToSlug = require('../../helpers/convertToSlug.js');
 
 // [GET] /admin/products
 module.exports.index = async (req, res, next) => {
+
+  //!search
+  const search = {};
+  if (req.query.search) {
+    search['$or'] = [];
+    search['$or'].push({
+      title: {
+        '$regex': req.query.search,
+        '$options': 'i'
+      }
+    });
+    search['$or'].push({
+      description: {
+        '$regex': req.query.search,
+        '$options': 'i'
+      }
+    });
+    search['$or'].push({
+      slug: {
+        '$regex': convertToSlug(req.query.search),
+        '$options': 'i'
+      }
+    });
+  }
+  //!end search
 
   //! sort
   const sort = {};
@@ -18,17 +44,18 @@ module.exports.index = async (req, res, next) => {
 
   //! find object
   const find = {
-    deleted: false
+    deleted: false,
+    ...search
   };
   //! end find object
 
-  //pagination
+  //!pagination
   const paginationObject = pagination({
     query: req.query,
     limitItems: 5,
     totalItems: await Product.countDocuments(find),
   });
-  //end pagination
+  //!end pagination
 
   const products = await Product.find(find)
     .sort(sort)
@@ -55,12 +82,19 @@ module.exports.index = async (req, res, next) => {
     product.createdBy = createdBy;
   }  
 
+  const categories = await ProductCategory.find({
+    deleted: false
+  });
+  const categoriesTree = createTree(categories);
+
   res.render('admin/pages/products/index', {
     pageTitle: 'Products Management',
     activeTab: 'products',
     products,
     paginationObject,
-    sort
+    sort,
+    categoriesTree,
+    searchKey: req.query.search
   });
 }
 

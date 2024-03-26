@@ -371,3 +371,21 @@ if (sort) {
     });
 }
 //! end sort
+
+//! search
+const search = document.querySelector('[search]');
+if (search) {
+    const url = new URL(window.location.href);
+    const searchSubmit = search.querySelector('[search-submit]');
+    const searchInput = search.querySelector('#searchInput');
+
+    search.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!searchInput.value.trim()) {
+            return;
+        }
+        url.searchParams.set('search', searchInput.value);
+        window.location.href = url.href;
+    });
+}
+//! end search

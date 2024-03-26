@@ -354,8 +354,6 @@ input[type="number"] {
     appearance: textfield; /* Other browsers */
     border: 1px solid #ccc;
     padding: 5px;
-    width: 100px; /* Adjust width as needed */
-    text-align: right; /* Align the text to the right */
 }
 
 /* Style the wrapper of the spinner */
@@ -364,5 +362,4 @@ input[type="number"] {
   appearance: textfield; /* Other browsers */
   border: 1px solid #ccc;
   padding: 2px;
-  width: 100px; /* Adjust width as needed */
 }
