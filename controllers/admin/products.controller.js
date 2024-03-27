@@ -42,10 +42,42 @@ module.exports.index = async (req, res, next) => {
   }
   //! end sort
 
+  //! filter
+  const filter = {};
+
+  const getSubCategories = async (categoryId) => {
+    const subs = await ProductCategory.find({
+      parent_id: categoryId,
+      deleted: false
+    });
+    
+    let allSubs = [...subs];
+
+    for (let sub of subs) {
+      const childs = await getSubCategories(sub._id);
+      allSubs = allSubs.concat(childs);
+    }
+
+    return allSubs;
+  }
+
+  const listSubsCategories = await getSubCategories(new mongoose.Types.ObjectId(req.query.categoryId));
+  const listSubsCategoriesId = listSubsCategories.map(sub => sub._id);
+
+  if (req.query.categoryId) {
+    filter.product_category_id = {$in: [new mongoose.Types.ObjectId(req.query.categoryId), ...listSubsCategoriesId]};
+  }
+  if (req.query.status) {
+    filter.status = req.query.status;
+  }
+  // return res.json(filter);  
+  //! end filter
+
   //! find object
   const find = {
     deleted: false,
-    ...search
+    ...search,
+    ...filter
   };
   //! end find object
 
@@ -64,7 +96,7 @@ module.exports.index = async (req, res, next) => {
     .lean();
 
   if (products.length === 0 && paginationObject.currentPage > 1) {
-    req.flash('error', 'Trang không tồn tại!');
+    req.flash('error', 'Không tìm thấy sản phẩm nào!');
     return res.redirect('/admin/products');
   }
 
@@ -94,7 +126,11 @@ module.exports.index = async (req, res, next) => {
     paginationObject,
     sort,
     categoriesTree,
-    searchKey: req.query.search
+    searchKey: req.query.search,
+    filter: {
+      categoryId: req.query.categoryId,
+      status: req.query.status
+    }
   });
 }
 

@@ -389,3 +389,34 @@ if (search) {
     });
 }
 //! end search
+
+//! filter
+const filter = document.querySelector('[filter]');
+if (filter) {
+    const categoryFilter = filter.querySelector('#category');
+    const statusFilter = filter.querySelector('#status');
+    
+    const filterSubmit = filter.querySelector('[filter-submit]');
+    const filterReset = filter.querySelector('[filter-reset]');
+
+    const url = new URL(window.location.href);
+
+    filterSubmit.addEventListener('click', (e) => {
+        if (!categoryFilter.value.trim() && !statusFilter.value.trim()) {
+            url.searchParams.delete('categoryId');
+            url.searchParams.delete('status');
+            window.location.href = url.href;
+            return;
+        }
+        url.searchParams.set('categoryId', categoryFilter.value);
+        url.searchParams.set('status', statusFilter.value);
+        window.location.href = url.href;
+    });
+
+    filterReset.addEventListener('click', (e) => {
+        url.searchParams.delete('categoryId');
+        url.searchParams.delete('status');
+        window.location.href = url.href;
+    });
+}
+//! end filter
