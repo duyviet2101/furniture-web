@@ -425,3 +425,30 @@ module.exports.patchEdit = async (req, res, next) => {
   req.flash('success', `Cập nhật <strong> ${product.title} </strong> thành công`);
   return res.redirect(`/admin/products/edit/${id}`);
 }
+
+// [DELETE] /admin/products/delete/:id
+module.exports.delete = async (req, res, next) => {
+  const {id} = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    req.flash('error', 'Id không hợp lệ!');
+    return res.redirect('/admin/products');
+  }
+
+  const product = await Product.findById(id);
+  if (!product) {
+    req.flash('error', 'Không tìm thấy sản phẩm!');
+    return res.redirect('/admin/products');
+  }
+
+  product.deleted = true;
+  product.deletedBy = {
+    account_id: req.admin._id,
+    deletedAt: new Date()
+  };
+
+  await product.save();
+
+  req.flash('success', `Xóa <strong> ${product.title} </strong> thành công`);
+  return res.redirect('/admin/products');
+}

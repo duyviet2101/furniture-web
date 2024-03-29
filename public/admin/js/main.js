@@ -524,6 +524,19 @@ if (changeStatus && changeStatus.length > 0)
 }
 //! end change status
 
-//! edit product
+//! delete product
+const deleteProduct = document.querySelectorAll('[delete-product]');
+if (deleteProduct && deleteProduct.length > 0) {
+    const deleteForm = document.querySelector('#deleteProductsForm');
+    const path = deleteForm.getAttribute('data-path');
 
-//! end edit product
+    deleteProduct.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const id = btn.getAttribute('delete-product');
+            const url = path + "/" + id +"?_method=DELETE";
+            deleteForm.action = url;
+            deleteForm.submit();
+        })
+    });
+}
+//! end delete product

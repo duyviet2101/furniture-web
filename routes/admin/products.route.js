@@ -37,4 +37,6 @@ router.patch('/edit/:id',
   asyncHandler(controller.patchEdit)
 );
 
+router.delete('/delete/:id', asyncHandler(controller.delete));
+
 module.exports = router;
