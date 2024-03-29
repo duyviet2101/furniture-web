@@ -22,4 +22,6 @@ router.post('/create',
   asyncHandler(controller.postCreate)
 );
 
+router.patch('/status/:id/:status', asyncHandler(controller.status));
+
 module.exports = router;

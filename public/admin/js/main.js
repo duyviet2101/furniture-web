@@ -308,20 +308,22 @@ for ( var i = 0; i < currencyInput.length; i++ ) {
 // end currency converter
 
 //! show alert
-
-const showAlert = document.querySelector("[show-alert]");
-if (showAlert) {
-    const time = parseInt(showAlert.getAttribute("data-time")) || 3000;
-    const closeAlert = showAlert.querySelector("[close-alert]");
-
-    setTimeout(() => {
-        showAlert.classList.add("alert-hidden")
-    }, time);
-
-    closeAlert.addEventListener("click", () => {
-        showAlert.classList.add("alert-hidden")
-    })
+const showAlert = () => {
+    const alert = document.querySelector("[show-alert]");
+    if (alert) {
+        const time = parseInt(alert.getAttribute("data-time")) || 3000;
+        const closeAlert = alert.querySelector("[close-alert]");
+    
+        setTimeout(() => {
+            alert.classList.add("alert-hidden")
+        }, time);
+    
+        closeAlert.addEventListener("click", () => {
+            alert.classList.add("alert-hidden")
+        })
+    }
 }
+showAlert();
 
 //! end show alert
 
@@ -420,3 +422,85 @@ if (filter) {
     });
 }
 //! end filter
+
+//! change status
+const changeStatus = document.querySelectorAll('[change-status]');
+if (changeStatus && changeStatus.length > 0)
+{
+    changeStatus.forEach(btn => {
+        btn.addEventListener('click', async (e) =>{
+            btn.innerHTML = 'Loading...';
+            btn.disabled = true;
+            
+            const [id, status] = btn.getAttribute('change-status').split('-');
+            const url = btn.getAttribute('path') + id + '/' + status;
+            const response = await fetch(url, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            const dataResponse = await response.json();
+            
+            if (response.status === 200) {
+                btn.innerHTML = status === 'active' ? 'Active' : 'Inactive';
+                btn.classList.remove(status === 'active' ? 'btn-warning' : 'btn-primary');
+                btn.classList.add(status === 'active' ? 'btn-primary' : 'btn-warning');
+                btn.setAttribute('change-status', id + '-' + (status === 'active' ? 'inactive' : 'active'));
+                
+                // ! alert
+                const alert = document.createElement("div");
+                alert.classList.add("alert", "alert-success");
+                alert.setAttribute("role", "alert");
+                alert.setAttribute("show-alert", "");
+                alert.innerHTML = `${dataResponse.message} <span close-alert>X</span>`;
+                const closeAlert = alert.querySelector("[close-alert]");
+                document.body.appendChild(alert);
+                setTimeout(() => {
+                    alert.classList.add("alert-hidden")
+                }, 5000);
+                closeAlert.addEventListener("click", () => {
+                    alert.classList.add("alert-hidden")
+                })
+                // ! end alert
+
+                //! updatedBy
+                const updatedBy = btn.parentElement.parentElement.querySelector('[updatedBy]');
+                if (updatedBy) {
+                    updatedBy.innerHTML = `
+                        ${dataResponse.updatedBy.accountInfo.fullName}
+                        <br>
+                        ${new Date(dataResponse.updatedBy.updatedAt).toLocaleString('en-US', { hour12: false })}
+                    `;
+                    console.log(dataResponse.updatedBy);
+                }
+                //! end updatedBy
+            } else {
+                btn.innerHTML = 'Error';
+                setTimeout(() => {
+                    btn.innerHTML = status === 'active' ? 'Inactive' : 'Active';
+                }, 3000);
+
+                // ! alert
+                const alert = document.createElement("div");
+                alert.classList.add("alert", "alert-danger");
+                alert.setAttribute("show-alert", "");
+                alert.setAttribute("role", "alert");
+                alert.innerHTML = `${dataResponse.message} <span close-alert>X</span>`;
+                const closeAlert = alert.querySelector("[close-alert]");
+                document.body.appendChild(alert);
+                setTimeout(() => {
+                    alert.classList.add("alert-hidden")
+                }, 5000);
+                closeAlert.addEventListener("click", () => {
+                    alert.classList.add("alert-hidden")
+                })
+                // ! end alert
+            }
+
+            btn.disabled = false;
+
+        });
+    });
+}
+//! end change status

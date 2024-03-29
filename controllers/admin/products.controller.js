@@ -112,6 +112,15 @@ module.exports.index = async (req, res, next) => {
       createdBy.createdAt = product.createdBy.createdAt;
     }
     product.createdBy = createdBy;
+
+    const updatedBy = {};
+    if (product.updatedBy && product.updatedBy.length > 0) {
+      updatedBy.accountInfo = await Admin.findById(product.updatedBy[product.updatedBy.length - 1].account_id)
+                      .select('_id fullName email')
+                      .lean();
+      updatedBy.updatedAt = product.updatedBy[product.updatedBy.length - 1].updatedAt;
+    }
+    product.updatedBy = updatedBy;
   }  
 
   const categories = await ProductCategory.find({
@@ -245,4 +254,41 @@ module.exports.postCreate = async (req, res, next) => {
   
   req.flash('success', `Tạo <strong> ${newProduct.title} </strong> thành công`);
   return res.redirect('/admin/products/create');
+}
+
+// [PATCH] /admin/products/status/:id/:status
+module.exports.status = async (req, res, next) => {
+  const {id, status} = req.params;
+  
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(400).json({message: 'Id không hợp lệ!'});
+  }
+
+  if (status !== 'active' && status !== 'inactive') {
+    res.status(400).json({message: 'Trạng thái không hợp lệ!'});
+  }
+
+  const product = await Product.findById(id);
+  if (!product) {
+    res.status(404).json({message: 'Không tìm thấy sản phẩm!'});
+  }
+
+  product.status = status === 'active' ? 'active' : 'inactive';
+  product.updatedBy.push({
+    account_id: req.admin._id,
+    updatedAt: new Date()
+  });
+  await product.save();
+
+  const updatedBy = {
+    accountInfo: await Admin.findById(req.admin._id)
+                  .select('_id fullName email')
+                  .lean(),
+    updatedAt: new Date()
+  };
+
+  res.status(200).json({
+    message: 'Cập nhật trạng thái thành công!',
+    updatedBy
+  });
 }

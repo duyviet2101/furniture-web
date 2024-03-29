@@ -88,12 +88,18 @@ block main
                 td.product-position
                   input.form-control(type='number' value=product.position min='0')
                 td
-                  a.btn.btn-sm.btn-primary(href='#') Active
-                td
+                  button.btn.btn-sm(class=`${product.status == "active" ? "btn-primary" : "btn-warning"}` change-status=`${product._id}-${product.status == "active" ? "inactive" : "active"}` path=`/${prefixAdmin}/products/status/`) #{product.status == "active" ? "Active" : "Inactive"}
+                td(createdBy)
                   | #{product.createdBy.accountInfo.fullName}
                   br
                   +formatDateTime(product.createdBy.createdAt)
-                td= product.updatedBy
+                td(updatedBy)
+                  - if (product.updatedBy.accountInfo)
+                    | #{product.updatedBy.accountInfo.fullName}
+                    br
+                    +formatDateTime(product.updatedBy.updatedAt)
+                  - else
+                    | Chưa cập nhật
                 td
                   a.btn.btn-sm.btn-primary(href='#') Edit
                   a.btn.btn-sm.btn-danger(href='#') Delete
