@@ -1,0 +1,62 @@
+extends ../../layouts/default.pug
+include ../../mixins/select-tree.pug
+include ../../mixins/alert.pug
+
+block main 
+  +alert-error(5000)
+  +alert-success(5000)
+  form.container-fluid.pt-4.px-4(method='POST' action=`/${prefixAdmin}/products/edit/${product._id}?_method=PATCH` enctype='multipart/form-data')
+    .bg-light.rounded.h-100.p-4
+      h6.mb-4 Tạo sản phẩm
+      .form-floating.mb-3
+        input#title.form-control(type='text' name='title' placeholder='' value=product.title)
+        label(for='title') Tên sản phẩm
+      .mb-3
+        label.form-label(for='') Ảnh sản phẩm (max: 10)
+        .mb-3.upload-multiple-images
+          label.labelThumbnailInput.form-control(for='thumbnail') Thêm ảnh mới
+          input#thumbnail.form-control.d-none(type='file' name='thumbnail' accept='image/*' multiple='multiple') 
+          .current-images.mt-3.d-flex
+            each image in product.thumbnail
+              .current-image.m-1.position-relative
+                img(src=`${image}` alt='Thumbnail' class='img-thumbnail')
+                button.btn.btn-danger.btnDeleteImage(type='button').position-absolute.top-0.end-0.px-1.py-0.text-white.rounded
+                  span(aria-hidden='true') &times;
+                input.d-none(type='checkbox' name='currentThumbnail' value=`${image}` checked)
+
+          .preview.mt-3
+      .form-floating.mb-3
+        input#price.form-control(type='currency' name='price' value=product.price min='0')
+        label(for='price') Giá sản phẩm (đ)
+      .form-floating.mb-3
+        input#stock.form-control(type='number' name='stock' value=product.stock min='0')
+        label(for='stock') Số lượng sản phẩm
+      .form-floating.mb-3
+        input#discountPercentage.form-control(type='number' name='discountPercentage' value=product.discountPercentage min='0')
+        label(for='discountPercentage') Discount percentage
+      .form-floating.mb-3
+        select#categoryId.form-select(name='categoryId' aria-label='Floating label select example')
+          option(selected='' value="") Chọn phân loại
+          +select-tree(categoriesTree, 1, product.product_category_id)
+        label(for='categoryId') Phân loại sản phẩm
+      hr
+      .form-check.form-check-inline
+        input#active.form-check-input(type='radio' name='status' value='active' checked= (product.status == 'active'))
+        label.form-check-label(for='active') Active
+      .form-check.form-check-inline
+        input#inactive.form-check-input(type='radio' name='status' value='inactive' checked= (product.status == 'inactive'))
+        label.form-check-label(for='inactive') Inactive
+      hr
+      .form-check
+        input#featured.form-check-input(type='checkbox' value="true" name='featured' checked=(product.featured == true))
+        label.form-check-label(for='featured')
+          | Sản phẩm nổi bật
+      hr
+      .form-floating.mb-3
+        input#position.form-control(type='number' name='position' value=product.position min='0')
+        label(for='quantity') Vị trí (lớn nhất hiển thị đầu tiên)
+      .form-floating
+        textarea#description.textarea-mce.form-control(placeholder='' style='height: 150px;' name='description') #{product.description}
+        label(for='description') Mô tả sản phẩm
+      .d-flex.justify-content-end.mt-4
+        button.btn.btn-primary(type='submit') Cập nhật sản phẩm

@@ -209,7 +209,7 @@
     
 })(jQuery);
 
-// signin
+//! signin
 const signInForm = document.querySelector('.signInForm');
 if (signInForm) {
     const alert = document.querySelector('.alert');
@@ -229,9 +229,9 @@ if (signInForm) {
         signInForm.submit();
     });
 }
-// end signin
+//! end signin
 
-// preview single image
+//! preview single image
 const uploadSingleImage = document.querySelector('.upload-single-image');
 if (uploadSingleImage) {
     const input = document.querySelector('.upload-single-image input[type="file"]');
@@ -245,13 +245,15 @@ if (uploadSingleImage) {
         reader.readAsDataURL(file);
     });
 }
-// end preview single image
+//! end preview single image
 
-// preview multiple images
+//! preview multiple images
 const uploadMultipleImages = document.querySelector('.upload-multiple-images');
 if (uploadMultipleImages) {
     const input = document.querySelector('.upload-multiple-images input[type="file"]');
     const preview = document.querySelector('.upload-multiple-images .preview');
+    const label = document.querySelector('.upload-multiple-images label');
+
     input.addEventListener('change', async (e) => {
         preview.innerHTML = '';
         const files = e.target.files;
@@ -265,11 +267,29 @@ if (uploadMultipleImages) {
             }
             reader.readAsDataURL(file);
         }
+        if (files.length > 0) {
+            label.innerHTML = `${files.length} files selected`;
+        } else {
+            label.innerHTML = 'Thêm ảnh mới';
+        }
     });
 }
-// end preview multiple images
+//! end preview multiple images
 
-// currency converter
+//! edit current images
+const currentImages = document.querySelectorAll('.current-image');
+if (currentImages && currentImages.length > 0) {
+    currentImages.forEach(image => {
+        const btnDelete = image.querySelector('.btnDeleteImage');
+        
+        btnDelete.addEventListener('click', () => {
+            image.remove();
+        });
+    });
+}
+//! end edit current images
+
+//! currency converter
 var currencyInput = document.querySelectorAll( 'input[type="currency"]' );
 
 for ( var i = 0; i < currencyInput.length; i++ ) {
@@ -305,7 +325,7 @@ for ( var i = 0; i < currencyInput.length; i++ ) {
             localStringToNumber( value ).toLocaleString( undefined, options ) : ''
     }
 }
-// end currency converter
+//! end currency converter
 
 //! show alert
 const showAlert = () => {
@@ -470,9 +490,8 @@ if (changeStatus && changeStatus.length > 0)
                     updatedBy.innerHTML = `
                         ${dataResponse.updatedBy.accountInfo.fullName}
                         <br>
-                        ${new Date(dataResponse.updatedBy.updatedAt).toLocaleString('en-US', { hour12: false })}
+                        ${new Date(dataResponse.updatedBy.updatedAt).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })}
                     `;
-                    console.log(dataResponse.updatedBy);
                 }
                 //! end updatedBy
             } else {
@@ -504,3 +523,7 @@ if (changeStatus && changeStatus.length > 0)
     });
 }
 //! end change status
+
+//! edit product
+
+//! end edit product

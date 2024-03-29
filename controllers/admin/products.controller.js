@@ -292,3 +292,136 @@ module.exports.status = async (req, res, next) => {
     updatedBy
   });
 }
+
+// [GET] /admin/products/edit/:id
+module.exports.edit = async (req, res, next) => {
+  const {id} = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    req.flash('error', 'Id không hợp lệ!');
+    return res.redirect('/admin/products');
+  }
+
+  const product = await Product.findById(id);
+  if (!product) {
+    req.flash('error', 'Không tìm thấy sản phẩm!');
+    return res.redirect('/admin/products');
+  }
+
+  const categories = await ProductCategory.find({
+    deleted: false
+  });
+  const categoriesTree = createTree(categories);
+
+  res.render('admin/pages/products/edit', {
+    pageTitle: 'Edit Product',
+    activeTab: 'products',
+    product,
+    categories,
+    categoriesTree
+  });
+}
+
+// [PATCH] /admin/products/edit/:id
+module.exports.patchEdit = async (req, res, next) => {
+  const {
+    title,
+    price,
+    stock,
+    discountPercentage,
+    categoryId,
+    status,
+    featured,
+    position,
+    description,
+    thumbnail,
+    currentThumbnail
+  } = req.body;
+
+  const {id} = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    req.flash('error', 'Id không hợp lệ!');
+    return res.redirect('/admin/products');
+  }
+
+  // Validate title
+  if (!title) {
+    req.flash('error', 'Tên sản phẩm không để trống!');
+    return res.redirect('/admin/products/create');
+  }
+
+  // Validate price
+  if (!price || parseInt(price.replace(/[^\d.]/g, '')) <= 0){
+    req.flash('error', 'Giá không hợp lệ! (số dương)');
+    return res.redirect('/admin/products/create');
+  }
+
+  // Validate stock
+  if (!stock || isNaN(parseInt(stock)) || parseInt(stock) <= 0) {
+    req.flash('error', 'Số lượng không hợp lệ! (số dương)');
+    return res.redirect('/admin/products/create');
+  }
+
+  // Validate discountPercentage
+  if (!discountPercentage || isNaN(parseInt(discountPercentage)) || parseInt(discountPercentage) < 0 || parseInt(discountPercentage) > 100) {
+    req.flash('error', 'Phần trăm giảm giá không hợp lệ! (0 - 100)');
+    return res.redirect('/admin/products/create');
+  }
+
+  // Validate categoryId
+  if (!categoryId || !mongoose.Types.ObjectId.isValid(categoryId)) {
+    req.flash('error', 'Danh mục không hợp lệ!');
+    return res.redirect('/admin/products/create');
+  }
+
+  // Validate status
+  if (!status) {
+    req.flash('error', 'Trạng thái không hợp lệ!');
+    return res.redirect('/admin/products/create');
+  }
+
+  // Validate position
+  if (!position || isNaN(parseInt(position)) || parseInt(position) < 0){
+    req.flash('error', 'Vị trí không hợp lệ!');
+    return res.redirect('/admin/products/create');
+  }
+
+  // Validate description
+  if (!description) {
+    req.flash('error', 'Mô tả không để trống!');
+    return res.redirect('/admin/products/create');
+  }
+
+  // Validate thumbnail
+  if (!thumbnail) {
+    req.flash('error', 'Ảnh không để trống!');
+    return res.redirect('/admin/products/create');
+  }
+
+  const product = await Product.findById(id);
+  if (!product) {
+    req.flash('error', 'Không tìm thấy sản phẩm!');
+    return res.redirect('/admin/products');
+  }
+
+  product.title = title;
+  product.price = parseInt(price.replace(/[^\d.]/g, ''));
+  product.stock = parseInt(stock);
+  product.discountPercentage = parseInt(discountPercentage);
+  product.product_category_id = categoryId;
+  product.status = status;
+  product.featured = featured === "true" ? true : false;
+  product.position = parseInt(position);
+  product.description = description;
+  product.thumbnail = [...currentThumbnail, ...thumbnail];
+  product.updatedBy.push({
+    account_id: req.admin._id,
+    updatedAt: new Date()
+  });
+
+  await product.save();
+
+  req.flash('success', `Cập nhật <strong> ${product.title} </strong> thành công`);
+  return res.redirect(`/admin/products/edit/${id}`);
+}

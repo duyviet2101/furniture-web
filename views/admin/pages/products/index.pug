@@ -101,8 +101,8 @@ block main
                   - else
                     | Chưa cập nhật
                 td
-                  a.btn.btn-sm.btn-primary(href='#') Edit
-                  a.btn.btn-sm.btn-danger(href='#') Delete
+                  a.btn.btn-sm.btn-primary(href=`/${prefixAdmin}/products/edit/${product._id}`) Edit
+                  a.btn.btn-sm.btn-danger(href=`/${prefixAdmin}/products/delete/${product._id}`) Delete
             else
               tr
                 td(colspan='11').text-center Không có sản phẩm nào

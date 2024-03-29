@@ -24,4 +24,17 @@ router.post('/create',
 
 router.patch('/status/:id/:status', asyncHandler(controller.status));
 
+router.get('/edit/:id', asyncHandler(controller.edit));
+
+router.patch('/edit/:id',
+  upload.array('thumbnail', 10),
+  asyncHandler(async (req, res, next) => {
+    if (req.files) {
+      req.body.thumbnail = await uploadMultipleCloudinaryByBuffer({files: req.files, folder: '/admin/products'});
+    }
+    next();
+  }),
+  asyncHandler(controller.patchEdit)
+);
+
 module.exports = router;

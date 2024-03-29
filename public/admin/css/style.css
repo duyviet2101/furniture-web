@@ -293,12 +293,16 @@
 }
 
 /* preview multiple images */
-.preview img {
+.preview img, .current-images img {
     width: 100px;
     height: 100px;
     border-radius: 10px;
     overflow: hidden;
     margin-right: 10px;
+}
+
+.btnDeleteImage {
+    transform: translate(-50%, -50%);
 }
 
 /* end preview multiple images */
