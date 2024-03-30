@@ -4,6 +4,7 @@ const ProductCategory = require('../../models/product-category.model');
 const mongoose = require('mongoose');
 
 const createTree = require('../../helpers/createTree.js');
+const searchHelper = require('../../helpers/search.js');
 const pagination = require('../../helpers/pagination.js');
 const convertToSlug = require('../../helpers/convertToSlug.js');
 
@@ -11,28 +12,7 @@ const convertToSlug = require('../../helpers/convertToSlug.js');
 module.exports.index = async (req, res, next) => {
 
   //!search
-  const search = {};
-  if (req.query.search) {
-    search['$or'] = [];
-    search['$or'].push({
-      title: {
-        '$regex': req.query.search,
-        '$options': 'i'
-      }
-    });
-    search['$or'].push({
-      description: {
-        '$regex': req.query.search,
-        '$options': 'i'
-      }
-    });
-    search['$or'].push({
-      slug: {
-        '$regex': convertToSlug(req.query.search),
-        '$options': 'i'
-      }
-    });
-  }
+  const search = searchHelper(req);
   //!end search
 
   //! sort
