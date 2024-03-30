@@ -37,13 +37,28 @@ block main
     .bg-light.text-center.rounded.p-4
       .d-flex.align-items-center.justify-content-between.mb-4
         h6.mb-0 Sản phẩm
-        a.btn.btn-primary(href=`/${prefixAdmin}/products/create`) Add Product
+        .d-flex.align-items-center.gap-3.w-75.justify-content-end
+          form.d-flex.align-items-center.justify-content-start(action = `/${prefixAdmin}/products/change-multi?_method=PATCH` form-change-multi method='POST')
+            .form-floating.me-1
+              select#status.form-select(name='type' aria-label='')
+                option(selected='' value="") Chọn hành động
+                option(value="active") Active
+                option(value="inactive") Inactive
+                option(value="delete-all") Delete
+              label(for='status') Chọn hành động
+            
+            .form-group
+              input(type='hidden' name='ids' value='')
+
+            button.btn.btn-primary(type='submit') Thực hiện
+
+          a.btn.btn-primary(href=`/${prefixAdmin}/products/create`) Add Product
       .table-responsive
-        table.table.text-start.align-middle.table-bordered.table-hover.mb-0.products-table
+        table.table.text-start.align-middle.table-bordered.table-hover.mb-0.products-table(checkbox-multi)
           thead
             tr.text-dark
               th(scope='col')
-                input.form-check-input(type='checkbox')
+                input.form-check-input(type='checkbox' name='checkAll')
               th(scope='col') STT
               th(scope='col') Hình ảnh
               th(scope='col') Sản phẩm
@@ -58,7 +73,7 @@ block main
             each product, index in products
               tr
                 td
-                  input.form-check-input(type='checkbox')
+                  input.form-check-input(type='checkbox' name="id" value=product._id)
                 td #{index + 1}
                 td.product-thumb
                   img(src=product.thumbnail[0] alt='')

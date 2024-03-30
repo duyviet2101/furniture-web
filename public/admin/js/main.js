@@ -614,3 +614,61 @@ if (editPosition && editPosition.length > 0) {
     })
 }
 //! end edit position
+
+//! checkbox multi
+const checkboxMulti = document.querySelector('[checkbox-multi]');
+if (checkboxMulti) {
+    const inputCheckAll = checkboxMulti.querySelector("input[name='checkAll']");
+    const inputsId = checkboxMulti.querySelectorAll("input[name='id']");
+
+    inputCheckAll.addEventListener("click", () => {
+        inputsId.forEach(input => {
+            input.checked = inputCheckAll.checked;
+        });
+    });
+
+    inputsId.forEach(input => {
+        input.addEventListener("click", () => {
+            const countChecked = checkboxMulti.querySelectorAll("input[name='id']:checked").length;
+
+            if (countChecked === inputsId.length) {
+                inputCheckAll.checked = true;
+            } else {
+                inputCheckAll.checked = false;
+            }
+        });
+    });
+}
+//! end checkbox multi
+
+//! change multi
+const formChangeMulti = document.querySelector('[form-change-multi]');
+if (formChangeMulti) {
+    formChangeMulti.addEventListener("submit", (e) => {
+        e.preventDefault();
+        
+        const inputsChecked = checkboxMulti.querySelectorAll("input[name='id']:checked");
+        const typeChange = formChangeMulti.querySelector("select[name='type']").value;
+
+        if (typeChange === "delete-all") {
+            const isConfirm = confirm("Bạn có chắc chắn muốn xóa những sản phẩm đã chọn không?");
+            if (!isConfirm) {
+                return;
+            }
+        }
+
+        if (inputsChecked.length > 0) {
+            let ids = [];
+            const inputsId = formChangeMulti.querySelector("input[name='ids']");
+
+            inputsChecked.forEach(input => {
+                ids.push(input.value);
+            });
+
+            inputsId.value = ids.join(',');
+
+            formChangeMulti.submit();
+        }
+    });
+}
+//! end change multi

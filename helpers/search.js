@@ -1,3 +1,4 @@
+const convertToSlug = require('./convertToSlug.js');
 module.exports = (req) => {
     const search = {};
     if (req.query.search) {

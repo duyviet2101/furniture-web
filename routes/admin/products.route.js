@@ -41,4 +41,6 @@ router.delete('/delete/:id', asyncHandler(controller.delete));
 
 router.patch('/change-position/:id', asyncHandler(controller.changePosition));
 
+router.patch('/change-multi', asyncHandler(controller.changeMulti));
+
 module.exports = router;

@@ -6,7 +6,6 @@ const mongoose = require('mongoose');
 const createTree = require('../../helpers/createTree.js');
 const searchHelper = require('../../helpers/search.js');
 const pagination = require('../../helpers/pagination.js');
-const convertToSlug = require('../../helpers/convertToSlug.js');
 
 // [GET] /admin/products
 module.exports.index = async (req, res, next) => {
@@ -469,4 +468,39 @@ module.exports.changePosition = async (req, res, next) => {
     message: 'Cập nhật vị trí thành công!',
     updatedBy
   });
+}
+
+// [PATCH] /admin/products/change-multi
+module.exports.changeMulti = async (req, res, next) => {
+  const type = req.body.type;
+  const ids = req.body.ids.split(',');
+
+  const updatedBy = {
+    account_id: req.admin._id,
+    updatedAt: new Date()
+  };
+
+  switch (type) {
+    case "active":
+    case "inactive":
+      await Product.updateMany({
+        _id: {$in: ids}
+      }, {
+        status: type,
+        $push: {updatedBy: updatedBy}
+      });
+      req.flash('success', `Cập nhật trạng thái ${ids.length} sản phẩm thành công!`);
+      break;
+    case "delete-all":
+      await Product.updateMany({
+        _id: {$in: ids}
+      }, {
+        deleted: true,
+        deletedBy: updatedBy
+      });
+      req.flash('success', `Xóa thành công ${ids.length} sản phẩm!`);
+      break;
+  }
+
+  return res.redirect('back');
 }
