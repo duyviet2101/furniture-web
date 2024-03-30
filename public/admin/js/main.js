@@ -531,12 +531,86 @@ if (deleteProduct && deleteProduct.length > 0) {
     const path = deleteForm.getAttribute('data-path');
 
     deleteProduct.forEach(btn => {
+        
         btn.addEventListener("click", () => {
-            const id = btn.getAttribute('delete-product');
-            const url = path + "/" + id +"?_method=DELETE";
-            deleteForm.action = url;
-            deleteForm.submit();
+            const ok = confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?');
+            if (ok) {
+                const id = btn.getAttribute('delete-product');
+                const url = path + "/" + id +"?_method=DELETE";
+                deleteForm.action = url;
+                deleteForm.submit();
+            }
+            else {
+                return;
+            }
         })
     });
 }
 //! end delete product
+
+//! edit position
+const editPosition = document.querySelectorAll('.positionEdit');
+if (editPosition && editPosition.length > 0) {
+    editPosition.forEach(input => {
+        input.addEventListener('change', async (e) => {
+            const path = input.getAttribute('data-path');
+
+            const response = await fetch(path, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    position: input.value
+                })
+            });
+
+            const dataResponse = await response.json();
+            if (response.status === 200) {
+                // ! alert
+                const alert = document.createElement("div");
+                alert.classList.add("alert", "alert-success");
+                alert.setAttribute("role", "alert");
+                alert.setAttribute("show-alert", "");
+                alert.innerHTML = `${dataResponse.message} <span close-alert>X</span>`;
+                const closeAlert = alert.querySelector("[close-alert]");
+                document.body.appendChild(alert);
+                setTimeout(() => {
+                    alert.classList.add("alert-hidden")
+                }, 5000);
+                closeAlert.addEventListener("click", () => {
+                    alert.classList.add("alert-hidden")
+                })
+                // ! end alert
+
+                //! updatedBy
+                const updatedBy = input.parentElement.parentElement.querySelector('[updatedBy]');
+                if (updatedBy) {
+                    updatedBy.innerHTML = `
+                        ${dataResponse.updatedBy.accountInfo.fullName}
+                        <br>
+                        ${new Date(dataResponse.updatedBy.updatedAt).toLocaleString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })}
+                    `;
+                }
+                //! end updatedBy
+            } else {
+                // ! alert
+                const alert = document.createElement("div");
+                alert.classList.add("alert", "alert-danger");
+                alert.setAttribute("role", "alert");
+                alert.setAttribute("show-alert", "");
+                alert.innerHTML = `${dataResponse.message} <span close-alert>X</span>`;
+                const closeAlert = alert.querySelector("[close-alert]");
+                document.body.appendChild(alert);
+                setTimeout(() => {
+                    alert.classList.add("alert-hidden")
+                }, 5000);
+                closeAlert.addEventListener("click", () => {
+                    alert.classList.add("alert-hidden")
+                })
+                // ! end alert
+            }
+        });
+    })
+}
+//! end edit position

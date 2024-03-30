@@ -85,8 +85,8 @@ block main
                 td= product.category.title
                 td
                   +toCurency(product.price)
-                td.product-position
-                  input.form-control(type='number' value=product.position min='0')
+                td
+                  input.form-control.positionEdit(data-path=`/${prefixAdmin}/products/change-position/${product._id}` type='number' value=product.position min='0')
                 td
                   button.btn.btn-sm(class=`${product.status == "active" ? "btn-primary" : "btn-warning"}` change-status=`${product._id}-${product.status == "active" ? "inactive" : "active"}` path=`/${prefixAdmin}/products/status/`) #{product.status == "active" ? "Active" : "Inactive"}
                 td(createdBy)

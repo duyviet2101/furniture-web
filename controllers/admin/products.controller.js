@@ -452,3 +452,41 @@ module.exports.delete = async (req, res, next) => {
   req.flash('success', `Xóa <strong> ${product.title} </strong> thành công`);
   return res.redirect('/admin/products');
 }
+
+// [PATCH] /admin/products/change-position/:id
+module.exports.changePosition = async (req, res, next) => {
+  const {id} = req.params;
+  const {position} = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(400).json({message: 'Id không hợp lệ!'});
+  }
+
+  if (!position || isNaN(parseInt(position)) || parseInt(position) < 0){
+    res.status(400).json({message: 'Vị trí không hợp lệ!'});
+  }
+
+  const product = await Product.findById(id);
+  if (!product) {
+    res.status(404).json({message: 'Không tìm thấy sản phẩm!'});
+  }
+
+  product.position = parseInt(position);
+  product.updatedBy.push({
+    account_id: req.admin._id,
+    updatedAt: new Date()
+  });
+  await product.save();
+
+  const updatedBy = {
+    accountInfo: await Admin.findById(req.admin._id)
+                  .select('_id fullName email')
+                  .lean(),
+    updatedAt: new Date()
+  };
+
+  res.status(200).json({
+    message: 'Cập nhật vị trí thành công!',
+    updatedBy
+  });
+}
