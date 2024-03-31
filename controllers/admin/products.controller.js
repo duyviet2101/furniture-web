@@ -504,3 +504,46 @@ module.exports.changeMulti = async (req, res, next) => {
 
   return res.redirect('back');
 }
+
+// [GET] /admin/products/detail/:id
+module.exports.detail = async (req, res, next) => {
+  const {id} = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    req.flash('error', 'Id không hợp lệ!');
+    return res.redirect('/admin/products');
+  }
+
+  const product = await Product.findById(id).lean();
+  if (!product) {
+    req.flash('error', 'Không tìm thấy sản phẩm!');
+    return res.redirect('/admin/products');
+  }
+
+  const category = await ProductCategory.findById(product.product_category_id).lean();
+  product.category = category;
+
+  const createdBy = {};
+  if (product.createdBy) {
+    createdBy.accountInfo = await Admin.findById(product.createdBy.account_id)
+                    .select('_id fullName email')
+                    .lean();
+    createdBy.createdAt = product.createdBy.createdAt;
+  }
+  product.createdBy = createdBy;
+
+  const updatedBy = {};
+  if (product.updatedBy && product.updatedBy.length > 0) {
+    updatedBy.accountInfo = await Admin.findById(product.updatedBy[product.updatedBy.length - 1].account_id)
+                    .select('_id fullName email')
+                    .lean();
+    updatedBy.updatedAt = product.updatedBy[product.updatedBy.length - 1].updatedAt;
+  }
+  product.updatedBy = updatedBy;
+
+  res.render('admin/pages/products/detail', {
+    pageTitle: 'Product Detail',
+    activeTab: 'products',
+    product
+  });
+}

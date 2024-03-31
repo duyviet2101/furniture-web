@@ -637,6 +637,10 @@ if (checkboxMulti) {
                 inputCheckAll.checked = false;
             }
         });
+
+        input.closest("tr").querySelector(".product-thumb").addEventListener("click", () => {
+            input.click();
+        });
     });
 }
 //! end checkbox multi
@@ -672,3 +676,40 @@ if (formChangeMulti) {
     });
 }
 //! end change multi
+
+//! slider
+const productThumbnailsSlider = document.querySelectorAll('.product-thumbnails-slider');
+if (productThumbnailsSlider) {
+    var splide = new Splide('#main-thumbnails', {
+        pagination: false,
+    });
+
+    var subThumbnails = document.getElementsByClassName('sub-thumbnail');
+    var current;
+
+    for (var i = 0; i < subThumbnails.length; i++) {
+        initThumbnail(subThumbnails[i], i);
+    }
+
+    function initThumbnail(subThumbnail, index) {
+        subThumbnail.addEventListener('click', function () {
+            splide.go(index);
+        });
+    }
+
+    splide.on('mounted move', function () {
+        var thumbnail = subThumbnails[splide.index];
+
+        if (thumbnail) {
+            if (current) {
+                current.classList.remove('is-active');
+            }
+
+            thumbnail.classList.add('is-active');
+            current = thumbnail;
+        }
+    });
+
+    splide.mount();
+}
+//! end slider

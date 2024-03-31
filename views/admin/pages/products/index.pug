@@ -77,7 +77,8 @@ block main
                 td #{index + 1}
                 td.product-thumb
                   img(src=product.thumbnail[0] alt='')
-                td= product.title
+                td
+                  a(href=`/${prefixAdmin}/products/detail/${product._id}`) #{product.title}
                 td= product.category.title
                 td
                   +toCurency(product.price)
