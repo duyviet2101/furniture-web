@@ -235,12 +235,16 @@ if (signInForm) {
 const uploadSingleImage = document.querySelector('.upload-single-image');
 if (uploadSingleImage) {
     const input = document.querySelector('.upload-single-image input[type="file"]');
-    const preview = document.querySelector('.upload-single-image img');
+    const preview = document.querySelector('.upload-single-image .preview');
     input.addEventListener('change', async (e) => {
+        preview.innerHTML = '';
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.onload = () => {
-            preview.src = reader.result;
+            const img = document.createElement('img');
+            img.src = reader.result;
+            img.classList.add('img-fluid', 'm-2');
+            preview.appendChild(img);
         }
         reader.readAsDataURL(file);
     });

@@ -15,7 +15,8 @@ block main
       .mb-3
         label.form-label(for='formFile' style='display: block') Avatar
         .d-flex.align-items-center.mb-3.upload-single-image
-          img(src=admin.avatar alt='Avatar' style='width: 100px; height: 100px; border-radius: 50%; margin-right: 10px;' upload-single-image-preview)
+          .preview
+            img(src=admin.avatar alt='Avatar' style='' upload-single-image-preview)
           input.form-control.form-control-sm(type='file' id='formFile' name='avatar' accept='image/*' style='width: auto;' upload-single-image-input)
       .input-group.mb-3
         span#basic-addon1.input-group-text
