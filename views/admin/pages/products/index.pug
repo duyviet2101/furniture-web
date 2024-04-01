@@ -54,7 +54,7 @@ block main
 
           a.btn.btn-primary(href=`/${prefixAdmin}/products/create`) Add Product
       .table-responsive
-        table.table.text-start.align-middle.table-bordered.table-hover.mb-0.products-table(checkbox-multi)
+        table.table.text-start.align-middle.table-bordered.table-hover.mb-0.items-table(checkbox-multi)
           thead
             tr.text-dark
               th(scope='col')
@@ -74,15 +74,15 @@ block main
               tr
                 td
                   input.form-check-input(type='checkbox' name="id" value=product._id)
-                td #{index + 1}
-                td.product-thumb
+                td #{product.index}
+                td.item-thumb
                   img(src=product.thumbnail[0] alt='')
                 td
                   a(href=`/${prefixAdmin}/products/detail/${product._id}`) #{product.title}
                 td= product.category.title
                 td
                   +toCurency(product.price)
-                td
+                td.item-position
                   input.form-control.positionEdit(data-path=`/${prefixAdmin}/products/change-position/${product._id}` type='number' value=product.position min='0')
                 td
                   button.btn.btn-sm(class=`${product.status == "active" ? "btn-primary" : "btn-warning"}` change-status=`${product._id}-${product.status == "active" ? "inactive" : "active"}` path=`/${prefixAdmin}/products/status/`) #{product.status == "active" ? "Active" : "Inactive"}
@@ -99,7 +99,7 @@ block main
                     | Chưa cập nhật
                 td
                   a.btn.btn-sm.btn-primary(href=`/${prefixAdmin}/products/edit/${product._id}`) Edit
-                  button.btn.btn-sm.btn-danger(delete-product=product._id) Delete
+                  button.btn.btn-sm.btn-danger(delete-item=product._id) Delete
             else
               tr
                 td(colspan='11').text-center Không có sản phẩm nào
@@ -110,5 +110,5 @@ block main
     action="" 
     method="POST"
     data-path=`/${prefixAdmin}/products/delete`
-    id="deleteProductsForm"
+    id="delete-item-form"
   )

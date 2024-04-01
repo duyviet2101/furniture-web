@@ -1,0 +1,56 @@
+include ./moment.pug
+
+mixin table-tree({items, level = 1, path})
+  each item, index in items
+    - const prefix = Array(level + 1).join("-- ")
+    tr
+      td 
+        input.form-check-input(type='checkbox' name="id" value=item._id)
+      td #{item.index}
+      td.item-thumb
+        img(
+          src=item.thumbnail[0]
+          alt=item.title
+        )
+      td 
+        a(href=`/${prefixAdmin}/${path}/detail/${item._id}`) #{prefix}#{item.title}
+      td.item-position
+        input.form-control.positionEdit(
+          data-path=`/${prefixAdmin}/${path}/change-position/${item._id}` 
+          type='number' 
+          value=item.position 
+          min='0'
+        )
+
+      td
+        button.btn.btn-sm(
+          class=`${item.status == "active" ? "btn-primary" : "btn-warning"}` 
+          change-status=`${item._id}-${item.status == "active" ? "inactive" : "active"}` 
+          path=`/${prefixAdmin}/${path}/status/`
+        ) #{item.status == "active" ? "Active" : "Inactive"}
+      td(createdBy)
+        if (item.createdBy.accountInfo)
+          | #{item.createdBy.accountInfo.fullName}
+          br
+          +formatDateTime(item.createdBy.createdAt)
+      td(updatedBy)
+        - if (item.updatedBy.accountInfo)
+          | #{item.updatedBy.accountInfo.fullName}
+          br
+          +formatDateTime(item.updatedBy.updatedAt)
+        - else
+          | Chưa cập nhật
+      td
+        a.btn.btn-sm.btn-primary(href=`/${prefixAdmin}/${path}/edit/${item._id}`) Edit
+        button.btn.btn-sm.btn-danger(delete-item=item._id) Delete
+    if item.children && item.children.length > 0
+      +table-tree({items: item.children, level: level + 1, path})
+  else
+    tr
+      td(colspan='11').text-center Không có dữ liệu
+  form(
+    action="" 
+    method="POST"
+    data-path=`/${prefixAdmin}/${path}/delete`
+    id="delete-item-form"
+  )

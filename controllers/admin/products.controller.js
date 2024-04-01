@@ -79,7 +79,11 @@ module.exports.index = async (req, res, next) => {
     return res.redirect('/admin/products');
   }
 
+  let count = paginationObject.skipItems;
   for (let product of products) {
+    count++;
+    product.index = count;
+
     const category = await ProductCategory.findById(product.product_category_id).lean();
     product.category = category;
 

@@ -1,0 +1,66 @@
+extends ../../layouts/default.pug
+include ../../mixins/moment.pug
+include ../../mixins/pagination.pug
+include ../../mixins/alert.pug
+include ../../mixins/currencyConverter.pug
+include ../../mixins/select-tree.pug
+include ../../mixins/search.pug
+include ../../mixins/sort.pug
+include ../../mixins/table-tree.pug
+
+block main
+  +alert-error(5000)
+  +alert-success(5000)
+  .container-fluid.pt-4.px-4
+    .bg-light.rounded.h-100.p-4
+      +search()
+
+      div(filter)
+        h6.mb-3 Bộ lọc
+        .d-flex
+          .form-floating.w-50.me-3
+            select#status.form-select(name='status' aria-label='')
+              option(selected='' value="") Tất cả
+              option(value="active" selected = (filter.status == 'active')) Active
+              option(value="inactive" selected = (filter.status == 'inactive')) Inactive
+            label(for='status') Chọn trạng thái
+        button.btn.btn-primary.mt-3.me-3(type='button' filter-submit) Lọc
+        button.btn.btn-danger.mt-3(type='button' filter-reset) Reset
+
+  .container-fluid.pt-4.px-4
+    .bg-light.text-center.rounded.p-4
+      .d-flex.align-items-center.justify-content-between.mb-4
+        h6.mb-0 Danh mục sản phẩm 
+        .d-flex.align-items-center.gap-3.w-75.justify-content-end
+          form.d-flex.align-items-center.justify-content-start(action = `/${prefixAdmin}/product-categories/change-multi?_method=PATCH` form-change-multi method='POST')
+            .form-floating.me-1
+              select#status.form-select(name='type' aria-label='')
+                option(selected='' value="") Chọn hành động
+                option(value="active") Active
+                option(value="inactive") Inactive
+                option(value="delete-all") Delete
+              label(for='status') Chọn hành động
+            
+            .form-group
+              input(type='hidden' name='ids' value='')
+
+            button.btn.btn-primary(type='submit') Thực hiện
+          a.btn.btn-primary(href=`/${prefixAdmin}/product-categories/create`) Thêm danh mục
+      .table-responsive
+        table.table.text-start.align-middle.table-bordered.table-hover.mb-0.items-table(checkbox-multi)
+          thead
+            tr.text-dark
+              th(scope='col')
+                input.form-check-input(type='checkbox' name='checkAll')
+              th(scope='col') STT
+              th(scope='col') Hình ảnh
+              th(scope='col') Danh mục
+              th(scope='col') Vị trí
+              th(scope='col') Trạng thái
+              th(scope='col') Người tạo
+              th(scope='col') Người cập nhật
+              th(scope='col') Hành động
+          tbody
+            +table-tree({items: records, path: 'product-categories'})
+      //- +pagination(paginationObject)
+  

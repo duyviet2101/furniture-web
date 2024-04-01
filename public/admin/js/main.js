@@ -404,6 +404,8 @@ if (search) {
     search.addEventListener('submit', async (e) => {
         e.preventDefault();
         if (!searchInput.value.trim()) {
+            url.searchParams.delete('search');
+            window.location.href = url.href;
             return;
         }
         url.searchParams.set('search', searchInput.value);
@@ -424,14 +426,16 @@ if (filter) {
     const url = new URL(window.location.href);
 
     filterSubmit.addEventListener('click', (e) => {
-        if (!categoryFilter.value.trim() && !statusFilter.value.trim()) {
+        if (categoryFilter?.value.trim()) {
+            url.searchParams.set('categoryId', categoryFilter.value);
+        } else {
             url.searchParams.delete('categoryId');
-            url.searchParams.delete('status');
-            window.location.href = url.href;
-            return;
         }
-        url.searchParams.set('categoryId', categoryFilter.value);
-        url.searchParams.set('status', statusFilter.value);
+        if (statusFilter?.value.trim()) {
+            url.searchParams.set('status', statusFilter.value);
+        } else {
+            url.searchParams.delete('status');
+        }
         window.location.href = url.href;
     });
 
@@ -496,8 +500,13 @@ if (changeStatus && changeStatus.length > 0)
                 //! end updatedBy
             } else {
                 btn.innerHTML = 'Error';
+                btn.classList.remove(status === 'active' ? 'btn-primary' : 'btn-warning');
+                btn.classList.add('btn-dander');
                 setTimeout(() => {
                     btn.innerHTML = status === 'active' ? 'Inactive' : 'Active';
+                    btn.classList.remove('btn-danger');
+                    btn.classList.add(status === 'active' ? 'btn-warning' : 'btn-primary');
+                    btn.disabled = false;
                 }, 3000);
 
                 // ! alert
@@ -525,9 +534,9 @@ if (changeStatus && changeStatus.length > 0)
 //! end change status
 
 //! delete product
-const deleteProduct = document.querySelectorAll('[delete-product]');
+const deleteProduct = document.querySelectorAll('[delete-item]');
 if (deleteProduct && deleteProduct.length > 0) {
-    const deleteForm = document.querySelector('#deleteProductsForm');
+    const deleteForm = document.querySelector('#delete-item-form');
     const path = deleteForm.getAttribute('data-path');
 
     deleteProduct.forEach(btn => {
@@ -535,7 +544,7 @@ if (deleteProduct && deleteProduct.length > 0) {
         btn.addEventListener("click", () => {
             const ok = confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?');
             if (ok) {
-                const id = btn.getAttribute('delete-product');
+                const id = btn.getAttribute('delete-item');
                 const url = path + "/" + id +"?_method=DELETE";
                 deleteForm.action = url;
                 deleteForm.submit();
@@ -638,7 +647,7 @@ if (checkboxMulti) {
             }
         });
 
-        input.closest("tr").querySelector(".product-thumb").addEventListener("click", () => {
+        input.closest("tr").querySelector(".item-thumb").addEventListener("click", () => {
             input.click();
         });
     });
@@ -678,7 +687,7 @@ if (formChangeMulti) {
 //! end change multi
 
 //! slider
-const productThumbnailsSlider = document.querySelectorAll('.product-thumbnails-slider');
+const productThumbnailsSlider = document.querySelector('.product-thumbnails-slider');
 if (productThumbnailsSlider) {
     var splide = new Splide('#main-thumbnails', {
         pagination: false,

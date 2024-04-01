@@ -277,23 +277,27 @@
 }
 
 /* product table */
-.products-table .product-thumb img {
+.items-table .item-thumb img {
     width: 80px;
     height: 80px;
     border-radius: 10px;
     overflow: hidden;
 }
 
-.products-table .product-thumb {
+.items-table .item-thumb {
     cursor: pointer;
 }
 
-.products-table .product-position input {
+.items-table .item-position input {
     width: 50px;
     height: 40px;
     text-align: center;
     border: 1px solid #E5E5E5;
     border-radius: 10px;
+}
+
+.items-table .item-position {
+    max-width: 70px;
 }
 
 /* preview multiple images */
