@@ -22,4 +22,6 @@ router.post('/create',
   asyncHandler(controller.postCreate)
 );
 
+router.delete('/delete/:id', asyncHandler(controller.delete));
+
 module.exports = router;

@@ -89,6 +89,8 @@ module.exports.index = async (req, res, next) => {
     const category = await ProductCategory.findById(product.product_category_id).lean();
     product.category = category;
 
+    console.log(product.category);
+
     const createdBy = {};
     if (product.createdBy) {
       createdBy.accountInfo = await Admin.findById(product.createdBy.account_id)

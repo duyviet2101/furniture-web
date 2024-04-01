@@ -1,4 +1,5 @@
 const ProductCategory = require('../../models/product-category.model.js');
+const Product = require('../../models/product.model.js');
 
 const createTree = require('../../helpers/createTree.js');
 const searchHelper = require('../../helpers/search.js');
@@ -41,7 +42,7 @@ exports.index = async (req, res) => {
     // .limit(paginationObject.limitItems);
 
   res.render('admin/pages/productCategories/index', {
-    activeTab: 'categories',
+    activeTab: 'product-categories',
     records: createTree(categories),
     filter,
     searchKey: req.query.search,
@@ -115,3 +116,42 @@ module.exports.postCreate = async (req, res) => {
   req.flash('success', `Tạo mới <strong> ${title} </strong> thành công!`);
   res.redirect('/admin/product-categories');
 };
+
+// [DELETE] /admin/product-categories/delete/:id
+module.exports.delete = async (req, res) => {
+  const {
+    id
+  } = req.params;
+  const category = await ProductCategory
+    .findById(id);
+
+  if (!category) {
+    req.flash('error', 'Danh mục không tồn tại!');
+    return res.redirect('/admin/product-categories');
+  }
+
+  const products = await Product.find({
+    product_category_id: id,
+    deleted: false
+  });
+
+  if (products.length > 0) {
+    req.flash('error', `Danh mục <strong> ${category.title} </strong> không thể xóa vì có sản phẩm!`);
+    return res.redirect('/admin/product-categories');
+  }
+
+  await ProductCategory.updateOne({
+    _id: id
+  }, {
+    deleted: true,
+    deletedAt: Date.now(),
+    deletedBy: {
+      account_id: req.admin._id,
+      deletedAt: Date.now()
+    }
+  });
+
+  req.flash('success', `Xóa thành công!`);
+
+  res.redirect('/admin/product-categories');
+}

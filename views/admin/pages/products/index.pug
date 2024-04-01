@@ -79,7 +79,11 @@ block main
                   img(src=product.thumbnail[0] alt='')
                 td
                   a(href=`/${prefixAdmin}/products/detail/${product._id}`) #{product.title}
-                td= product.category.title
+                td 
+                  if product.category
+                    | #{product.category.title}
+                  else
+                    | Chưa cập nhật
                 td
                   +toCurency(product.price)
                 td.item-position
