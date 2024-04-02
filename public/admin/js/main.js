@@ -537,16 +537,16 @@ if (changeStatus && changeStatus.length > 0)
 }
 //! end change status
 
-//! delete product
-const deleteProduct = document.querySelectorAll('[delete-item]');
-if (deleteProduct && deleteProduct.length > 0) {
+//! delete item
+const deleteItem = document.querySelectorAll('[delete-item]');
+if (deleteItem && deleteItem.length > 0) {
     const deleteForm = document.querySelector('#delete-item-form');
     const path = deleteForm.getAttribute('data-path');
 
-    deleteProduct.forEach(btn => {
+    deleteItem.forEach(btn => {
         
         btn.addEventListener("click", () => {
-            const ok = confirm('Bạn có chắc chắn muốn xóa sản phẩm này không?');
+            const ok = confirm('Bạn có chắc chắn muốn xóa bản ghi này không?');
             if (ok) {
                 const id = btn.getAttribute('delete-item');
                 const url = path + "/" + id +"?_method=DELETE";
@@ -559,7 +559,7 @@ if (deleteProduct && deleteProduct.length > 0) {
         })
     });
 }
-//! end delete product
+//! end delete item
 
 //! edit position
 const editPosition = document.querySelectorAll('.positionEdit');
@@ -668,7 +668,7 @@ if (formChangeMulti) {
         const typeChange = formChangeMulti.querySelector("select[name='type']").value;
 
         if (typeChange === "delete-all") {
-            const isConfirm = confirm("Bạn có chắc chắn muốn xóa những sản phẩm đã chọn không?");
+            const isConfirm = confirm("Bạn có chắc chắn muốn xóa những bản ghi đã chọn không?");
             if (!isConfirm) {
                 return;
             }

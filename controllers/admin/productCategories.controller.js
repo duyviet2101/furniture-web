@@ -385,3 +385,46 @@ module.exports.patchEdit = async (req, res, next) => {
   req.flash('success', `Cập nhật <strong> ${title} </strong> thành công!`);
   res.redirect('/admin/product-categories');
 }
+
+// [PATCH] /admin/product-categories/change-multi
+module.exports.changeMulti = async (req, res, next) => {
+  const type = req.body.type;
+  const ids = req.body.ids.split(',');
+
+  const updatedBy = {
+    account_id: req.admin._id,
+    updatedAt: new Date()
+  };
+
+  switch (type) {
+    case "active":
+    case "inactive":
+      await ProductCategory.updateMany({
+        _id: {
+          $in: ids
+        }
+      }, {
+        status: type,
+        $push: {
+          updatedBy
+        }
+      });
+      req.flash('success', `Cập nhật trạng thái ${ids.length} danh mục thành công!`);
+      break;
+    case "delete-all":
+      await ProductCategory.updateMany({
+        _id: {
+          $in: ids
+        }
+      }, {
+        deleted: true,
+        deletedBy: {
+          account_id: req.admin._id,
+          deletedAt: new Date()
+        }
+      });
+      req.flash('success', `Xóa ${ids.length} danh mục thành công!`);
+      break;
+  };
+  res.redirect('back');
+}
