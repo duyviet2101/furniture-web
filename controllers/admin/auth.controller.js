@@ -69,7 +69,7 @@ module.exports.postLogin = async (req, res, next) => {
     httpOnly: true
   });
 
-  res.redirect(`/${systemConfig.prefixAdmin}/dashboard`);
+  res.redirect(`/${systemConfig.prefixAdmin}/products`);
 }
 
 // [GET] /admin/auth/logout

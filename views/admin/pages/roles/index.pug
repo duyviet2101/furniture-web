@@ -40,12 +40,12 @@ block main
                 - else
                   | Chưa cập nhật
               td
-                a.btn.btn-primary.me-3(href=`/${prefixAdmin}/rbac/roles/edit/${role._id}`) Edit
-                button.btn.btn-danger(delete-item=role._id) Delete
+                a.btn.btn-primary.me-3(href=`/${prefixAdmin}/rbac/roles/edit/${role._id}`) Sửa
+                button.btn.btn-danger(delete-item=role._id) Xoá
 
   form(
     action="" 
     method="POST"
-    data-path=`/${prefixAdmin}/roles/delete`
+    data-path=`/${prefixAdmin}/rbac/roles/delete`
     id="delete-item-form"
   )

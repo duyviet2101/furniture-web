@@ -52,7 +52,7 @@ block main
 
             button.btn.btn-primary(type='submit') Thực hiện
 
-          a.btn.btn-primary(href=`/${prefixAdmin}/products/create`) Add Product
+          a.btn.btn-primary(href=`/${prefixAdmin}/products/create`) Thêm sản phẩm
       .table-responsive
         table.table.text-start.align-middle.table-bordered.table-hover.mb-0.items-table(checkbox-multi)
           thead
@@ -102,8 +102,8 @@ block main
                   - else
                     | Chưa cập nhật
                 td
-                  a.btn.btn-sm.btn-primary(href=`/${prefixAdmin}/products/edit/${product._id}`) Edit
-                  button.btn.btn-sm.btn-danger(delete-item=product._id) Delete
+                  a.btn.btn-sm.btn-primary(href=`/${prefixAdmin}/products/edit/${product._id}`) Sửa
+                  button.btn.btn-sm.btn-danger(delete-item=product._id) Xoá
             else
               tr
                 td(colspan='11').text-center Không có sản phẩm nào
