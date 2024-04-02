@@ -4,6 +4,8 @@ const Product = require('../../models/product.model.js');
 const createTree = require('../../helpers/createTree.js');
 const searchHelper = require('../../helpers/search.js');
 const paginationHelper = require('../../helpers/pagination.js');
+const mongoose = require('mongoose');
+const Account = require('../../models/admin.model.js');
 
 // [GET] /admin/product-categories
 exports.index = async (req, res) => {
@@ -154,4 +156,50 @@ module.exports.delete = async (req, res) => {
   req.flash('success', `Xóa thành công!`);
 
   res.redirect('/admin/product-categories');
+}
+
+// [PATCH] /admin/product-categories/status/:id/:status
+module.exports.status = async (req, res, next) => {
+  const {
+    id,
+    status
+  } = req.params;
+  
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(400).json({
+      message: 'Id không hợp lệ!'
+    });
+  }
+
+  if (status !== 'active' && status !== 'inactive') {
+    res.status(400).json({
+      message: 'Trạng thái không hợp lệ!'
+    });
+  }
+
+  const category = await ProductCategory.findById(id);
+  if (!category) {
+    res.status(404).json({
+      message: 'Danh mục không tồn tại!'
+    });
+  }
+
+  category.status = status;
+  category.updatedBy.push({
+    account_id: req.admin._id,
+    updatedAt: new Date()
+  });
+  await category.save();
+
+  const updatedBy = {
+    accountInfo: await Account.findById(req.admin._id)
+                        .select('_id fullName email')
+                        .lean(),
+    updatedAt: new Date(),
+  };
+
+  res.status(200).json({
+    message: 'Cập nhật trạng thái thành công!',
+    updatedBy
+  });
 }
