@@ -299,3 +299,89 @@ module.exports.edit = async (req, res) => {
     countCategories
   });
 }
+
+// [PATCH] /admin/product-categories/edit/:id
+module.exports.patchEdit = async (req, res, next) => {
+  const {
+    id
+  } = req.params;
+
+  const {
+    title,
+    parentId,
+    thumbnail,
+    status,
+    position,
+    description
+  } = req.body;
+
+  if (!title) {
+    req.flash('error', 'Title không được để trống!');
+    return res.redirect(`/admin/product-categories/edit/${id}`);
+  }
+
+  if (!status) {
+    req.flash('error', 'Status không được để trống!');
+    return res.redirect(`/admin/product-categories/edit/${id}`);
+  }
+
+  if (!position) {
+    req.flash('error', 'Position không được để trống!');
+    return res.redirect(`/admin/product-categories/edit/${id}`);
+  }
+
+  const category = await ProductCategory.findById(id);
+  if (!category) {
+    req.flash('error', 'Danh mục không tồn tại!');
+    return res.redirect('/admin/product-categories');
+  }
+
+  category.title = title;
+  //! validate parentId
+  if (parentId) {
+    if (parentId === id) {
+      req.flash('error', 'Danh mục cha không được là chính nó!');
+      return res.redirect(`/admin/product-categories/edit/${id}`);
+    }
+    const parentCategory = await ProductCategory.findById(parentId);
+    if (!parentCategory) {
+      req.flash('error', 'Danh mục cha không tồn tại!');
+      return res.redirect(`/admin/product-categories/edit/${id}`);
+    }
+
+    const checkParent = async (parentId) => {
+      const parent = await ProductCategory.findById(parentId);
+      if (parent.parent_id) {
+        if (parent.parent_id === id) {
+          return false;
+        }
+        return checkParent(parent.parent_id);
+      } else {
+        return true;
+      }
+    }
+
+    if (await checkParent(parentId)) 
+      category.parent_id = parentId;
+    else {
+      req.flash('error', 'Danh mục cha không hợp lệ!');
+      return res.redirect(`/admin/product-categories/edit/${id}`);
+    }
+  }
+  //! end validate parentId
+  if (thumbnail) {
+    category.thumbnail = thumbnail;
+  }
+  category.status = status;
+  category.position = parseInt(position);
+  category.description = description;
+  category.updatedBy.push({
+    account_id: req.admin._id,
+    updatedAt: new Date()
+  });
+
+  await category.save();
+
+  req.flash('success', `Cập nhật <strong> ${title} </strong> thành công!`);
+  res.redirect('/admin/product-categories');
+}

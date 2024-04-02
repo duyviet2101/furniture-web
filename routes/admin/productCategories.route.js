@@ -30,4 +30,15 @@ router.patch('/change-position/:id', asyncHandler(controller.changePosition));
 
 router.get('/edit/:id', asyncHandler(controller.edit));
 
+router.patch('/edit/:id',
+  upload.single('thumbnail'),
+  asyncHandler(async (req, res, next) => {
+    if (req.file) {
+      req.body.thumbnail = await uploadSingleCloudinaryByBuffer({file: req.file, folder: '/admin/product-categories'});
+    }
+    next();
+  }),
+  asyncHandler(controller.patchEdit)
+);
+
 module.exports = router;

@@ -5,7 +5,7 @@ include ../../mixins/alert.pug
 block main 
   +alert-error(5000)
   +alert-success(5000)
-  form.container-fluid.pt-4.px-4(method='POST' action=`/${prefixAdmin}/product-categories/edit/${category._id}` enctype='multipart/form-data')
+  form.container-fluid.pt-4.px-4(method='POST' action=`/${prefixAdmin}/product-categories/edit/${category._id}?_method=PATCH` enctype='multipart/form-data')
     .bg-light.rounded.h-100.p-4
       h6.mb-4 Chỉnh sửa danh mục sản phẩm
       .form-floating.mb-3
@@ -14,7 +14,7 @@ block main
       .mb-3
         label.form-label(for='thumbnail') Ảnh minh hoạ
         .mb-3.upload-single-image
-          input#thumbnail.form-control(type='file' name='thumbnail' accept='image/*' required) 
+          input#thumbnail.form-control(type='file' name='thumbnail' accept='image/*') 
           .preview.mt-3
             img(src=category.thumbnail alt='Thumbnail' style='max-width: 100%;')
       .form-floating.mb-3
