@@ -28,4 +28,6 @@ router.patch('/status/:id/:status', asyncHandler(controller.status));
 
 router.patch('/change-position/:id', asyncHandler(controller.changePosition));
 
+router.get('/edit/:id', asyncHandler(controller.edit));
+
 module.exports = router;

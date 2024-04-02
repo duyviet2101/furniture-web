@@ -56,7 +56,7 @@ block main
         input#position.form-control(type='number' name='position' value=product.position min='0')
         label(for='quantity') Vị trí (lớn nhất hiển thị đầu tiên)
       .form-floating
-        textarea#description.textarea-mce.form-control(placeholder='' style='height: 150px;' name='description') #{product.description}
+        textarea#description.textarea-mce.form-control(placeholder='Mô tả sản phẩm' style='height: 150px;' name='description') #{product.description}
         label(for='description') Mô tả sản phẩm
       .d-flex.justify-content-end.mt-4
         button.btn.btn-primary(type='submit') Cập nhật sản phẩm

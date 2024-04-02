@@ -269,3 +269,33 @@ module.exports.changePosition = async (req, res, next) => {
     updatedBy
   });
 }
+
+// [GET] /admin/product-categories/edit/:id
+module.exports.edit = async (req, res) => {
+  const {
+    id
+  } = req.params;
+
+  const category = await ProductCategory.findById(id);
+  if (!category) {
+    req.flash('error', 'Danh mục không tồn tại!');
+    return res.redirect('/admin/product-categories');
+  }
+
+  const categories = await ProductCategory.find({
+    deleted: false
+  });
+
+  const categoriesTree = createTree(categories);
+  const countCategories = await ProductCategory.countDocuments({
+    deleted: false
+  });
+
+  res.render('admin/pages/productCategories/edit', {
+    pageTile: "Edit Product Category",
+    activeTab: 'product-categories',
+    category,
+    categoriesTree,
+    countCategories
+  });
+}

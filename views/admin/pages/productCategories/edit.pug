@@ -5,35 +5,36 @@ include ../../mixins/alert.pug
 block main 
   +alert-error(5000)
   +alert-success(5000)
-  form.container-fluid.pt-4.px-4(method='POST' action=`/${prefixAdmin}/product-categories/create` enctype='multipart/form-data')
+  form.container-fluid.pt-4.px-4(method='POST' action=`/${prefixAdmin}/product-categories/edit/${category._id}` enctype='multipart/form-data')
     .bg-light.rounded.h-100.p-4
-      h6.mb-4 Tạo danh mục sản phẩm
+      h6.mb-4 Chỉnh sửa danh mục sản phẩm
       .form-floating.mb-3
-        input#title.form-control(type='text' name='title' placeholder='' required)
+        input#title.form-control(type='text' name='title' placeholder='' value=category.title required)
         label(for='title') Danh mục
       .mb-3
         label.form-label(for='thumbnail') Ảnh minh hoạ
         .mb-3.upload-single-image
           input#thumbnail.form-control(type='file' name='thumbnail' accept='image/*' required) 
           .preview.mt-3
+            img(src=category.thumbnail alt='Thumbnail' style='max-width: 100%;')
       .form-floating.mb-3
         select#parentId.form-select(name='parentId' aria-label='Floating label select example')
           option(selected='' value="") Chọn danh mục cha
-          +select-tree(categoriesTree)
+          +select-tree(categoriesTree, 1, category.parent_id)
         label(for='parentId') Danh mục cha
       hr
       .form-check.form-check-inline
-        input#active.form-check-input(type='radio' name='status' checked='' value='active')
+        input#active.form-check-input(type='radio' name='status' value='active' checked = (category.status == 'active'))
         label.form-check-label(for='active') Active
       .form-check.form-check-inline
-        input#inactive.form-check-input(type='radio' name='status' value='inactive')
+        input#inactive.form-check-input(type='radio' name='status' value='inactive' checked = (category.status == 'inactive'))
         label.form-check-label(for='inactive') Inactive
       hr
       .form-floating.mb-3
-        input#position.form-control(type='number' name='position' value=`${countCategories + 1}` min='0' required)
+        input#position.form-control(type='number' name='position' value=category.position min='0' required)
         label(for='quantity') Vị trí (lớn nhất hiển thị đầu tiên)
       .form-floating
-        textarea#description.textarea-mce.form-control(placeholder='Mô tả danh mục' style='height: 150px;' name='description')
+        textarea#description.textarea-mce.form-control(placeholder='Mô tả danh mục' style='height: 150px;' name='description') #{category.description}
         label(for='description') Mô tả danh mục
       .d-flex.justify-content-end.mt-4
-        button.btn.btn-primary(type='submit') Tạo danh mục
+        button.btn.btn-primary(type='submit') Cập nhật danh mục
