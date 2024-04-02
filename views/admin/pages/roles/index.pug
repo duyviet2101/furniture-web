@@ -1,0 +1,51 @@
+extends ../../layouts/default.pug
+include ../../mixins/moment.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-error(5000)
+  +alert-success(5000)
+
+  .container-fluid.pt-4.px-4
+    .bg-light.text-center.rounded.p-4
+      .d-flex.align-items-center.justify-content-between.mb-4
+        h6.mb-0 Nhóm quyền
+        .d-flex.align-items-center.gap-3.w-75.justify-content-end
+          a.btn.btn-primary(href=`/${prefixAdmin}/rbac/roles/create`) Thêm
+      table.table.text-start.align-middle.table-hover.mb-0.items-table(checkbox-multi)
+        thead
+          tr.text-dark
+            th(scope='col') STT
+            th(scope='col') Role
+            th(scope='col') Mô tả
+            th(scope='col') Tạo
+            th(scope='col') Cập nhật
+            th(scope='col') Hành động
+        tbody
+          each role, index in roles
+            tr
+              td= index + 1
+              td= role.title
+              td
+                | !{role.description}
+              td(createdBy)
+                | #{role.createdBy.accountInfo.fullName}
+                br
+                +formatDateTime(role.createdBy.createdAt)
+              td(updatedBy)
+                - if (role.updatedBy.accountInfo)
+                  | #{role.updatedBy.accountInfo.fullName}
+                  br
+                  +formatDateTime(role.updatedBy.updatedAt)
+                - else
+                  | Chưa cập nhật
+              td
+                a.btn.btn-primary.me-3(href=`/${prefixAdmin}/rbac/roles/edit/${role._id}`) Edit
+                button.btn.btn-danger(delete-item=role._id) Delete
+
+  form(
+    action="" 
+    method="POST"
+    data-path=`/${prefixAdmin}/roles/delete`
+    id="delete-item-form"
+  )

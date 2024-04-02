@@ -1,7 +1,7 @@
 
 .sidebar.pe-4.pb-3
   nav.navbar.bg-light.navbar-light
-    a.navbar-brand.mx-4.mb-3(href='/admin/dashboard')
+    a.navbar-brand.mx-4.mb-3(href=`/${prefixAdmin}/dashboard`)
       h3.text-primary
         i.fa.fa-hashtag.me-2
         | furniture-web
@@ -13,41 +13,18 @@
         h6.mb-0 #{admin.fullName}
         span admin
     .navbar-nav.w-100
-      a.nav-item.nav-link(href='/admin/dashboard' class = `${activeTab === 'dashboard' ? 'active' : ''}`)
+      a.nav-item.nav-link(href=`/${prefixAdmin}/dashboard` class = `${activeTab === 'dashboard' ? 'active' : ''}`)
         i.fa.fa-tachometer-alt.me-2
         | Dashboard
-      a.nav-item.nav-link(href='/admin/products' class = `${activeTab === 'products' ? 'active' : ''}`)
+      a.nav-item.nav-link(href=`/${prefixAdmin}/products` class = `${activeTab === 'products' ? 'active' : ''}`)
         i.fa.fa-shopping-cart.me-2
         | Products
-      a.nav-item.nav-link(href='/admin/product-categories' class = `${activeTab === 'product-categories' ? 'active' : ''}`)
+      a.nav-item.nav-link(href=`/${prefixAdmin}/product-categories` class = `${activeTab === 'product-categories' ? 'active' : ''}`)
         i.fa.fa-list.me-2
         | Categories
-      .nav-item.dropdown
-        a.nav-link.dropdown-toggle(href='#' data-bs-toggle='dropdown')
-          i.fa.fa-laptop.me-2
-          | Elements
-        .dropdown-menu.bg-transparent.border-0
-          a.dropdown-item(href='button.html') Buttons
-          a.dropdown-item(href='typography.html') Typography
-          a.dropdown-item(href='element.html') Other Elements
-      a.nav-item.nav-link(href='widget.html')
-        i.fa.fa-th.me-2
-        | Widgets
-      a.nav-item.nav-link(href='form.html')
-        i.fa.fa-keyboard.me-2
-        | Forms
-      a.nav-item.nav-link(href='table.html')
-        i.fa.fa-table.me-2
-        | Tables
-      a.nav-item.nav-link(href='chart.html')
-        i.fa.fa-chart-bar.me-2
-        | Charts
-      .nav-item.dropdown
-        a.nav-link.dropdown-toggle(href='#' data-bs-toggle='dropdown')
-          i.far.fa-file-alt.me-2
-          | Pages
-        .dropdown-menu.bg-transparent.border-0
-          a.dropdown-item(href='signin.html') Sign In
-          a.dropdown-item(href='signup.html') Sign Up
-          a.dropdown-item(href='404.html') 404 Error
-          a.dropdown-item(href='blank.html') Blank Page
+      a.nav-item.nav-link(href=`/${prefixAdmin}/rbac/roles` class = `${activeTab === 'roles' ? 'active' : ''}`)
+        i.fa.fab.fa-black-tie.me-2
+        | Roles
+      a.nav-item.nav-link(href=`/${prefixAdmin}/rbac/roles/permissions` class = `${activeTab === 'permisstions' ? 'active' : ''}`)
+        i.fa.fa-unlock-keyhole.me-2
+        | Permissions

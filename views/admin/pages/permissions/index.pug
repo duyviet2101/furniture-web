@@ -1,0 +1,72 @@
+extends ../../layouts/default.pug
+include ../../mixins/moment.pug
+include ../../mixins/pagination.pug
+include ../../mixins/alert.pug
+include ../../mixins/currencyConverter.pug
+include ../../mixins/select-tree.pug
+include ../../mixins/search.pug
+include ../../mixins/sort.pug
+
+block main
+  +alert-error(5000)
+  +alert-success(5000)
+
+  .container-fluid.pt-4.px-4
+    .bg-light.text-center.rounded.p-4
+      .d-flex.align-items-center.justify-content-between.mb-4
+        h6.mb-0 Phân quyền
+        .d-flex.align-items-center.gap-3.w-75.justify-content-end
+          a.btn.btn-primary(href=`/${prefixAdmin}/resources`) Thêm quyền
+      table.table.text-start.align-middle.table-hover.mb-0.items-table(checkbox-multi)
+        thead
+          tr.text-dark
+            th(scope='col') Quyền
+            th(scope='col') Admin
+            th(scope='col') Shop
+            th(scope='col') User
+        tbody
+          tr
+            td.text-dark(colspan=4) Quản lý sản phẩm
+          tr
+            td 
+              | Xem
+            td
+              input(type='checkbox' name='admin' value='view')
+            td
+              input(type='checkbox' name='shop' value='view')
+            td
+              input(type='checkbox' name='user' value='view')
+          tr
+            td 
+              | Thêm
+            td
+              input(type='checkbox' name='admin' value='add')
+            td
+              input(type='checkbox' name='shop' value='add')
+            td
+              input(type='checkbox' name='user' value='add')
+          tr
+            td 
+              | Sửa
+            td
+              input(type='checkbox' name='admin' value='edit')
+            td
+              input(type='checkbox' name='shop' value='edit')
+            td
+              input(type='checkbox' name='user' value='edit')
+          tr
+            td 
+              | Xóa
+            td
+              input(type='checkbox' name='admin' value='delete')
+            td
+              input(type='checkbox' name='shop' value='delete')
+            td
+              input(type='checkbox' name='user' value='delete')
+
+  form(
+    action="" 
+    method="POST"
+    data-path=`/${prefixAdmin}/roles/delete`
+    id="delete-item-form"
+  )
