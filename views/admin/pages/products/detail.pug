@@ -22,7 +22,7 @@ block main
         h1.mb-3 
           | #{product.title}
         p.mb-3.fw-bold Category: 
-          a(href=`/${prefixAdmin}/categories/detail/${product.category._id}`) #{product.category.title}
+          a(href=`/${prefixAdmin}/product-categories/detail/${product.category._id}`) #{product.category.title}
         p.mb-3.fw-bold Status: 
             span(class=`${product.status == "active" ? 'text-success' : 'text-warning'}`) #{product.status.charAt(0).toUpperCase() + product.status.slice(1)}
         p.mb-3.fw-bold Price: 

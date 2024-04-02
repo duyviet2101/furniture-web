@@ -43,4 +43,6 @@ router.patch('/edit/:id',
 
 router.patch('/change-multi', asyncHandler(controller.changeMulti));
 
+router.get('/detail/:id', asyncHandler(controller.detail));
+
 module.exports = router;

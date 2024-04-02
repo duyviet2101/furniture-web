@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const Account = require('../../models/admin.model.js');
 
 // [GET] /admin/product-categories
-exports.index = async (req, res) => {
+module.exports.index = async (req, res) => {
 
   //! search
   const search = searchHelper(req);
@@ -427,4 +427,46 @@ module.exports.changeMulti = async (req, res, next) => {
       break;
   };
   res.redirect('back');
+}
+
+// [GET] /admin/product-categories/detail/:id
+module.exports.detail = async (req, res) => {
+  const {
+    id
+  } = req.params;
+
+  const category = await ProductCategory.findById(id).lean();
+  if (!category) {
+    req.flash('error', 'Danh mục không tồn tại!');
+    return res.redirect('/admin/product-categories');
+  }
+
+  const createdBy = {};
+  if (category.createdBy.account_id) {
+    createdBy.accountInfo = await Account.findById(category.createdBy.account_id)
+      .select('_id fullName email')
+      .lean();
+    createdBy.createdAt = category.createdBy.createdAt;
+  };
+  category['createdBy'] = createdBy;
+
+  const updatedBy = {};
+  if (category.updatedBy.length > 0) {
+    updatedBy.accountInfo = await Account.findById(category.updatedBy[category.updatedBy.length - 1].account_id)
+      .select('_id fullName email')
+      .lean();
+    updatedBy.updatedAt = category.updatedBy[category.updatedBy.length - 1].updatedAt;
+  };
+  category['updatedBy'] = updatedBy;
+
+  if (category.parent_id) {
+    const parentCategory = await ProductCategory.findById(category.parent_id).lean();
+    category['parentCategory'] = parentCategory;
+  }
+
+  res.render('admin/pages/productCategories/detail', {
+    pageTile: "Detail Product Category",
+    activeTab: 'product-categories',
+    category
+  });
 }

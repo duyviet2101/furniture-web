@@ -67,7 +67,7 @@ app.use((req, res, next) => {
 app.use((error, req, res, next) => {
     console.log(error);
     res.status(error.status || 500);
-    return res.render('error', { message: error.message });
+    return res.render('error', { message: error.message + ' ' + error.stack });
 });
 //!end handle error
 

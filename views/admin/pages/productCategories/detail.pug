@@ -1,0 +1,52 @@
+extends ../../layouts/default.pug
+include ../../mixins/moment.pug
+
+block main
+  .container-fluid.pt-4.px-4
+    .bg-light.rounded.h-100.p-4.d-flex.gap-4.flex-wrap
+      div.product-thumbnails-slider.w-50
+        div#main-thumbnails.splide
+          .splide__track
+            ul.splide__list
+              li.splide__slide 
+                img(src=`${category.thumbnail}` alt='Slide 01')
+
+        ul#sub-thumbnails.sub-thumbnails
+          li.sub-thumbnail
+            img(src=`${category.thumbnail}` alt='')  
+
+      div.product-info
+        h1.mb-3 
+          | #{category.title}
+        if (category.parentCategory)
+          p.mb-3.fw-bold Danh mục cha: 
+            a(href=`/${prefixAdmin}/product-categories/detail/${category.parent_id}`) #{category.parentCategory.title}
+        p.mb-3.fw-bold Status: 
+            span(class=`${category.status == "active" ? 'text-success' : 'text-warning'}`) #{category.status.charAt(0).toUpperCase() + category.status.slice(1)}
+        p.mb-3.fw-bold Created: 
+          span.text-primary
+            | #{category.createdBy.accountInfo.fullName}
+            | - 
+            +formatDateTime(category.createdBy.createdAt)
+        p.mb-3.fw-bold Updated At: 
+          span.text-primary 
+            - if (category.updatedBy.accountInfo)
+              | #{category.updatedBy.accountInfo.fullName}
+              | - 
+              +formatDateTime(category.updatedBy.updatedAt)
+            - else
+              | Chưa cập nhật
+        a.btn.btn-primary.me-3(href=`/${prefixAdmin}/product-categories/edit/${category._id}`) Edit
+        button.btn.btn-danger(delete-item=category._id) Delete
+
+      div.product-description.w-100
+        h3.mb-3 Description: 
+        p.text-primary 
+          | !{category.description}
+
+  form(
+    action="" 
+    method="POST"
+    data-path=`/${prefixAdmin}/${path}/delete`
+    id="delete-item-form"
+  )
