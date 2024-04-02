@@ -40,8 +40,29 @@ exports.index = async (req, res) => {
     .sort({
       position: -1
     })
+    .lean();
     // .skip(paginationObject.startItem)
     // .limit(paginationObject.limitItems);
+
+  for (let category of categories) {
+    const createdBy = {};
+    if (category.createdBy.account_id) {
+      createdBy.accountInfo = await Account.findById(category.createdBy.account_id)
+        .select('_id fullName email')
+        .lean();
+      createdBy.createdAt = category.createdBy.createdAt;
+    };
+    category['createdBy'] = createdBy;
+
+    const updatedBy = {};
+    if (category.updatedBy.length > 0) {
+      updatedBy.accountInfo = await Account.findById(category.updatedBy[category.updatedBy.length - 1].account_id)
+        .select('_id fullName email')
+        .lean();
+      updatedBy.updatedAt = category.updatedBy[category.updatedBy.length - 1].updatedAt;
+    };
+    category['updatedBy'] = updatedBy;
+  }
 
   res.render('admin/pages/productCategories/index', {
     activeTab: 'product-categories',
@@ -200,6 +221,51 @@ module.exports.status = async (req, res, next) => {
 
   res.status(200).json({
     message: 'Cập nhật trạng thái thành công!',
+    updatedBy
+  });
+}
+
+// [PATCH] /admin/product-categories/change-position/:id
+module.exports.changePosition = async (req, res, next) => {
+  const {id} = req.params;
+  const {position} = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(400).json({
+      message: 'Id không hợp lệ!'
+    });
+  }
+
+  if  (!position || isNaN(parseInt(position)) || parseInt(position) < 0) {
+    res.status(400).json({
+      message: 'Vị trí không hợp lệ!'
+    });
+  }
+
+  const category = await ProductCategory.findById(id);
+  if (!category) {
+    res.status(404).json({
+      message: 'Danh mục không tồn tại!'
+    });
+  }
+
+  category.position = parseInt(position);
+  category.updatedBy.push({
+    account_id: req.admin._id,
+    updatedAt: new Date()
+  });
+
+  await category.save();
+
+  const updatedBy = {
+    accountInfo: await Account.findById(req.admin._id)
+                        .select('_id fullName email')
+                        .lean(),
+    updatedAt: new Date(),
+  };
+
+  res.status(200).json({
+    message: 'Cập nhật vị trí thành công!',
     updatedBy
   });
 }

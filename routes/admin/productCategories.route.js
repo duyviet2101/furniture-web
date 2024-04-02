@@ -26,4 +26,6 @@ router.delete('/delete/:id', asyncHandler(controller.delete));
 
 router.patch('/status/:id/:status', asyncHandler(controller.status));
 
+router.patch('/change-position/:id', asyncHandler(controller.changePosition));
+
 module.exports = router;
