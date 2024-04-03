@@ -1,0 +1,17 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-error(5000)
+  +alert-success(5000)
+  form.container-fluid.pt-4.px-4(method='POST' action=`/${prefixAdmin}/rbac/resources/create` )
+    .bg-light.rounded.h-100.p-4
+      h6.mb-4 Thêm tài nguyên
+      .form-floating.mb-3
+        input#title.form-control(type='text' name='title' placeholder='')
+        label(for='title') Tài nguyên
+      .form-floating
+        textarea#description.textarea-mce.form-control(placeholder='Mô tả' style='height: 150px;' name='description')
+        label(for='description') Mô tả
+      .d-flex.justify-content-end.mt-4
+        button.btn.btn-primary(type='submit') Thêm tài nguyên

@@ -16,53 +16,41 @@ block main
       .d-flex.align-items-center.justify-content-between.mb-4
         h6.mb-0 Phân quyền
         .d-flex.align-items-center.gap-3.w-75.justify-content-end
-          a.btn.btn-primary(href=`/${prefixAdmin}/resources`) Thêm quyền
+          a.btn.btn-primary(href=`/${prefixAdmin}/rbac/resources/create`) Thêm tài nguyên
+          button.btn.btn-primary(path=`/${prefixAdmin}/rbac/roles/permission` update-permissions) Cập nhật
       table.table.text-start.align-middle.table-hover.mb-0.items-table(checkbox-multi)
         thead
           tr.text-dark
             th(scope='col') Quyền
-            th(scope='col') Admin
-            th(scope='col') Shop
-            th(scope='col') User
+            each role in roles
+              th(scope='col')= role.title
         tbody
-          tr
-            td.text-dark(colspan=4) Quản lý sản phẩm
-          tr
-            td 
-              | Xem
-            td
-              input(type='checkbox' name='admin' value='view')
-            td
-              input(type='checkbox' name='shop' value='view')
-            td
-              input(type='checkbox' name='user' value='view')
-          tr
-            td 
-              | Thêm
-            td
-              input(type='checkbox' name='admin' value='add')
-            td
-              input(type='checkbox' name='shop' value='add')
-            td
-              input(type='checkbox' name='user' value='add')
-          tr
-            td 
-              | Sửa
-            td
-              input(type='checkbox' name='admin' value='edit')
-            td
-              input(type='checkbox' name='shop' value='edit')
-            td
-              input(type='checkbox' name='user' value='edit')
-          tr
-            td 
-              | Xóa
-            td
-              input(type='checkbox' name='admin' value='delete')
-            td
-              input(type='checkbox' name='shop' value='delete')
-            td
-              input(type='checkbox' name='user' value='delete')
+          each resource in resources
+            tr.text-dark.fw-bold
+              td(colspan='4')= resource.title
+              //- each role in roles
+              //-   td
+              //-     input(type='checkbox' value=`${role._id}-${resource._id}`)
+            tr
+              td Xem
+              each role in roles
+                td
+                  input(type='checkbox' name='view' value=`${role._id}-${resource._id}-view`)
+            tr
+              td Thêm
+              each role in roles
+                td
+                  input(type='checkbox' name='add' value=`${role._id}-${resource._id}-add`)
+            tr
+              td Sửa
+              each role in roles
+                td
+                  input(type='checkbox' name='edit' value=`${role._id}-${resource._id}-edit`)
+            tr
+              td Xóa
+              each role in roles
+                td
+                  input(type='checkbox' name='delete' value=`${role._id}-${resource._id}-delete`)
 
   form(
     action="" 

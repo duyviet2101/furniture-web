@@ -1,5 +1,6 @@
 const Role = require('../../models/role.model.js')
 const Admin = require('../../models/admin.model.js')
+const Resource = require('../../models/resource.model.js')
 
 // [GET] /admin/rbac/roles
 module.exports.roles = async (req, res, next) => {
@@ -43,7 +44,7 @@ module.exports.createRoles = async (req, res, next) => {
 }
 
 // [POST] /admin/rbac/roles/create
-module.exports.postRoles = async (req, res, next) => {
+module.exports.postCreateRoles = async (req, res, next) => {
   const { title, status, description } = req.body
   const role = new Role({
     title,
@@ -56,4 +57,46 @@ module.exports.postRoles = async (req, res, next) => {
   })
   await role.save()
   res.redirect('/admin/rbac/roles')
+}
+
+// [GET] /admin/rbac/permissions
+module.exports.permissions = async (req, res, next) => {
+  const roles = await Role.find({
+    deleted: false
+  }).lean();
+
+  const resources = await Resource.find({
+    deleted: false
+  }).lean();
+
+  res.render('admin/pages/permissions/index', {
+    pageTitle: 'Permissions',
+    activeTab: 'permissions',
+    roles,
+    resources
+  })
+}
+
+// [GET] /admin/rbac/resources/create
+module.exports.createResources = async (req, res, next) => {
+  res.render('admin/pages/resources/create', {
+    pageTitle: 'Create Resource',
+    activeTab: 'resources'
+  })
+}
+
+// [POST] /admin/rbac/resources/create
+module.exports.postCreateResources = async (req, res, next) => {
+  const { title, description } = req.body
+  const resource = new Resource({
+    title,
+    description,
+    createdBy: {
+      account_id: req.admin._id,
+      createdAt: new Date()
+    }
+  });
+  await resource.save()
+  req.flash('success', 'Tạo tài nguyên thành công!');
+  res.redirect('/admin/rbac/roles/permissions');
 }
