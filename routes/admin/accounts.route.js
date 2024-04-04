@@ -24,4 +24,18 @@ router.post('/create',
   asyncHandler(controller.postCreate)
 );
 
+router.get('/edit/:id', grantAccess('updateAny', 'Accounts'), asyncHandler(controller.edit));
+
+router.patch('/edit/:id',
+  grantAccess('updateAny', 'Accounts'),
+  upload.single('avatar'),
+  asyncHandler(async (req, res, next) => {
+    if (req.file) {
+      req.body.avatar = await uploadSingleCloudinaryByBuffer({file: req.file, folder: '/admin/avatar'});
+    }
+    next();
+  }),
+  asyncHandler(controller.postEdit)
+);
+
 module.exports = router;

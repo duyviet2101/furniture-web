@@ -15,15 +15,18 @@ module.exports.postLogin = async (req, res, next) => {
   const { email, password, rememberMe} = req.body;
   const admin = await Admin.findOne({ 
     email: email,
-    deleted: false 
+    deleted: false ,
+    status: 'active'
   });
   
   if (!admin) {
+    req.flash('error', 'Email không tồn tại hoặc tài khoản đã bị khóa!');
     return res.redirect("back");
   }
 
   const checkPassword = await bcrypt.compare(password, admin.password);
   if (!checkPassword) {
+    req.flash('error', 'Mật khẩu không đúng!');
     return res.redirect("back");
   }
 
