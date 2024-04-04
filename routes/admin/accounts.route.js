@@ -38,4 +38,6 @@ router.patch('/edit/:id',
   asyncHandler(controller.postEdit)
 );
 
+router.delete('/delete/:id', grantAccess('deleteAny', 'Accounts'), asyncHandler(controller.delete));
+
 module.exports = router;

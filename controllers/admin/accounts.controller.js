@@ -94,6 +94,11 @@ module.exports.postCreate = async (req, res, next) => {
     role_id
   });
 
+  newAccount.createdBy = {
+    account_id: req.admin._id,
+    createdAt: new Date()
+  }
+
   await newAccount.save();
 
   req.flash('success', 'Tạo tài khoản thành công!');
@@ -186,8 +191,39 @@ module.exports.postEdit = async (req, res, next) => {
     account.password = hashPassword;
   }
 
+  account.updatedBy.push({
+    account_id: req.admin._id,
+    updatedAt: new Date()
+  })
+
   await account.save();
 
   req.flash('success', 'Cập nhật tài khoản thành công!');
+  res.redirect('/admin/accounts');
+}
+
+// [DELETE] /admin/accounts/delete/:id
+module.exports.delete = async (req, res, next) => {
+  const { id } = req.params;
+
+  const account = await Admin.findOne
+  ({
+    _id: id,
+    deleted: false
+  });
+
+  if (!account) {
+    req.flash('error', 'Tài khoản không tồn tại!');
+    return res.redirect('/admin/accounts');
+  }
+
+  account.deleted = true;
+  account.deletedBy = {
+    account_id: req.admin._id,
+    deletedAt: new Date()
+  }
+  await account.save();
+
+  req.flash('success', 'Xóa tài khoản thành công!');
   res.redirect('/admin/accounts');
 }

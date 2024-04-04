@@ -21,6 +21,31 @@ const adminSchema = new mongoose.Schema(
       default: false,
     },
     deletedAt: Date,
+    createdBy: {
+      account_id: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Admin'
+      },
+      createdAt: {
+        type: Date
+      },
+    },
+    deletedBy: {
+      account_id: {
+        type: mongoose.Types.ObjectId,
+        ref: 'Admin'
+      },
+      deletedAt: Date
+    },
+    updatedBy: [
+      {
+        account_id: {
+          type: mongoose.Types.ObjectId,
+          ref: 'Admin'
+        },
+        updatedAt: Date
+      }
+    ]
   },
   { timestamps: true }
 );
