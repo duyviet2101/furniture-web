@@ -38,4 +38,4 @@ const resourceSchema = new mongoose.Schema(
   { timestamps: false }
 );
 
-module.exports = mongoose.model("Source", resourceSchema, "resources");
+module.exports = mongoose.model("Resource", resourceSchema, "resources");

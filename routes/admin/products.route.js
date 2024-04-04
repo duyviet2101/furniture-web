@@ -7,9 +7,13 @@ const {uploadMultipleCloudinaryByBuffer} = require('../../helpers/uploadCloudina
 const asyncHandler = require('../../helpers/handleError.js');
 const controller = require('../../controllers/admin/products.controller.js');
 
-router.get('/', asyncHandler(controller.index));
+//! kiểm soát phân quyền
+const { grantAccess } = require('../../middlewares/admin/rbac.middleware.js');
+//! end kiểm soát phân quyền
 
-router.get('/create', asyncHandler(controller.create));
+router.get('/', grantAccess('readAny', 'Sản phẩm'), asyncHandler(controller.index));
+
+router.get('/create', grantAccess('createAny', 'Sản phẩm'),asyncHandler(controller.create));
 
 router.post('/create',
   upload.array('thumbnail', 10),
@@ -19,12 +23,13 @@ router.post('/create',
     }
     next();
   }),
+  grantAccess('createAny', 'Sản phẩm'),
   asyncHandler(controller.postCreate)
 );
 
-router.patch('/status/:id/:status', asyncHandler(controller.status));
+router.patch('/status/:id/:status', grantAccess('updateAny', 'Sản phẩm'), asyncHandler(controller.status));
 
-router.get('/edit/:id', asyncHandler(controller.edit));
+router.get('/edit/:id', grantAccess('updateAny', 'Sản phẩm'), asyncHandler(controller.edit));
 
 router.patch('/edit/:id',
   upload.array('thumbnail', 10),
@@ -34,15 +39,16 @@ router.patch('/edit/:id',
     }
     next();
   }),
+  grantAccess('updateAny', 'Sản phẩm'),
   asyncHandler(controller.patchEdit)
 );
 
-router.delete('/delete/:id', asyncHandler(controller.delete));
+router.delete('/delete/:id', grantAccess('deleteAny', 'Sản phẩm'), asyncHandler(controller.delete));
 
-router.patch('/change-position/:id', asyncHandler(controller.changePosition));
+router.patch('/change-position/:id', grantAccess('updateAny', 'Sản phẩm'), asyncHandler(controller.changePosition));
 
-router.patch('/change-multi', asyncHandler(controller.changeMulti));
+router.patch('/change-multi', grantAccess('updateAny', 'Sản phẩm'), asyncHandler(controller.changeMulti));
 
-router.get('/detail/:id', asyncHandler(controller.detail));
+router.get('/detail/:id', grantAccess('readAny', 'Sản phẩm'), asyncHandler(controller.detail));
 
 module.exports = router;

@@ -1,6 +1,7 @@
-const Role = require('../../models/role.model.js')
-const Admin = require('../../models/admin.model.js')
-const Resource = require('../../models/resource.model.js')
+const Role = require('../../models/role.model.js');
+const Admin = require('../../models/admin.model.js');
+const Resource = require('../../models/resource.model.js');
+const mongoose = require('mongoose'); 
 
 // [GET] /admin/rbac/roles
 module.exports.roles = async (req, res, next) => {
@@ -119,4 +120,50 @@ module.exports.updatePermissions = async (req, res, next) => {
   });
   req.flash('success', 'Cập nhật quyền thành công!');
   res.redirect('/admin/rbac/roles/permissions');
+}
+
+// getGrants
+module.exports.getGrants = async (role_id) => {
+  const roles = await Role.aggregate([
+    {
+      $match: {
+        _id: new mongoose.Types.ObjectId(role_id)
+      }
+    },
+    {
+      $unwind: '$grants' 
+    },
+    {
+      $lookup: {
+        from: 'resources',
+        localField: 'grants.resource',
+        foreignField: '_id',
+        as: 'resource'
+      }
+    },
+    {
+      $unwind: '$resource'
+    },
+    {
+      $project: {
+        role: '$title',
+        resource: '$resource.title',
+        action: '$grants.actions',
+        attributes: '$grants.attributes'
+      }
+    },
+    {
+      $unwind: '$action'
+    },
+    {
+      $project: {
+        _id: 0,
+        role: 1,
+        resource: 1,
+        action: '$action',
+        attributes: 1
+      }
+    }
+  ]);
+  return roles;
 }

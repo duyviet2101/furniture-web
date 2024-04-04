@@ -7,18 +7,20 @@ const controller = require('../../controllers/admin/rbac.controller.js');
 
 const { grantAccess } = require('../../middlewares/admin/rbac.middleware.js');
 
-router.get('/roles', grantAccess('readAny', 'roles'), asyncHandler(controller.roles));
+router.get('/roles', grantAccess('readAny', 'Roles'), asyncHandler(controller.roles));
 
-router.get('/roles/create', asyncHandler(controller.createRoles));
+router.get('/roles/create', grantAccess('createAny', 'Roles'), asyncHandler(controller.createRoles));
 
-router.post('/roles/create', asyncHandler(controller.postCreateRoles));
+router.post('/roles/create', grantAccess('createAny', 'Roles'), asyncHandler(controller.postCreateRoles));
 
-router.get('/roles/permissions', asyncHandler(controller.permissions));
+router.get('/roles/permissions', grantAccess('readAny', 'Roles'), asyncHandler(controller.permissions));
 
-router.get('/resources/create', asyncHandler(controller.createResources));
+router.get('/resources/create', grantAccess('createAny', 'Resources'), asyncHandler(controller.createResources));
 
-router.post('/resources/create', asyncHandler(controller.postCreateResources));
+router.post('/resources/create', grantAccess('createAny', 'Resources'), asyncHandler(controller.postCreateResources));
 
-router.patch('/roles/permissions', asyncHandler(controller.updatePermissions));
+router.patch('/roles/permissions', grantAccess('updateAny', 'Roles'), asyncHandler(controller.updatePermissions));
+
+// router.get('/getGrants', asyncHandler(controller.getGrants));
 
 module.exports = router;

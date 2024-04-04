@@ -5,6 +5,7 @@ const upload = require('multer')();
 const {uploadSingleCloudinaryByBuffer} = require('../../helpers/uploadCloudinary.js');
 
 const asyncHandler = require('../../helpers/handleError.js');
+const {grantAccess} = require('../../middlewares/admin/rbac.middleware.js')
 const controller = require('../../controllers/admin/upload.controller.js');
 
 router.post('/',
@@ -15,6 +16,7 @@ router.post('/',
     }
     next();
   }),
+  grantAccess('createAny', 'Upload'),
   asyncHandler(controller.postUpload)
 );
 
