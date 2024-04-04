@@ -13,6 +13,7 @@ router.get('/', grantAccess('readAny', 'Danh mục sản phẩm'), asyncHandler(
 router.get('/create', grantAccess('createAny', 'Danh mục sản phẩm'), asyncHandler(controller.create));
 
 router.post('/create',
+  grantAccess('createAny', 'Danh mục sản phẩm'),
   upload.single('thumbnail'),
   asyncHandler(async (req, res, next) => {
     if (req.file) {
@@ -20,7 +21,6 @@ router.post('/create',
     }
     next();
   }),
-  grantAccess('createAny', 'Danh mục sản phẩm'),
   asyncHandler(controller.postCreate)
 );
 
@@ -33,6 +33,7 @@ router.patch('/change-position/:id', grantAccess('updateAny', 'Danh mục sản 
 router.get('/edit/:id', grantAccess('updateAny', 'Danh mục sản phẩm'), asyncHandler(controller.edit));
 
 router.patch('/edit/:id',
+  grantAccess('updateAny', 'Danh mục sản phẩm'),
   upload.single('thumbnail'),
   asyncHandler(async (req, res, next) => {
     if (req.file) {
@@ -40,7 +41,6 @@ router.patch('/edit/:id',
     }
     next();
   }),
-  grantAccess('updateAny', 'Danh mục sản phẩm'),
   asyncHandler(controller.patchEdit)
 );
 

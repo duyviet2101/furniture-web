@@ -16,6 +16,7 @@ router.get('/', grantAccess('readAny', 'Sản phẩm'), asyncHandler(controller.
 router.get('/create', grantAccess('createAny', 'Sản phẩm'),asyncHandler(controller.create));
 
 router.post('/create',
+  grantAccess('createAny', 'Sản phẩm'),
   upload.array('thumbnail', 10),
   asyncHandler(async (req, res, next) => {
     if (req.files) {
@@ -23,7 +24,6 @@ router.post('/create',
     }
     next();
   }),
-  grantAccess('createAny', 'Sản phẩm'),
   asyncHandler(controller.postCreate)
 );
 
@@ -32,6 +32,7 @@ router.patch('/status/:id/:status', grantAccess('updateAny', 'Sản phẩm'), as
 router.get('/edit/:id', grantAccess('updateAny', 'Sản phẩm'), asyncHandler(controller.edit));
 
 router.patch('/edit/:id',
+  grantAccess('updateAny', 'Sản phẩm'),
   upload.array('thumbnail', 10),
   asyncHandler(async (req, res, next) => {
     if (req.files) {
@@ -39,7 +40,6 @@ router.patch('/edit/:id',
     }
     next();
   }),
-  grantAccess('updateAny', 'Sản phẩm'),
   asyncHandler(controller.patchEdit)
 );
 

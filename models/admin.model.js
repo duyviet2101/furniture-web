@@ -5,7 +5,10 @@ const adminSchema = new mongoose.Schema(
     fullName: String,
     email: String,
     password: String,
-    refreshToken: String,
+    refreshToken: {
+      type: String,
+      default: null,
+    },
     phone: String,
     avatar: String,
     status: String,

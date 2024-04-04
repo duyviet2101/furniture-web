@@ -1,0 +1,50 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-error(5000)
+  +alert-success(5000)
+  .container-fluid.pt-4.px-4
+    form.bg-light.rounded.h-100.p-4(method='POST' action=`/${prefixAdmin}/accounts/create` enctype='multipart/form-data')
+      h6.mb-4 Tạo account
+      .input-group.mb-3
+        span#basic-addon1.input-group-text
+          i.fa-solid.fa-address-card.fa
+        input.form-control(type='text' placeholder='Full Name' aria-label='Full Name' aria-describedby='basic-addon1' autocomplete='off' name='fullName')
+      .input-group.mb-3
+        span#basic-addon1.input-group-text
+          i.fa-regular.fa-envelope.fa
+        input.form-control(type='text' placeholder='Email' aria-label='Email' aria-describedby='basic-addon1' autocomplete='off' name='email')
+      .mb-3
+        label.form-label(for='formFile' style='display: block') Avatar
+        .d-flex.align-items-center.mb-3.upload-single-image
+          .preview
+          input.form-control.form-control-sm(type='file' id='formFile' name='avatar' accept='image/*' style='width: auto;' upload-single-image-input)
+      .input-group.mb-3
+        span#basic-addon1.input-group-text
+          i.fa-phone.fa
+        input.form-control(type='text' placeholder='Phone Number' aria-label='Phone Number' aria-describedby='basic-addon1' name='phone')
+      hr
+      .form-check.form-check-inline
+        input#active.form-check-input(type='radio' name='status' checked='' value='active')
+        label.form-check-label(for='active') Active
+      .form-check.form-check-inline
+        input#inactive.form-check-input(type='radio' name='status' value='inactive')
+        label.form-check-label(for='inactive') Inactive
+      hr
+      .form-floating.mb-3
+        select#roleId.form-select(name='role_id' aria-label='' required)
+          option(selected='' value="") Select role
+          each role in roles
+            option(value=role._id)= role.title
+        label(for='roleId') Phân quyền
+      h6.mb-4 Password
+      .input-group.mb-3
+        span#basic-addon1.input-group-text
+          i.fa-solid.fa-lock.fa
+        input.form-control(type='password' placeholder='Password' aria-label='Password' aria-describedby='basic-addon1' name='password' autocomplete='off')
+      .input-group.mb-3
+        span#basic-addon1.input-group-text
+          i.fa-solid.fa-lock.fa
+        input.form-control(type='password' placeholder='Confirm Password' aria-label='Confirm Password' aria-describedby='basic-addon1' name='confirmPassword' autocomplete='off')
+      button.btn.btn-primary(type='submit') Tạo
