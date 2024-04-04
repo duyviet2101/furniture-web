@@ -42,4 +42,6 @@ router.delete('/delete/:id', grantAccess('deleteAny', 'Accounts'), asyncHandler(
 
 router.patch('/status/:id/:status', grantAccess('updateAny', 'Accounts'), asyncHandler(controller.changeStatus));
 
+router.get('/detail/:id', grantAccess('readAny', 'Accounts'), asyncHandler(controller.detail));
+
 module.exports = router;

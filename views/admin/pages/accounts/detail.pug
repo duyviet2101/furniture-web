@@ -1,0 +1,38 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-error(5000)
+  +alert-success(5000)
+  .container-fluid.pt-4.px-4
+    .bg-light.rounded.h-100.p-4
+      h6.mb-4 Thông tin account
+      .input-group.mb-3
+        span#basic-addon1.input-group-text
+          i.fa-solid.fa-address-card.fa
+        input.form-control(type='text' value=account.fullName placeholder='Full Name' aria-label='Full Name' aria-describedby='basic-addon1' autocomplete='off' disabled)
+      .input-group.mb-3
+        span#basic-addon1.input-group-text
+          i.fa-regular.fa-envelope.fa
+        input.form-control(type='text' disabled value=account.email placeholder='Email' aria-label='Email' aria-describedby='basic-addon1' autocomplete='off' name='email')
+      .mb-3
+        label.form-label(for='formFile' style='display: block') Avatar
+        .d-flex.align-items-center.mb-3
+          .preview
+            img(src=account.avatar alt='')
+      .input-group.mb-3
+        span#basic-addon1.input-group-text
+          i.fa-phone.fa
+        input.form-control(type='text' disabled value=account.phone placeholder='Phone Number' aria-label='Phone Number' aria-describedby='basic-addon1' name='phone')
+      hr
+      .form-check.form-check-inline
+        input#active.form-check-input(type='radio' disabled name='status' value='active' checked = (account.status === "active"))
+        label.form-check-label(for='active') Active
+      .form-check.form-check-inline
+        input#inactive.form-check-input(type='radio' disabled name='status' value='inactive' checked = (account.status === "inactive"))
+        label.form-check-label(for='inactive') Inactive
+      hr
+      .form-floating.mb-3
+        select#roleId.form-select(name='role_id' aria-label='' disabled)
+          option( value="")= account.role
+        label(for='roleId') Phân quyền

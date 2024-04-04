@@ -265,3 +265,54 @@ module.exports.changeStatus = async (req, res, next) => {
     updatedBy
   });
 }
+
+// [GET] /admin/accounts/detail/:id
+module.exports.detail = async (req, res, next) => {
+  const { id } = req.params;
+
+  const account = await Admin.aggregate([
+    {
+      $match: {
+        _id: new mongoose.Types.ObjectId(id)
+      }
+    },
+    {
+      $lookup: {
+        from: 'roles',
+        localField: 'role_id',
+        foreignField: '_id',
+        as: 'role'
+      }
+    },
+    {
+      $unwind: {
+        path: '$role',
+        preserveNullAndEmptyArrays: true
+      }
+    },
+    {
+      $project: {
+        _id: 1,
+        email: 1,
+        fullName: 1,
+        status: 1,
+        avatar: 1,
+        phone: 1,
+        role: '$role.title',
+        createdBy: 1,
+        updatedBy: 1
+      }
+    }
+  ]);
+
+  if (!account) {
+    req.flash('error', 'Tài khoản không tồn tại!');
+    return res.redirect('/admin/accounts');
+  }
+
+  res.render('admin/pages/accounts/detail', {
+    pageTitle: 'Account Detail',
+    activeTab: 'accounts',
+    account: account[0]
+  })
+}
