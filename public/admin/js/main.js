@@ -726,3 +726,84 @@ if (productThumbnailsSlider) {
     splide.mount();
 }
 //! end slider
+
+//! permissions form
+const tablePermissions = document.querySelector('[table-permissions]');
+if (tablePermissions) {
+    const buttonSubmit = document.querySelector('[button-submit]');
+
+    buttonSubmit.addEventListener("click", () => {
+        let result = [];
+
+        const rows = tablePermissions.querySelectorAll("[data-resource]");
+
+        rows.forEach(row => {
+            const resource = row.getAttribute("data-resource");
+            const action = row.getAttribute("data-action");
+            const inputs = row.querySelectorAll("input");
+
+            if (resource == "id") {
+                inputs.forEach(input => {
+                    const role_id = input.value;
+                    result.push({
+                        role_id: role_id,
+                        grants: []
+                    });
+                })  
+            } else {
+                inputs.forEach((input, index) => {
+                    const checked = input.checked;
+                    if (checked) {
+                        let resourceExist = false;
+                        result[index].grants.forEach(grant => {
+                            if (grant.resource == resource) {
+                                resourceExist = true;
+                                grant.actions.push(`${action}:any`);
+                            }
+                        })
+                        if (!resourceExist) {
+                            result[index].grants.push({
+                                resource: resource,
+                                actions: [`${action}:any`],
+                                attributes: ["*"]
+                            });
+                        }
+                    }
+                });
+            }
+        });
+        const formChangePermissions = document.querySelector("#form-change-permissions");
+        const inputPermissions = formChangePermissions.querySelector("input[name='permissions']");
+        inputPermissions.value = JSON.stringify(result);
+        formChangePermissions.submit();
+    });
+}
+//! end permissions form
+
+//! default permissions
+if (tablePermissions) {
+    const data = JSON.parse(tablePermissions.getAttribute("data-roles"));
+
+    const inputRoleIds = tablePermissions.querySelectorAll("[data-resource='id'] input");
+    const roleIds = Array.from(inputRoleIds).map(input => input.value);
+
+    const  rows = tablePermissions.querySelectorAll("[data-resource]");
+    rows.forEach(row => {
+        const resource = row.getAttribute("data-resource");
+        const inputs = row.querySelectorAll("input");
+        
+        if (resource == "id") return;
+
+        const action = row.getAttribute("data-action");
+        inputs.forEach((input, index) => {
+            const role_id = roleIds[index];
+            const role = data.find(role => role._id == role_id);
+            const permission = role.grants.find(grant => grant.resource == resource);
+
+            if (permission && permission.actions.includes(`${action}:any`)) {
+                input.checked = true;
+            }
+        });
+    });
+}
+//! end default permissions

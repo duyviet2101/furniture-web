@@ -13,10 +13,11 @@ const roleSchema = new mongoose.Schema(
         resource: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Resource",
+          required: true,
         },
         actions: [{
           type: String,
-          required: true,
+          required: true
         }],
         attributes: [{
           type: String,

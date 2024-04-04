@@ -17,44 +17,56 @@ block main
         h6.mb-0 Phân quyền
         .d-flex.align-items-center.gap-3.w-75.justify-content-end
           a.btn.btn-primary(href=`/${prefixAdmin}/rbac/resources/create`) Thêm tài nguyên
-          button.btn.btn-primary(path=`/${prefixAdmin}/rbac/roles/permission` update-permissions) Cập nhật
-      table.table.text-start.align-middle.table-hover.mb-0.items-table(checkbox-multi)
+          button.btn.btn-primary(path=`/${prefixAdmin}/rbac/roles/permission` button-submit) Cập nhật
+      table.table.text-start.align-middle.table-hover.mb-0.items-table(table-permissions data-roles=roles)
         thead
           tr.text-dark
             th(scope='col') Quyền
             each role in roles
               th(scope='col')= role.title
         tbody
+          tr.d-none(data-resource="id")
+            td
+            each role in roles
+              td
+                input(type='text' value=`${role._id}`)
+
           each resource in resources
             tr.text-dark.fw-bold
               td(colspan='4')= resource.title
               //- each role in roles
               //-   td
               //-     input(type='checkbox' value=`${role._id}-${resource._id}`)
-            tr
+            tr(data-resource=resource._id data-action='read')
               td Xem
               each role in roles
                 td
-                  input(type='checkbox' name='view' value=`${role._id}-${resource._id}-view`)
-            tr
+                  input(type='checkbox' name='read')
+            tr(data-resource=resource._id data-action='create')
               td Thêm
               each role in roles
                 td
-                  input(type='checkbox' name='add' value=`${role._id}-${resource._id}-add`)
-            tr
+                  input(type='checkbox' name='create')
+            tr(data-resource=resource._id data-action='update')
               td Sửa
               each role in roles
                 td
-                  input(type='checkbox' name='edit' value=`${role._id}-${resource._id}-edit`)
-            tr
+                  input(type='checkbox' name='update')
+            tr(data-resource=resource._id data-action='delete')
               td Xóa
               each role in roles
                 td
-                  input(type='checkbox' name='delete' value=`${role._id}-${resource._id}-delete`)
+                  input(type='checkbox' name='delete')
 
   form(
-    action="" 
+    id="form-change-permissions"
     method="POST"
-    data-path=`/${prefixAdmin}/roles/delete`
-    id="delete-item-form"
+    action=`/${prefixAdmin}/rbac/roles/permissions?_method=PATCH`
+    class="d-none"
   )
+    div(class="form-group")
+      input(
+        type="text"
+        class="form-control"
+        name="permissions"
+      )

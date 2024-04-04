@@ -100,3 +100,23 @@ module.exports.postCreateResources = async (req, res, next) => {
   req.flash('success', 'Tạo tài nguyên thành công!');
   res.redirect('/admin/rbac/roles/permissions');
 }
+
+// [PATCH] /admin/rbac/roles/permissions
+module.exports.updatePermissions = async (req, res, next) => {
+  const data = JSON.parse(req.body.permissions);
+  data.forEach(async (item) => {
+    await Role.findOneAndUpdate({
+      _id: item.role_id
+    }, {
+      grants: item.grants,
+      updatedBy: {
+        account_id: req.admin._id,
+        updatedAt: new Date()
+      }
+    }, {
+      new: true
+    });
+  });
+  req.flash('success', 'Cập nhật quyền thành công!');
+  res.redirect('/admin/rbac/roles/permissions');
+}
