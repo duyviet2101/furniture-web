@@ -1,0 +1,51 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-error(5000)
+  +alert-success(5000)
+  // Recent Sales Start
+  .container-fluid.pt-4.px-4
+    .bg-light.text-center.rounded.p-4
+      .d-flex.align-items-center.justify-content-between.mb-4
+        h6.mb-0 Accounts
+        .d-flex.align-items-center.gap-3.w-75.justify-content-end
+          a.btn.btn-primary(href=`/${prefixAdmin}/accounts/create`) Thêm
+      .table-responsive
+        table.table.text-start.align-middle.table-bordered.table-hover.mb-0.items-table
+          thead
+            tr.text-dark
+              th(scope='col') STT
+              th(scope='col') Avatar
+              th(scope='col') Họ tên
+              th(scope='col') Phân quyền
+              th(scope='col') Email
+              th(scope='col') Trạng thái
+              th(scope='col') Hành động
+          tbody
+            each account, index in accounts
+              tr
+                td #{index + 1}
+                td.item-thumb
+                  img(src=account.avatar alt='')
+                td
+                  a(href=`/${prefixAdmin}/accounts/detail/${account._id}`) #{account.fullName}
+                td
+                  | #{account.role}
+                td
+                  | #{account.email}
+                td
+                  button.btn.btn-sm(class=`${account.status == "active" ? "btn-primary" : "btn-warning"}` change-status=`${account._id}-${account.status == "active" ? "inactive" : "active"}` path=`/${prefixAdmin}/accounts/status`) #{account.status == "active" ? "Active" : "Inactive"}
+                td
+                  a.btn.btn-sm.btn-primary.me-3(href=`/${prefixAdmin}/accounts/edit/${account._id}`) Sửa
+                  button.btn.btn-sm.btn-danger(delete-item=account._id) Xoá
+            else
+              tr
+                td(colspan='11').text-center Không có sản phẩm nào
+
+  form(
+    action="" 
+    method="POST"
+    data-path=`/${prefixAdmin}/accounts/delete`
+    id="delete-item-form"
+  )

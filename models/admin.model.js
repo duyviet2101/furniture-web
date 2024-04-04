@@ -9,7 +9,10 @@ const adminSchema = new mongoose.Schema(
     phone: String,
     avatar: String,
     status: String,
-    role_id: String,
+    role_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Role",
+    },
     deleted: {
       type: Boolean,
       default: false,

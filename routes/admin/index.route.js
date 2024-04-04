@@ -18,4 +18,6 @@ router.use('/upload', require('./upload.route.js'))
 
 router.use('/rbac', require('./rbac.route.js'))
 
+router.use('/accounts', require('./accounts.route.js'))
+
 module.exports = router;

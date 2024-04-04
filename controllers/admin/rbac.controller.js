@@ -82,7 +82,7 @@ module.exports.permissions = async (req, res, next) => {
 module.exports.createResources = async (req, res, next) => {
   res.render('admin/pages/resources/create', {
     pageTitle: 'Create Resource',
-    activeTab: 'resources'
+    activeTab: 'permissions'
   })
 }
 
