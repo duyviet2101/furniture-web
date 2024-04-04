@@ -1,0 +1,24 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
+block main
+  +alert-error(5000)
+  +alert-success(5000)
+  form.container-fluid.pt-4.px-4(method='POST' action=`/${prefixAdmin}/rbac/roles/edit/${role._id}?_method=PATCH` )
+    .bg-light.rounded.h-100.p-4
+      h6.mb-4 Sửa nhóm quyền
+      .form-floating.mb-3
+        input#title.form-control(type='text' name='title' placeholder='' value=role.title)
+        label(for='title') Nhóm quyền
+      .form-check.form-check-inline
+        input#active.form-check-input(type='radio' name='status' value='active' checked=role.status === 'active')
+        label.form-check-label(for='active') Active
+      .form-check.form-check-inline
+        input#inactive.form-check-input(type='radio' name='status' value='inactive' checked=role.status === 'inactive')
+        label.form-check-label(for='inactive') Inactive
+      hr
+      .form-floating
+        textarea#description.textarea-mce.form-control(placeholder='Mô tả' style='height: 150px;' name='description') #{role.description}
+        label(for='description') Mô tả
+      .d-flex.justify-content-end.mt-4
+        button.btn.btn-primary(type='submit') Cập nhật

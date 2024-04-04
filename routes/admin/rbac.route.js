@@ -13,6 +13,12 @@ router.get('/roles/create', grantAccess('createAny', 'Roles'), asyncHandler(cont
 
 router.post('/roles/create', grantAccess('createAny', 'Roles'), asyncHandler(controller.postCreateRoles));
 
+router.get('/roles/edit/:id', grantAccess('updateAny', 'Roles'), asyncHandler(controller.editRoles));
+
+router.patch('/roles/edit/:id', grantAccess('updateAny', 'Roles'), asyncHandler(controller.patchEditRoles));
+
+router.delete('/roles/delete/:id', grantAccess('deleteAny', 'Roles'), asyncHandler(controller.deleteRoles));
+
 router.get('/roles/permissions', grantAccess('readAny', 'Roles'), asyncHandler(controller.permissions));
 
 router.get('/resources/create', grantAccess('createAny', 'Resources'), asyncHandler(controller.createResources));

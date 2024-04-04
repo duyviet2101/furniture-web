@@ -127,7 +127,9 @@ module.exports.getGrants = async (role_id) => {
   const roles = await Role.aggregate([
     {
       $match: {
-        _id: new mongoose.Types.ObjectId(role_id)
+        _id: new mongoose.Types.ObjectId(role_id),
+        deleted: false,
+        status: 'active'
       }
     },
     {
@@ -166,4 +168,65 @@ module.exports.getGrants = async (role_id) => {
     }
   ]);
   return roles;
+}
+
+// [GET]  /admin/rbac/roles/edit/:id
+module.exports.editRoles = async (req, res, next) => {
+  const role = await Role.findById(req.params.id).lean();
+  res.render('admin/pages/roles/edit', {
+    pageTitle: 'Edit Role',
+    activeTab: 'roles',
+    role
+  })
+}
+
+// [PATCH] /admin/rbac/roles/edit/:id
+module.exports.patchEditRoles = async (req, res, next) => {
+  const { title, status, description } = req.body;
+
+  if (!title || !status || !description) {
+    req.flash('error', 'Vui lòng nhập đầy đủ thông tin!');
+    return res.redirect(`/admin/rbac/roles/edit/${req.params.id}`);
+  }
+
+  const role = await Role.findById(req.params.id);
+
+  if (!role) {
+    req.flash('error', 'Không tìm thấy role!');
+    return res.redirect('/admin/rbac/roles');
+  }
+
+  role.title = title;
+  role.status = status;
+  role.description = description;
+  role.updatedBy.push({
+    account_id: req.admin._id,
+    updatedAt: new Date()
+  });
+
+  await role.save();
+
+  req.flash('success', 'Cập nhật role thành công!');
+  res.redirect('/admin/rbac/roles');
+}
+
+// [DELETE] /admin/rbac/roles/delete/:id
+module.exports.deleteRoles = async (req, res, next) => {
+  const role = await Role.findById(req.params.id);
+
+  if (!role) {
+    req.flash('error', 'Không tìm thấy role!');
+    return res.redirect('/admin/rbac/roles');
+  }
+
+  role.deleted = true;
+  role.deletedBy = {
+    account_id: req.admin._id,
+    deletedAt: new Date()
+  };
+
+  await role.save();
+
+  req.flash('success', 'Xóa role thành công!');
+  res.redirect('/admin/rbac/roles');
 }
