@@ -1,0 +1,5 @@
+mixin search()
+    form.input-group.mb-3(search)
+        input#searchInput.form-control(type='text' placeholder="Tìm kiếm" aria-label="Tìm kiếm sản phẩm" value=searchKey)
+        button.btn.btn-primary(type='submit' search-submit).input-group-text
+            i.fas.fa-search

@@ -1,0 +1,215 @@
+include ../../mixins/alert.pug
+
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  title &Dstrok;&abreve;ng k&yacute;
+  link(rel='shortcut icon' href='/img/logo/shop.svg' type='image/x-icon')
+  link(rel='stylesheet' href='/bootstrap/css/bootstrap.min.css')
+  link(rel='stylesheet' href='/css/layout/style.css')
+  style.
+    body {
+    background: linear-gradient(to bottom right, #3b5d50, #608e7c);
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
+    .signup-container {
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    align-items: center;
+    }
+    .signup-form {
+    background-color: #ffffff;
+    /* text-align: center; */
+    padding: 65px 55px 55px 55px;
+    border-radius: 20px;
+    width: 500px;
+    }
+    .signup-form h2 {
+    margin-bottom: 49px !important;
+    text-align: center;
+    }
+    .group-input {
+    margin-bottom: 20px;
+    position: relative;
+    }
+    .label {
+    font-family: Nunito;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333333;
+    line-height: 1.5;
+    padding-left: 7px;
+    padding-bottom: 5px;
+    display: block;
+    }
+    input {
+    font-family: Nunito;
+    border: none;
+    outline: none;
+    padding: 5px;
+    font-size: 16px;
+    line-height: 1.2;
+    width: 100%;
+    height: 55px;
+    background: transparent;
+    padding: 0 7px 0 43px;
+    border-bottom: #7f7f7f73 solid 1px;
+    }
+    .focus {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    }
+    .focus::before {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: #7f7f7f;
+    transition: all 0.4s;
+    }
+    .input {
+    position: relative;
+    }
+    .group-input .img {
+    width: 43px;
+    height: 100%;
+    position: absolute;
+    top: 0%;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+    }
+    input::placeholder {
+    transition: all 0.3s ease;
+    }
+    input:focus::placeholder {
+    opacity: 0;
+    }
+    input:focus + .focus::before {
+    width: 100%;
+    }
+    .input:focus-within .img {
+    opacity: 1;
+    }
+    a {
+    color: #333333;
+    }
+    .forgot {
+    text-align: right;
+    }
+    .signup {
+    color: #333333;
+    text-align: center;
+    }
+    .signup a {
+    color: #3b5d50;
+    font-weight: 700;
+    display: block;
+    }
+    .form-button {
+    text-align: center;
+    padding: 20px 0;
+    }
+    .form-button.disabled {
+    opacity: 0.7;
+    pointer-events: none;
+    }
+    .form-button button {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 10px 20px;
+    width: 100%;
+    border-radius: 30px;
+    border: none;
+    background-color: #388165;
+    color: #ffffff;
+    transition: all 0.3s ease;
+    }
+    .form-button button:hover {
+    background-color: #53b38f;
+    width: 90%;
+    }
+    @media screen and (max-width: 768px) {
+    .signup-form {
+    padding: 65px 15px 55px 15px;
+    margin: 15px;
+    }
+    }
+    .checkbox {
+    display: inline !important;
+    padding: 0 !important;
+    width: 20px;
+    height: 100%;
+    }
+    .group-input.invalid::after {
+    content: attr(data-error);
+    color: red;
+    font-size: 12px;
+    font-style: italic;
+    }
+.container-loader
+  #loader
+.limit
+  +alert-error(5000)
+  +alert-success(5000)
+  .signup-container
+    form.signup-form(action='/auth/signup' method='POST')
+    
+      h2.section-title &Dstrok;&abreve;ng k&yacute;
+      .group-input.invalid
+        span.label H&#x1ECD; t&ecirc;n
+        .input
+          .img
+            img(src='/img/logo/user-dark.svg' alt='' style='width: 25px;')
+          input#name(required='' type='text' placeholder='Nhập họ và tên' name='fullName')
+          span.focus
+      .group-input.invalid
+        span.label Email
+        .input
+          .img
+            img(src='/img/logo/email.svg' alt='' style='width: 25px;')
+          input#email(required='' type='email' placeholder='Nhập email' name='email')
+          span.focus
+      //- .group-input.invalid
+      //-   span.label Username
+      //-   .input
+      //-     .img
+      //-       img(src='/img/logo/username.svg' alt='' style='width: 25px;')
+      //-     input#username(required='' type='text' placeholder='Nhập tài khoản' name='username')
+      //-     span.focus
+      .group-input.invalid
+        span.label Password
+        .input
+          .img
+            img(src='/img/logo/password.svg' alt='' style='width: 25px;')
+          input#password(required='' type='password' placeholder='Nhập mật khẩu' name='password')
+          span.focus
+      .group-input.invalid
+        span.label Confirm password
+        .input
+          .img
+            img(src='/img/logo/password.svg' alt='' style='width: 25px;')
+          input#confirm-password(required='' type='password' placeholder='Xác nhận lại mật khẩu' name='confirmPassword')
+          span.focus
+      .group-input.invalid
+        p
+          input#agreement.checkbox(required='' type='checkbox')
+          label(for='agreement') T&ocirc;i &dstrok;&#x1ED3;ng &yacute; v&#x1EDB;i &Dstrok;i&#x1EC1;u kho&#x1EA3;n v&agrave; Ch&iacute;nh s&aacute;ch b&#x1EA3;o m&#x1EAD;t
+      .form-button.disabled
+        button.submit-signup &Dstrok;&Abreve;NG K&Yacute; NGAY
+script(src='/bootstrap/js/bootstrap.bundle.js')
+script(type='module' src='/js/layout/script.js')
+script(type='module' src='/js/signup.js')

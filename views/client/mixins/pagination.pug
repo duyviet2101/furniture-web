@@ -1,0 +1,18 @@
+mixin pagination(paginationObject)
+  .btn-toolbar.role-pagination.d-flex.justify-content-center.mt-4
+    .btn-group.me-2(role='pagination' aria-label='pagination')
+      - if (paginationObject.startPage > 1)
+        button.btn.btn-outline-primary(type='button' button-page=1) First
+        button.btn.btn-outline-primary(type='button') ...
+      - if (paginationObject.currentPage > paginationObject.prevPage)
+        button.btn.btn-outline-primary(type='button' button-page=paginationObject.prevPage) Previous
+      - for (var i = paginationObject.startPage; i <= paginationObject.endPage; i++)
+        if (i == paginationObject.currentPage)
+          button.btn.btn-primary(type='button' button-page=i) #{i}
+        else
+          button.btn.btn-outline-primary(type='button' button-page=i) #{i}
+      - if (paginationObject.currentPage < paginationObject.nextPage)
+        button.btn.btn-outline-primary(type='button' button-page=paginationObject.nextPage) Next
+      - if (paginationObject.endPage < paginationObject.totalPages)
+        button.btn.btn-outline-primary(type='button') ...
+        button.btn.btn-outline-primary(type='button' button-page=paginationObject.totalPages) Last

@@ -8,15 +8,15 @@
       img(src='img/logo/toggle-menu.svg' alt='toggle' style='height: 30px; display: none')
     .collapseNav.collapse
       .navigation
-        a#home(href='#')
+        a#home(href='/')
           | Trang chủ
-        a#products(href='')  Sản phẩm
-        a#introduction(href='#') Giới thiệu
-        a#contact(href='#') Liên hệ
-        a#sitemap(href='#') Sitemap
+        a#products(href='/products')  Sản phẩm
+        a#introduction(href='/introduction') Giới thiệu
+        a#contact(href='/contact') Liên hệ
       .userNav
-        a(href='#')
-          img(src='img/logo/user.svg' alt='logoUser')
+        if (user)
+          a(href='#')
+            img(src='img/logo/user.svg' alt='logoUser')
         a(href='#')
           img(src='img/logo/cart.svg' alt='logoCart')
       .search-input

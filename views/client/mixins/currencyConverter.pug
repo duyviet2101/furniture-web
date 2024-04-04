@@ -1,0 +1,2 @@
+mixin toCurency(price)
+  != Number(String(price).replace(/[^0-9.-]+/g,"")).toLocaleString('en-US', {style: 'currency', currency: 'VND'})

@@ -1,13 +1,3 @@
-fetch('_footer.html')
-  .then(response => response.text())
-  .then(data => {
-    const footer = document.querySelector('.footer');
-    if (footer) {
-      footer.innerHTML = data;
-    }
-  });
-
-
 //!button increase, decrease cart
 const buttons = document.querySelectorAll('.btn')
 if (buttons && buttons.length > 0) {
@@ -49,3 +39,23 @@ document.addEventListener("DOMContentLoaded", () => {
   // setTimeout(showPage, 500);
   showPage();
 });
+
+//! show alert
+const showAlert = () => {
+  const alert = document.querySelector("[show-alert]");
+  if (alert) {
+      const time = parseInt(alert.getAttribute("data-time")) || 3000;
+      const closeAlert = alert.querySelector("[close-alert]");
+  
+      setTimeout(() => {
+          alert.classList.add("alert-hidden")
+      }, time);
+  
+      closeAlert.addEventListener("click", () => {
+          alert.classList.add("alert-hidden")
+      })
+  }
+}
+showAlert();
+
+//! end show alert
