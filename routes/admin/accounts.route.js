@@ -40,4 +40,6 @@ router.patch('/edit/:id',
 
 router.delete('/delete/:id', grantAccess('deleteAny', 'Accounts'), asyncHandler(controller.delete));
 
+router.patch('/status/:id/:status', grantAccess('updateAny', 'Accounts'), asyncHandler(controller.changeStatus));
+
 module.exports = router;

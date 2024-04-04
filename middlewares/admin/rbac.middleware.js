@@ -7,7 +7,6 @@ const {getGrants} = require('../../controllers/admin/rbac.controller.js');
 const grantAccess = (action, resource) => {
   return async (req, res, next) => {
     try {
-      console.log(await getGrants(req.admin.role_id));
       rbac.setGrants(await getGrants(req.admin.role_id));
 
       const role = await Role.findOne({

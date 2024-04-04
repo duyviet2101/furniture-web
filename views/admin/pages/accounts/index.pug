@@ -35,7 +35,7 @@ block main
                 td
                   | #{account.email}
                 td
-                  button.btn.btn-sm(class=`${account.status == "active" ? "btn-primary" : "btn-warning"}` change-status=`${account._id}-${account.status == "active" ? "inactive" : "active"}` path=`/${prefixAdmin}/accounts/status`) #{account.status == "active" ? "Active" : "Inactive"}
+                  button.btn.btn-sm(class=`${account.status == "active" ? "btn-primary" : "btn-warning"}` change-status=`${account._id}-${account.status == "active" ? "inactive" : "active"}` path=`/${prefixAdmin}/accounts/status/`) #{account.status == "active" ? "Active" : "Inactive"}
                 td
                   a.btn.btn-sm.btn-primary.me-3(href=`/${prefixAdmin}/accounts/edit/${account._id}`) Sửa
                   button.btn.btn-sm.btn-danger(delete-item=account._id) Xoá

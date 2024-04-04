@@ -16,7 +16,9 @@ module.exports.requiredAuth = async (req, res, next) => {
     
     const admin = await Admin.findOne({
       _id: data.id,
-      refreshToken: refreshToken
+      refreshToken: refreshToken,
+      deleted: false,
+      status: 'active'
     }).select('-password -refreshToken -deleted -createdAt -updatedAt -__v').lean();
 
     if (!admin) {

@@ -1,3 +1,5 @@
+include ../../mixins/alert.pug
+
 doctype html
 head
   meta(charset='utf-8')
@@ -22,6 +24,8 @@ head
   // Template Stylesheet
   link(href='/admin/css/style.css' rel='stylesheet')
 .container-xxl.position-relative.bg-white.d-flex.p-0
+  +alert-error(5000)
+  +alert-success(5000)
   // Spinner Start
   #spinner.show.bg-white.position-fixed.translate-middle.w-100.vh-100.top-50.start-50.d-flex.align-items-center.justify-content-center
     .spinner-border.text-primary(style='width: 3rem; height: 3rem;' role='status')

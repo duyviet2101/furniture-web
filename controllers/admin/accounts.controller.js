@@ -1,5 +1,6 @@
 const Admin = require('../../models/admin.model');
 const Role = require('../../models/role.model');
+const mongoose = require('mongoose');
 
 const bcrypt = require('bcrypt');
 
@@ -226,4 +227,41 @@ module.exports.delete = async (req, res, next) => {
 
   req.flash('success', 'Xóa tài khoản thành công!');
   res.redirect('/admin/accounts');
+}
+
+// [PATCH] /admin/accounts/status/:id/:status
+module.exports.changeStatus = async (req, res, next) => {
+  const {id, status} = req.params;
+  
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.status(400).json({message: 'Id không hợp lệ!'});
+  }
+
+  if (status !== 'active' && status !== 'inactive') {
+    res.status(400).json({message: 'Trạng thái không hợp lệ!'});
+  }
+
+  const account = await Admin.findById(id);
+  if (!account) {
+    res.status(404).json({message: 'Không tìm thấy tài khoản!'});
+  }
+
+  account.status = status === 'active' ? 'active' : 'inactive';
+  account.updatedBy.push({
+    account_id: req.admin._id,
+    updatedAt: new Date()
+  });
+  await account.save();
+
+  const updatedBy = {
+    accountInfo: await Admin.findById(req.admin._id)
+                  .select('_id fullName email')
+                  .lean(),
+    updatedAt: new Date()
+  };
+
+  res.status(200).json({
+    message: 'Cập nhật trạng thái thành công!',
+    updatedBy
+  });
 }
