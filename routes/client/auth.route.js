@@ -12,4 +12,6 @@ router.get('/login', asyncHandler(controller.login));
 
 router.post('/login', asyncHandler(controller.postLogin));
 
+router.get('/logout', asyncHandler(controller.logout));
+
 module.exports = router;

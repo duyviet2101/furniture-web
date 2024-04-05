@@ -124,3 +124,10 @@ module.exports.postLogin = async (req, res, next) => {
 
   res.redirect(`/`);
 }
+
+// [GET] /auth/logout
+module.exports.logout = async (req, res, next) => {
+  res.clearCookie('accessTokenUser');
+  res.clearCookie('refreshTokenUser');
+  res.redirect('/');
+}

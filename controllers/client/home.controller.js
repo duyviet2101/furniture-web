@@ -13,6 +13,7 @@ module.exports.index = async (req, res, next) => {
         .lean();
     res.render('client/pages/home/index', {
         pageTitle: 'Trang chủ',
-        featuredProducts
+        featuredProducts,
+        activeTab: 'home',
     });
 }
