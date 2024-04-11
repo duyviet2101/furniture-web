@@ -77,3 +77,68 @@ if (btnsPagination && btnsPagination.length > 0) {
   });
 }
 //! end pagination
+
+//! sort
+const sort = document.querySelectorAll('[sort]');
+if (sort && sort.length > 0) {
+  const url = new URL(window.location.href);
+
+  sort.forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const sortBy = btn.getAttribute('sortBy');
+      const sortValue = btn.getAttribute('sortValue');
+
+      url.searchParams.set('sortBy', sortBy);
+      url.searchParams.set('sortValue', sortValue);
+      window.location.href = url.href;
+    });
+  });
+}
+//! end sort
+
+//! price filter
+const priceFilter = document.querySelectorAll('[price-filter]');
+if (priceFilter && priceFilter.length > 0) {
+  const url = new URL(window.location.href);
+
+  priceFilter.forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const priceFrom = btn.getAttribute('priceFrom');
+      const priceTo = btn.getAttribute('priceTo');
+
+      if (priceFrom === '0' && priceTo === 'inf') {
+        url.searchParams.delete('priceFrom');
+        url.searchParams.delete('priceTo');
+        window.location.href = url.href;
+        return;
+      }
+
+      url.searchParams.set('priceFrom', priceFrom);
+      url.searchParams.set('priceTo', priceTo);
+      window.location.href = url.href;
+    });
+  });
+}
+//! end price filter
+
+//! search
+const search = document.querySelector('[search]');
+if (search) {
+  const url = new URL(window.location.href);
+  const input = search.querySelector('#searchInput');
+
+  search.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const searchValue = input.value.trim();
+    if (searchValue) {
+      url.searchParams.set('search', searchValue);
+      window.location.href = url.href;
+    } else {
+      url.searchParams.delete('search');
+      window.location.href = url.href;
+    }
+  });
+}
+//! end search

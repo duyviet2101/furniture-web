@@ -5,3 +5,5 @@ mixin product-grid(items)
   .container.product-flex
     each item in items
       +product-item(item)
+    else 
+      p.text-center Không có sản phẩm nào

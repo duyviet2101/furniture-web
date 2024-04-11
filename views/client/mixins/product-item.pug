@@ -1,10 +1,13 @@
+include ./currencyConverter.pug
+
 mixin product-item(item)
   .column-flex-4
     .product-item
       a(href=`/products/detail/${item.slug}`)
         img.product-thumbnail(src=item.thumbnail[0] alt=item.title)
         h3.product-title #{item.title}
-        strong.product-price #{item.price} $
+        strong.product-price 
+          +toCurency(item.price)
       a(href='#')
         span.icon-add
           img(src='img/icon_add.svg' alt='')
