@@ -6,7 +6,7 @@ mixin wall(title, subContent, displayImg = true)
         p.sub-content #{subContent}
         if (!user)
           p.buttons 
-            a.button.button-hightlight.mr-3(href='/auth/login') Đăng nhập
+            a.button.button-hightlight.me-3(href='/auth/login') Đăng nhập
             a.button.button-simple(href='/auth/signup') Đăng ký
       if (displayImg)
         .img-wall

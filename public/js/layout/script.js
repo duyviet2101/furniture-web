@@ -29,33 +29,51 @@ if (buttonSubmit) {
 }
 
 //! showpage
-function showPage() {
-  document.querySelector(".container-loader").style.opacity = 0;
-  setTimeout(() => {
-    document.querySelector(".container-loader").style.display = "none";
-  }, 300);
-}
-document.addEventListener("DOMContentLoaded", () => {
-  // setTimeout(showPage, 500);
-  showPage();
-});
+// function showPage() {
+//   document.querySelector(".container-loader").style.opacity = 0;
+//   setTimeout(() => {
+//     document.querySelector(".container-loader").style.display = "none";
+//   }, 300);
+// }
+// document.addEventListener("DOMContentLoaded", () => {
+//   // setTimeout(showPage, 500);
+//   showPage();
+// });
 
 //! show alert
 const showAlert = () => {
   const alert = document.querySelector("[show-alert]");
   if (alert) {
-      const time = parseInt(alert.getAttribute("data-time")) || 3000;
-      const closeAlert = alert.querySelector("[close-alert]");
-  
-      setTimeout(() => {
-          alert.classList.add("alert-hidden")
-      }, time);
-  
-      closeAlert.addEventListener("click", () => {
-          alert.classList.add("alert-hidden")
-      })
+    const time = parseInt(alert.getAttribute("data-time")) || 3000;
+    const closeAlert = alert.querySelector("[close-alert]");
+
+    setTimeout(() => {
+      alert.classList.add("alert-hidden")
+    }, time);
+
+    closeAlert.addEventListener("click", () => {
+      alert.classList.add("alert-hidden")
+    })
   }
 }
 showAlert();
 
 //! end show alert
+
+//! pagination
+const btnsPagination = document.querySelectorAll('[button-page]');
+if (btnsPagination && btnsPagination.length > 0) {
+
+  const url = new URL(window.location.href);
+
+  btnsPagination.forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const page = btn.getAttribute('button-page');
+
+      url.searchParams.set('page', page);
+      window.location.href = url.href;
+    });
+  });
+}
+//! end pagination

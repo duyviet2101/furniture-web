@@ -19,15 +19,15 @@ nav.navbar.navbar-expand-lg.sticky-top(data-bs-theme="dark")
         .dropdown.nav-item.text-center.btn-group
           button.btn.dropdown-toggle.p-2(type='button' data-bs-toggle='dropdown' aria-expanded='false' data-bs-auto-close='outside')
             img(src='img/logo/search.svg' alt='' style='width: 24px; padding: 0')
-          form.dropdown-menu.p-0.bg-transparent.border.border-0
+          form.dropdown-menu.p-0.bg-transparent.border.border-0.dropdown-menu-end
             .mb-3
               input.form-control.me-2(type='search' placeholder='Search' aria-label='Search')
         if (user)
           .nav-item.dropdown.d-flex.align-items-center
-            a.dropdown-toggle.d-flex.align-items-center.mr-2(href='#' data-bs-toggle='dropdown')
+            a.dropdown-toggle.d-flex.align-items-center.me-2(href='#' data-bs-toggle='dropdown')
               img.rounded-circle.me-lg-2.mr-2(src=user.avatar alt='' style='width: 40px; height: 40px;')
               span.d-none.d-lg-inline-flex #{user.fullName}
-            .dropdown-menu.dropdown-menu-end.bg-light.border-0.rounded-0.rounded-bottom.m-0
+            .dropdown-menu.dropdown-menu-end.bg-light.border-0.rounded-1.m-0.dropdown-menu-end
               a.dropdown-item(href='/profile') My Profile
               a.dropdown-item(href='#') Settings
               a.dropdown-item(href='/auth/logout') Log Out

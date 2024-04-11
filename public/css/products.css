@@ -40,20 +40,25 @@
   content: "";
   width: 0%;
   height: 100%;
-  background-color: #587b6e;
+  background-color: #85ddbd69;
   position: absolute;
   top: 0;
   left: 10%;
   /* transform: translate(100%, 100%); */
   border-radius: 10px;
   transition: all 0.2s ease;
+  z-index: -1;
 }
 
-.main-grid .main .categories .box .category:hover a {
-  color: #ffffff;
+.main-grid .main .categories .box .category:hover a,
+.main-grid .main .categories .box .category.active a
+{
+  color: black;
 }
 
-.main-grid .main .categories .box .category:hover::before {
+.main-grid .main .categories .box .category:hover::before,
+.main-grid .main .categories .box .category.active::before
+{
   width: 80%;
 }
 

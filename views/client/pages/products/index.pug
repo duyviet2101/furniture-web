@@ -2,6 +2,7 @@ extends ../../layouts/default.pug
 include ../../mixins/wall.pug
 include ../../mixins/product-item.pug
 include ../../mixins/product-layout.pug
+include ../../mixins/pagination.pug
 
 block style
   link(rel="stylesheet", href="/css/products.css")
@@ -15,24 +16,14 @@ block main
         .head-main
           .categories
             .box
-              .category
-                a.sub-content-dark(href='#') T&#x1EA5;t c&#x1EA3;
-              .category
-                a.sub-content-dark(href='#') Sofa
-              .category
-                a.sub-content-dark(href='#') Gh&#x1EBF;
-              .category
-                a.sub-content-dark(href='#') B&agrave;n
-              .category
-                a.sub-content-dark(href='#') K&#x1EC7;
+              .category(class = `${categorySlug ? '' : 'active'}`)
+                a.sub-content-dark(href=`/products`) Tất cả
+              each category in productCategories
+                .category(class = `${categorySlug === category.slug ? 'active' : ''}`)
+                  a.sub-content-dark(href=`/products/${category.slug}`) #{category.title}
         +product-grid(products)
         .pagination
-          a(href='#') &laquo;
-          a(href='#') 1
-          a.active(href='#') 2
-          a(href='#') 3
-          a(href='#') 4
-          a(href='#') &raquo;
+          +pagination(paginationObject)
       .aside
         .search-input
           form(action='#' method='get')
@@ -42,41 +33,27 @@ block main
                 img(src='/img/logo/search.svg' alt='' style='width: 24px; padding: 0')
         .filter
           h4.section-title
-            | Tags
+            | Sắp xếp
           ul
             li
-              a.sub-content-dark(href='#') Gi&aacute; r&#x1EBB;
+              a.sub-content-dark(href='#') Giá tăng dần
             li
-              a.sub-content-dark(href='#') T&#x1ED1;i gi&#x1EA3;n
+              a.sub-content-dark(href='#') Giá giảm dần
             li
-              a.sub-content-dark(href='#') M&#x1EAB;u m&#x1EDB;i
+              a.sub-content-dark(href='#') Xu hướng
             li
-              a.sub-content-dark(href='#') Xu h&#x1B0;&#x1EDB;ng
-            li
-              a.sub-content-dark(href='#') Luxury
+              a.sub-content-dark(href='#') Sản phẩm mới
         .filter
           h4.section-title
-            | Th&#x1B0;&#x1A1;ng hi&#x1EC7;u
+            | Khoảng giá
           ul
             li
-              a.sub-content-dark(href='#') Th&#x1B0;&#x1A1;ng hi&#x1EC7;u 1
+              a.sub-content-dark(href='#') Dưới 1 triệu
             li
-              a.sub-content-dark(href='#') Th&#x1B0;&#x1A1;ng hi&#x1EC7;u 2
+              a.sub-content-dark(href='#') 1 - 3 triệu
             li
-              a.sub-content-dark(href='#') Th&#x1B0;&#x1A1;ng hi&#x1EC7;u 3
+              a.sub-content-dark(href='#') 3 - 5 triệu
             li
-              a.sub-content-dark(href='#') Th&#x1B0;&#x1A1;ng hi&#x1EC7;u 4
+              a.sub-content-dark(href='#') 5 - 10 triệu
             li
-              a.sub-content-dark(href='#') Th&#x1B0;&#x1A1;ng hi&#x1EC7;u 5
-        .filter
-          h4.section-title
-            | Kho&#x1EA3;ng gi&aacute;
-          ul
-            li
-              a.sub-content-dark(href='#') Th&#x1EA5;p h&#x1A1;n 30$
-            li
-              a.sub-content-dark(href='#') 30$ - 40%
-            li
-              a.sub-content-dark(href='#') 40$ - 50$
-            li
-              a.sub-content-dark(href='#') Cao h&#x1A1;n 50$
+              a.sub-content-dark(href='#') Trên 10 triệu

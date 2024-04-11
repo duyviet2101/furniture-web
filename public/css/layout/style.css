@@ -58,6 +58,7 @@ body {
 
 a {
   text-decoration: none;
+  color: white;
 }
 
 button {
@@ -1413,3 +1414,37 @@ input::-webkit-inner-spin-button {
       margin-left: 15px;
   }
 }
+
+/* pagination */
+.pagination {
+  display: inline-block;
+
+}
+
+.pagination .btn-group .btn-primary {
+  background-color: #4CAF50;
+  color: white;
+  border: 1px solid #4CAF50;
+}
+
+.pagination .btn-group .btn-outline-primary {
+  background-color: white;
+  border: 1px solid #4CAF50;
+  color: #000000;
+}
+
+.pagination .btn-group .btn-outline-primary:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.btn-check:focus+.btn-outline-primary, .btn-outline-primary:focus {
+  box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.5);
+}
+
+.btn-check:focus+.btn-primary, .btn-primary:focus {
+  box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.5);
+}
+
+
+/* end pagination */
