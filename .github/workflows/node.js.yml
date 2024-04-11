@@ -25,4 +25,19 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
+    - name: create .env file
+      run: |
+        echo "PORT=${{ secrets.PORT }}" > .env
+        echo "MONGO_URL=${{ secrets.MONGO_URL }}" >> .env
+        echo "CLOUD_NAME=${{ secrets.CLOUD_NAME }}" >> .env
+        echo "CLOUD_KEY=${{ secrets.CLOUD_KEY }}" >> .env
+        echo "CLOUD_SECRET=${{ secrets.CLOUD_SECRET }}" >> .env
+        echo "EMAIL_NODEMAILER=${{ secrets.EMAIL_NODEMAILER }}" >> .env
+        echo "PASSWORD_NODEMAILER=${{ secrets.PASSWORD_NODEMAILER }}" >> .env
+        echo "PREFIX_ADMIN=${{ secrets.PREFIX_ADMIN }}" >> .env
+        echo "ACCESS_TOKEN_SECRET=${{ secrets.ACCESS_TOKEN_SECRET }}" >> .env
+        echo "REFRESH_TOKEN_SECRET=${{ secrets.REFRESH_TOKEN_SECRET }}" >> .env
+        echo "ACCESS_TOKEN_LIFE=${{ secrets.ACCESS_TOKEN_LIFE }}" >> .env
+        echo "REFRESH_TOKEN_LIFE=${{ secrets.REFRESH_TOKEN_LIFE }}" >> .env
+        echo "SECRET_KEY_COOKIE=${{ secrets.SECRET_KEY_COOKIE }}" >> .env
     - run: pm2 restart furniture-web
