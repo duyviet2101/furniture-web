@@ -6,9 +6,9 @@ nav.navbar.navbar-expand-lg.sticky-top(data-bs-theme="dark")
     button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarToggler' aria-controls='navbarToggler' aria-expanded='false' aria-label='Toggle navigation')
       img(src='img/logo/toggle-menu.svg' alt='toggle' style='height: 30px')
     #navbarToggler.collapse.navbar-collapse.justify-content-end
-      ul.navbar-nav.me-auto.mb-2.mb-lg-0
+      ul.navbar-nav.mb-2.mb-lg-0
         li.nav-item
-          a#home.nav-link(class=`${activeTab == "home" ? 'active' : ''}` aria-current='page' href='#') 
+          a#home.nav-link(class=`${activeTab == "home" ? 'active' : ''}` aria-current='page' href='/') 
             | Trang chủ
         li.nav-item
           a#products.nav-link(class=`${activeTab == "products" ? 'active' : ''}` href='/products')  Sản phẩm

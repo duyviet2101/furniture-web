@@ -2,13 +2,14 @@ doctype html
 html 
     head 
         title #{pageTitle}
-        link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous")
+        link(rel="stylesheet" href="/bootstrap/css/bootstrap.min.css")
         link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css")
         link(rel="stylesheet", href="/css/layout/style.css")
         //- file upload with preview
         link(rel="stylesheet", href="https://unpkg.com/file-upload-with-preview/dist/style.css")
         link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.11.6/viewer.css")
         link(href='/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css' rel='stylesheet')
+        block style
     body 
         include ../partials/header.pug
 

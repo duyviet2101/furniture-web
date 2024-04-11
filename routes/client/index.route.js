@@ -9,4 +9,6 @@ router.use('/', require('./home.route.js'));
 
 router.use('/auth', require('./auth.route.js'));
 
+router.use('/products', require('./products.route.js'));
+
 module.exports = router;

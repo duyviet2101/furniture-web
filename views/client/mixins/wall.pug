@@ -1,4 +1,4 @@
-mixin wall(title, subContent)
+mixin wall(title, subContent, displayImg = true)
   .wall 
     .container.wall-flex
       .content-wall
@@ -6,7 +6,8 @@ mixin wall(title, subContent)
         p.sub-content #{subContent}
         if (!user)
           p.buttons 
-            a.button.button-hightlight(href='/auth/login') Đăng nhập
+            a.button.button-hightlight.mr-3(href='/auth/login') Đăng nhập
             a.button.button-simple(href='/auth/signup') Đăng ký
-      .img-wall
-        img(src='img/couch.png' alt='couch')
+      if (displayImg)
+        .img-wall
+          img(src='img/couch.png' alt='couch')

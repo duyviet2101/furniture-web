@@ -1,3 +1,5 @@
+include ../../mixins/alert.pug
+
 doctype html
 head
   meta(charset='UTF-8')
@@ -158,6 +160,8 @@ head
     font-size: 12px;
     font-style: italic;
     }
++alert-success(5000)
++alert-error(5000)
 .container-loader
   #loader
 .limit
@@ -183,11 +187,11 @@ head
           input#rememberMe.checkbox(value='true' type='checkbox' name='rememberMe')
           label(for='rememberMe') Remember me
       .forgot
-        a(href='#') Qu&ecirc;n m&#x1EAD;t kh&#x1EA9;u?
+        a(href='/auth/forgotPassword') Qu&ecirc;n m&#x1EAD;t kh&#x1EA9;u?
       .form-button
         button.submit-login &Dstrok;&Abreve;NG NH&#x1EAC;P
       .signup
         span B&#x1EA1;n ch&#x1B0;a c&oacute; t&agrave;i kho&#x1EA3;n?
-        a(href='signup.html') &Dstrok;&Abreve;NG K&Yacute;
+        a(href='/auth/signup') &Dstrok;&Abreve;NG K&Yacute;
 script(src='/bootstrap/js/bootstrap.bundle.js')
 script(type='module' src='/js/layout/script.js')

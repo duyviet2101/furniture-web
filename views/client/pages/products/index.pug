@@ -1,0 +1,82 @@
+extends ../../layouts/default.pug
+include ../../mixins/wall.pug
+include ../../mixins/product-item.pug
+include ../../mixins/product-layout.pug
+
+block style
+  link(rel="stylesheet", href="/css/products.css")
+
+block main 
+  +wall('Sản phẩm', "Chúng tôi tự hào giới thiệu những sản phẩm nội thất chất lượng cao, từ sofa êm ái đến bàn ăn sang trọng và nhiều hơn nữa.", false)
+
+  .main-content.container-xxl
+    .main-grid
+      .main
+        .head-main
+          .categories
+            .box
+              .category
+                a.sub-content-dark(href='#') T&#x1EA5;t c&#x1EA3;
+              .category
+                a.sub-content-dark(href='#') Sofa
+              .category
+                a.sub-content-dark(href='#') Gh&#x1EBF;
+              .category
+                a.sub-content-dark(href='#') B&agrave;n
+              .category
+                a.sub-content-dark(href='#') K&#x1EC7;
+        +product-grid(products)
+        .pagination
+          a(href='#') &laquo;
+          a(href='#') 1
+          a.active(href='#') 2
+          a(href='#') 3
+          a(href='#') 4
+          a(href='#') &raquo;
+      .aside
+        .search-input
+          form(action='#' method='get')
+            input(type='text' placeholder='Nhập từ khoá' name='searchKeyWord')
+            button
+              a.search-button
+                img(src='/img/logo/search.svg' alt='' style='width: 24px; padding: 0')
+        .filter
+          h4.section-title
+            | Tags
+          ul
+            li
+              a.sub-content-dark(href='#') Gi&aacute; r&#x1EBB;
+            li
+              a.sub-content-dark(href='#') T&#x1ED1;i gi&#x1EA3;n
+            li
+              a.sub-content-dark(href='#') M&#x1EAB;u m&#x1EDB;i
+            li
+              a.sub-content-dark(href='#') Xu h&#x1B0;&#x1EDB;ng
+            li
+              a.sub-content-dark(href='#') Luxury
+        .filter
+          h4.section-title
+            | Th&#x1B0;&#x1A1;ng hi&#x1EC7;u
+          ul
+            li
+              a.sub-content-dark(href='#') Th&#x1B0;&#x1A1;ng hi&#x1EC7;u 1
+            li
+              a.sub-content-dark(href='#') Th&#x1B0;&#x1A1;ng hi&#x1EC7;u 2
+            li
+              a.sub-content-dark(href='#') Th&#x1B0;&#x1A1;ng hi&#x1EC7;u 3
+            li
+              a.sub-content-dark(href='#') Th&#x1B0;&#x1A1;ng hi&#x1EC7;u 4
+            li
+              a.sub-content-dark(href='#') Th&#x1B0;&#x1A1;ng hi&#x1EC7;u 5
+        .filter
+          h4.section-title
+            | Kho&#x1EA3;ng gi&aacute;
+          ul
+            li
+              a.sub-content-dark(href='#') Th&#x1EA5;p h&#x1A1;n 30$
+            li
+              a.sub-content-dark(href='#') 30$ - 40%
+            li
+              a.sub-content-dark(href='#') 40$ - 50$
+            li
+              a.sub-content-dark(href='#') Cao h&#x1A1;n 50$
