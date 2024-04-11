@@ -29,6 +29,13 @@ if (buttonSubmit) {
 }
 
 //! showpage
+const containerLoader = document.querySelector('.container-loader')
+if (containerLoader) {
+  containerLoader.style.opacity = 0
+  setTimeout(() => {
+    containerLoader.style.display = 'none'
+  }, 300)
+}
 // function showPage() {
 //   document.querySelector(".container-loader").style.opacity = 0;
 //   setTimeout(() => {
