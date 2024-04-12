@@ -1,3 +1,5 @@
+include ../mixins/sub-menu.pug
+
 nav.navbar.navbar-expand-lg.sticky-top(data-bs-theme="dark")
   .container.d-flex.justify-content-between
     a.navbar-brand.d-flex(href='/')
@@ -10,8 +12,10 @@ nav.navbar.navbar-expand-lg.sticky-top(data-bs-theme="dark")
         li.nav-item
           a#home.nav-link(class=`${activeTab == "home" ? 'active' : ''}` aria-current='page' href='/') 
             | Trang chủ
-        li.nav-item
-          a#products.nav-link(class=`${activeTab == "products" ? 'active' : ''}` href='/products')  Sản phẩm
+        .dropdown.nav-item.text-center
+          a#products.nav-link.p-2(class=`${activeTab == "products" ? 'active' : ''}` href='/products')  Sản phẩm
+          if (productCategoriesTree)
+            +sub-menu(productCategoriesTree, '/products')
         li.nav-item
           a#introduction.nav-link(class=`${activeTab == "introduction" ? 'active' : ''}` href='/introduction') Giới thiệu
         li.nav-item(class=`${activeTab == "contact" ? 'active' : ''}`)
@@ -27,10 +31,13 @@ nav.navbar.navbar-expand-lg.sticky-top(data-bs-theme="dark")
             a.dropdown-toggle.d-flex.align-items-center.me-2(href='#' data-bs-toggle='dropdown')
               img.rounded-circle.me-lg-2.mr-2(src=user.avatar alt='' style='width: 40px; height: 40px;')
               span.d-none.d-lg-inline-flex #{user.fullName}
-            .dropdown-menu.dropdown-menu-end.bg-light.border-0.rounded-1.m-0.dropdown-menu-end
-              a.dropdown-item(href='/profile') My Profile
-              a.dropdown-item(href='#') Settings
-              a.dropdown-item(href='/auth/logout') Log Out
+            ul.dropdown-menu.dropdown-menu-end.bg-light.border-0.rounded-1.m-0.dropdown-menu-end
+              li
+                a.dropdown-item(href='/profile') My Profile
+              li
+                a.dropdown-item(href='#') Settings
+              li
+                a.dropdown-item(href='/auth/logout') Log Out
         .nav-item.d-flex.align-items-center
           a(href='/cart')
             img(src='img/logo/cart.svg' alt='logoCart')

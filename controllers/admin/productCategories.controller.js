@@ -367,6 +367,8 @@ module.exports.patchEdit = async (req, res, next) => {
       req.flash('error', 'Danh mục cha không hợp lệ!');
       return res.redirect(`/admin/product-categories/edit/${id}`);
     }
+  } else {
+    category.parent_id = "";
   }
   //! end validate parentId
   if (thumbnail) {

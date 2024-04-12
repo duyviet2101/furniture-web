@@ -1,0 +1,10 @@
+mixin sub-menu(items, path)
+  ul.dropdown-submenu.dropdown-menu.p-0.border.border-0.rounded-2.shadow-lg
+    each item in items
+      if item.children
+        li
+          a.dropdown-item.p-2(href=`${path}/${item.slug}`) #{item.title}
+          +sub-menu(item.children, path)
+      else
+        li
+          a.dropdown-item.p-2(href=`${path}/${item.slug}`) #{item.title}

@@ -17,6 +17,7 @@
   /* display: none; */
   transition: all .3s ease;
 }
+
 #loader {
   position: absolute;
   z-index: 9999;
@@ -32,14 +33,25 @@
   -webkit-animation: spin 2s linear infinite;
   animation: spin 2s linear infinite;
 }
+
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 div {
@@ -128,22 +140,30 @@ nav .nav-link {
   text-align: center;
   font-weight: bold;
   transition: .3s all ease-out;
+  position: relative;
 }
+
 nav a:hover {
   color: #ffffff;
 }
+
 .navbar {
   background-color: #3b5d50;
 }
+
 .navbar .navbar-brand {
   color: white;
 }
-.nav-link:hover, .nav-link:focus {
+
+.nav-link:hover,
+.nav-link:focus {
   color: white;
 }
-.navbar #navbarToggler a.nav-link::after{
+
+.navbar #navbarToggler a.nav-link::before {
   content: "";
-  position: relative;
+  position: absolute;
+  bottom: 0;
   display: block;
   margin: auto;
   background: #f9bf29;
@@ -154,17 +174,21 @@ nav a:hover {
   visibility: visible;
   transition: .15s all ease-out;
 }
-.navbar #navbarToggler a.nav-link.active::after {
+
+.navbar #navbarToggler a.nav-link.active::before {
   max-width: 50px;
   width: 100%;
 }
-.navbar #navbarToggler a.nav-link:hover::after {
+
+.navbar #navbarToggler a.nav-link:hover::before {
   max-width: 50px;
   width: 100%;
 }
+
 form.dropdown-menu {
   left: -100%;
 }
+
 .topnav {
   background-color: #3b5d50 !important;
   width: 100%;
@@ -180,6 +204,49 @@ form.dropdown-menu {
   display: flex;
   justify-content: flex-end;
   flex-wrap: wrap;
+}
+
+.dropdown:hover>.dropdown-menu,
+.dropstart:hover>.dropdown-menu {
+  display: block;
+  --bs-position: end;
+  right: 0;
+  left: auto;
+  top: 100%;
+}
+
+.dropdown-menu li {
+  position: relative;
+}
+
+.dropdown>.dropdown-toggle:active,
+.dropstart>.dropdown-toggle:active {
+  pointer-events: none;
+}
+
+.dropdown .dropdown-toggle::after,
+.dropstart .dropdown-toggle::after {
+  display: none !important;
+}
+
+.dropdown-menu .dropdown-submenu {
+  display: none;
+  position: absolute;
+  right: 100%;
+  top: 7px;
+}
+
+.dropdown-menu .dropdown-submenu-left {
+  right: 100%;
+  left: auto;
+}
+
+.dropdown-menu>li:hover>.dropdown-submenu {
+  display: block;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+  border-radius: 5px;
 }
 
 @media screen and (max-width: 768px) {
@@ -261,7 +328,7 @@ form.dropdown-menu {
 
 
 .topnav .topnav-flex a {
-  color: #ffffff ;
+  color: #ffffff;
   text-align: center;
   padding: 8px 16px;
   text-decoration: none;
@@ -1094,7 +1161,8 @@ form.dropdown-menu {
   overflow: auto;
 }
 
-.site-blocks-table table td,th {
+.site-blocks-table table td,
+th {
   background-color: #eff2f1 !important;
 }
 
@@ -1182,7 +1250,8 @@ input::-webkit-inner-spin-button {
   height: 100%;
 }
 
-.quantity .input-prepend,.input-append {
+.quantity .input-prepend,
+.input-append {
   height: 100%;
 }
 
@@ -1197,12 +1266,13 @@ input::-webkit-inner-spin-button {
 }
 
 .button-add-cart {
-  padding:  10px;
+  padding: 10px;
   border-radius: 5px;
   border: none;
   background-color: #3b5d50;
   color: white;
 }
+
 @media screen and (max-width: 768px) {
   .total-cart {
     padding-top: 36px;
@@ -1297,12 +1367,12 @@ input::-webkit-inner-spin-button {
 
 @keyframes alert-hidden {
   from {
-      right: 15px;
+    right: 15px;
   }
 
   to {
-      right: -100%;
-      display: none;
+    right: -100%;
+    display: none;
   }
 }
 
@@ -1411,7 +1481,7 @@ input::-webkit-inner-spin-button {
 
 @media (max-width: 575.98px) {
   .content .navbar .navbar-nav .nav-link {
-      margin-left: 15px;
+    margin-left: 15px;
   }
 }
 
@@ -1438,11 +1508,13 @@ input::-webkit-inner-spin-button {
   color: white;
 }
 
-.btn-check:focus+.btn-outline-primary, .btn-outline-primary:focus {
+.btn-check:focus+.btn-outline-primary,
+.btn-outline-primary:focus {
   box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.5);
 }
 
-.btn-check:focus+.btn-primary, .btn-primary:focus {
+.btn-check:focus+.btn-primary,
+.btn-primary:focus {
   box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.5);
 }
 
