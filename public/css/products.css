@@ -13,18 +13,22 @@
 .main-grid .main {
   text-align: center;
   flex-basis: 70%;
+  box-shadow: 0 0 10px 0px #cad3d2;
+  padding: 10px 24px;
+  border-radius: 10px;
 }
 
 .main-grid .main .categories {
   display: flex;
   flex-wrap: unset;
   padding: 24px 0;
-  overflow: auto;
+  /* overflow: auto; */
   max-width: 83vw !important;
 }
 
 .main-grid .main .categories .box {
   display: flex;
+  position: relative;
   /* flex-wrap: wrap; */
   /* min-width: min-content; */
 }
@@ -48,6 +52,7 @@
   border-radius: 10px;
   transition: all 0.2s ease;
   z-index: -1;
+  box-shadow: 0 0 10px 0px #85ddbd69;
 }
 
 .main-grid .main .categories .box .category:hover a,
@@ -63,8 +68,14 @@
 }
 
 .main-grid .aside {
-  padding: 0 48px;
+  padding: 0 24px;
   flex-basis: 28%;
+}
+
+.main-grid .aside .aside-content {
+  padding: 10px 24px;
+  box-shadow: 0 0 10px 0px #cad3d2;
+  border-radius: 10px;
 }
 
 .main-grid .aside .search-input {

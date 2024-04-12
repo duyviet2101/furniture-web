@@ -3,10 +3,10 @@ include ../mixins/sub-menu.pug
 nav.navbar.navbar-expand-lg.sticky-top(data-bs-theme="dark")
   .container.d-flex.justify-content-between
     a.navbar-brand.d-flex(href='/')
-      img(src='img/logo/shop.svg' alt='logoShop' style='height: 30px;')
+      img(src='/img/logo/shop.svg' alt='logoShop' style='height: 30px;')
       span.brandName Furniture.
     button.navbar-toggler(type='button' data-bs-toggle='collapse' data-bs-target='#navbarToggler' aria-controls='navbarToggler' aria-expanded='false' aria-label='Toggle navigation')
-      img(src='img/logo/toggle-menu.svg' alt='toggle' style='height: 30px')
+      img(src='/img/logo/toggle-menu.svg' alt='toggle' style='height: 30px')
     #navbarToggler.collapse.navbar-collapse.justify-content-end
       ul.navbar-nav.mb-2.mb-lg-0
         li.nav-item
@@ -22,7 +22,7 @@ nav.navbar.navbar-expand-lg.sticky-top(data-bs-theme="dark")
           a#contact.nav-link(href='/contact') Liên hệ
         .dropdown.nav-item.text-center.btn-group
           button.btn.dropdown-toggle.p-2(type='button' data-bs-toggle='dropdown' aria-expanded='false' data-bs-auto-close='outside')
-            img(src='img/logo/search.svg' alt='' style='width: 24px; padding: 0')
+            img(src='/img/logo/search.svg' alt='' style='width: 24px; padding: 0')
           form.dropdown-menu.p-0.bg-transparent.border.border-0.dropdown-menu-end
             .mb-3
               input.form-control.me-2(type='search' placeholder='Search' aria-label='Search')
@@ -40,5 +40,5 @@ nav.navbar.navbar-expand-lg.sticky-top(data-bs-theme="dark")
                 a.dropdown-item(href='/auth/logout') Log Out
         .nav-item.d-flex.align-items-center
           a(href='/cart')
-            img(src='img/logo/cart.svg' alt='logoCart')
+            img(src='/img/logo/cart.svg' alt='logoCart')
             span.badge.bg-danger.text-white.rounded-pill.cart-count(style='font-size: 0.8rem;') 0

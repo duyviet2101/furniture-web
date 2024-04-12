@@ -8,3 +8,21 @@ mixin sub-menu(items, path)
       else
         li
           a.dropdown-item.p-2(href=`${path}/${item.slug}`) #{item.title}
+
+mixin multi-level-menu(items, path, slug, first = true)
+  if (first)
+    each item in items
+      .category.dropend(class = `${slug === item.slug ? 'active' : ''}`)
+        a.sub-content-dark(href=`/products/${item.slug}`) #{item.title}
+        if item.children
+          +multi-level-menu(item.children, path, slug, false)
+  else
+    ul.dropdown-menu.dropdown-submenu.dropdown-submenu-right.p-0.border.border-0.rounded-2.shadow-lg
+      each item in items
+        if item.children
+          li
+            a.dropdown-item.p-2(href=`${path}/${item.slug}`) #{item.title}
+            +multi-level-menu(item.children, path, slug, false)
+        else
+          li
+            a.dropdown-item.p-2(href=`${path}/${item.slug}`) #{item.title}

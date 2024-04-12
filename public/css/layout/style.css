@@ -215,12 +215,22 @@ form.dropdown-menu {
   top: 100%;
 }
 
+.dropend:hover>.dropdown-menu {
+  display: block;
+  --bs-position: end;
+  right: auto;
+  left: 0;
+  top: 100%;
+}
+
 .dropdown-menu li {
   position: relative;
 }
 
 .dropdown>.dropdown-toggle:active,
-.dropstart>.dropdown-toggle:active {
+.dropstart>.dropdown-toggle:active,
+.dropend>.dropdown-toggle:active
+{
   pointer-events: none;
 }
 
@@ -236,9 +246,9 @@ form.dropdown-menu {
   top: 7px;
 }
 
-.dropdown-menu .dropdown-submenu-left {
-  right: 100%;
-  left: auto;
+.dropdown-menu .dropdown-submenu-right {
+  left: 100% !important;
+  right: auto !important;
 }
 
 .dropdown-menu>li:hover>.dropdown-submenu {
@@ -520,16 +530,19 @@ form.dropdown-menu {
 
 .product-flex .column-flex-4 {
   flex-basis: 25%;
-  padding: 12px;
+  padding: 12px 6px;
 }
 
 .product-flex .column-flex-4 .product-item {
   position: relative;
   text-align: center;
   display: block;
+  height: 100%;
   padding-bottom: 50px;
   cursor: pointer;
-
+  transition: .3s all ease;
+  box-shadow: 0 0 10px 0px #dce5e4;
+  border-radius: 10px;
 }
 
 .product-flex .column-flex-4 .product-item a {
@@ -540,11 +553,13 @@ form.dropdown-menu {
 .product-flex .column-flex-4 .product-item .product-title {
   font-weight: 600;
   font-size: 18px;
+  transition: .3s all ease;
 }
 
 .product-flex .column-flex-4 .product-item .product-price {
   font-weight: 600;
   font-size: 20px;
+  transition: .3s all ease;
 }
 
 .product-flex .column-flex-4 .product-item .product-thumbnail {
@@ -554,17 +569,31 @@ form.dropdown-menu {
   height: auto;
   transition: .3s all ease;
   top: 0;
+  padding: 10px;
+  border-radius: 20px;
 }
 
 .product-flex .column-flex-4 .product-item:hover {
   .product-thumbnail {
-    top: -25px;
+    /* top: -25px; */
   }
 
   .icon-add {
     opacity: 1;
     bottom: 0;
     margin-bottom: -17.5px;
+  }
+
+  .product-title {
+    color: #3b5d50;
+  }
+
+  .product-price {
+    color: #3b5d50;
+  }
+
+  .product-item {
+    box-shadow: 0 0 10px 10px #dce5e4;
   }
 }
 
@@ -587,6 +616,7 @@ form.dropdown-menu {
 
 .product-flex .column-flex-4 .product-item:hover::before {
   height: 70%;
+  box-shadow: 0 0 10px 0px #dce5e4;
 }
 
 .product-flex .column-flex-4 .product-item .icon-add {

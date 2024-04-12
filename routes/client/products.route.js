@@ -7,4 +7,6 @@ const {requiredAuth} = require('../../middlewares/client/auth.middleware.js');
 
 router.get('/', asyncHandler(controller.index));
 
+router.get('/:slugCategory', asyncHandler(controller.byCategory));
+
 module.exports = router;

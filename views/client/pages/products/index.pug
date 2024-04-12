@@ -4,6 +4,7 @@ include ../../mixins/product-item.pug
 include ../../mixins/product-layout.pug
 include ../../mixins/pagination.pug
 include ../../mixins/alert.pug
+include ../../mixins/sub-menu.pug
 
 block style
   link(rel="stylesheet", href="/css/products.css")
@@ -21,44 +22,46 @@ block main
             .box
               .category(class = `${categorySlug ? '' : 'active'}`)
                 a.sub-content-dark(href=`/products`) Tất cả
-              each category in productCategories
-                .category(class = `${categorySlug === category.slug ? 'active' : ''}`)
-                  a.sub-content-dark(href=`/products/${category.slug}`) #{category.title}
+              //- each category in productCategories
+              //-   .category(class = `${categorySlug === category.slug ? 'active' : ''}`)
+              //-     a.sub-content-dark(href=`/products/${category.slug}`) #{category.title}
+              +multi-level-menu(productCategoriesTree, '/products', categorySlug)
         +product-grid(products)
         .pagination
           +pagination(paginationObject)
       .aside
-        .search-input
-          form(search)
-            input#searchInput(type='text' placeholder='Tìm kiếm sản phẩm' name='searchKeyWord' value=searchKey)
-            button(type="submit")
-              a.search-button
-                img(src='/img/logo/search.svg' alt='' style='width: 24px; padding: 0')
-        .filter
-          h4.section-title
-            | Sắp xếp
-          ul
-            li
-              a.sub-content-dark(href='#' sort sortBy='position' sortValue='desc') Xu hướng
-            li
-              a.sub-content-dark(href='#' sort sortBy='createdBy.createdAt' sortValue='desc') Sản phẩm mới
-            li
-              a.sub-content-dark(href='#' sort sortBy='price' sortValue='asc') Giá tăng dần
-            li
-              a.sub-content-dark(href='#' sort sortBy='price' sortValue='desc') Giá giảm dần
-        .filter
-          h4.section-title
-            | Khoảng giá
-          ul
-            li 
-              a.sub-content-dark(href='#' price-filter priceFrom=0 priceTo="inf") Tất cả
-            li
-              a.sub-content-dark(href='#' price-filter priceFrom=0 priceTo=1000000) Dưới 1 triệu
-            li
-              a.sub-content-dark(href='#' price-filter priceFrom=1000000 priceTo=3000000) 1 - 3 triệu
-            li
-              a.sub-content-dark(href='#' price-filter priceFrom=3000000 priceTo=5000000) 3 - 5 triệu
-            li
-              a.sub-content-dark(href='#' price-filter priceFrom=5000000 priceTo=10000000) 5 - 10 triệu
-            li
-              a.sub-content-dark(href='#' price-filter priceFrom=10000000 priceTo="inf") Trên 10 triệu
+        div.aside-content
+          .search-input
+            form(search)
+              input#searchInput(type='text' placeholder='Tìm kiếm sản phẩm' name='searchKeyWord' value=searchKey)
+              button(type="submit")
+                a.search-button
+                  img(src='/img/logo/search.svg' alt='' style='width: 24px; padding: 0')
+          .filter
+            h4.section-title
+              | Sắp xếp
+            ul
+              li
+                a.sub-content-dark(href='#' sort sortBy='position' sortValue='desc') Xu hướng
+              li
+                a.sub-content-dark(href='#' sort sortBy='createdBy.createdAt' sortValue='desc') Sản phẩm mới
+              li
+                a.sub-content-dark(href='#' sort sortBy='price' sortValue='asc') Giá tăng dần
+              li
+                a.sub-content-dark(href='#' sort sortBy='price' sortValue='desc') Giá giảm dần
+          .filter
+            h4.section-title
+              | Khoảng giá
+            ul
+              li 
+                a.sub-content-dark(href='#' price-filter priceFrom=0 priceTo="inf") Tất cả
+              li
+                a.sub-content-dark(href='#' price-filter priceFrom=0 priceTo=1000000) Dưới 1 triệu
+              li
+                a.sub-content-dark(href='#' price-filter priceFrom=1000000 priceTo=3000000) 1 - 3 triệu
+              li
+                a.sub-content-dark(href='#' price-filter priceFrom=3000000 priceTo=5000000) 3 - 5 triệu
+              li
+                a.sub-content-dark(href='#' price-filter priceFrom=5000000 priceTo=10000000) 5 - 10 triệu
+              li
+                a.sub-content-dark(href='#' price-filter priceFrom=10000000 priceTo="inf") Trên 10 triệu
