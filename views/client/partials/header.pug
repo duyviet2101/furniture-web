@@ -27,7 +27,7 @@ nav.navbar.navbar-expand-lg.sticky-top(data-bs-theme="dark")
             .mb-3
               input.form-control.me-2(type='search' placeholder='Search' aria-label='Search')
         if (user)
-          .nav-item.dropdown.d-flex.align-items-center
+          .nav-item.dropdown.d-flex.align-items-center.justify-content-center
             a.dropdown-toggle.d-flex.align-items-center.me-2(href='#' data-bs-toggle='dropdown')
               img.rounded-circle.me-lg-2.mr-2(src=user.avatar alt='' style='width: 40px; height: 40px;')
               span.d-none.d-lg-inline-flex #{user.fullName}
@@ -38,7 +38,9 @@ nav.navbar.navbar-expand-lg.sticky-top(data-bs-theme="dark")
                 a.dropdown-item(href='#') Settings
               li
                 a.dropdown-item(href='/auth/logout') Log Out
-        .nav-item.d-flex.align-items-center
+        .nav-item.d-flex.align-items-center.justify-content-center
           a(href='/cart')
             img(src='/img/logo/cart.svg' alt='logoCart')
-            span.badge.bg-danger.text-white.rounded-pill.cart-count(style='font-size: 0.8rem;') 0
+            span.badge.bg-danger.text-white.rounded-pill.mini-cart-count(style='font-size: 0.8rem;')
+              if (cart)
+                | #{cart.count}

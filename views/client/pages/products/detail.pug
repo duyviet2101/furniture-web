@@ -9,7 +9,7 @@ block style
       color: #000000;
     }
     .main-content {
-      padding: 112px 0;
+      padding: 56px 0;
     }
     
     .wall .wall-flex {
@@ -92,14 +92,18 @@ block style
     .product-categories a:hover {
       color: #3b5d50;
     }
+    .quantity .input-prepend button:focus, 
+    .quantity .input-append button:focus {
+      box-shadow: none;
+    }
 
 block main 
   +wall('Chi tiết sản phẩm', '', false)
 
   .main-content
     .container
-      .single-product.d-flex.gap-4
-        .product-img.product-thumbnails-slider.border.border-3.rounded-3.w-50
+      .single-product.d-flex.gap-4.justify-content-center
+        .product-img.product-thumbnails-slider.border.border-3.rounded-3.col-4
           div#main-thumbnails.splide.p-2
             .splide__track
               ul.splide__list
@@ -112,7 +116,7 @@ block main
               li.sub-thumbnail.border.m-2
                 img(src=`${img}` alt='')
 
-        .product-detail.w-50
+        .product-detail.col-6
           h2.section-title
             | #{product.title}
           //- .review
@@ -171,10 +175,10 @@ block main
                 input#quantity(type='number' min='0' value='1' name='quantity')
               .input-append
                 button.btn.btn-outline-black.increase(type='button') +
-            a.button-add-cart(href='cart.html')
+            button.button-add-cart(href='cart.html' button-add-cart data-product-id=`${product._id}`)
               span
                 img(src='/img/logo/cart-2.svg' alt='' style='width: 25px;')
-              |               Th&ecirc;m v&agrave;o gi&#x1ECF; h&agrave;ng
+              | Thêm vào giỏ hàng
           .share-on
             | Share on: 
             .social

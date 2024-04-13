@@ -62,7 +62,6 @@ module.exports.index = async (req, res, next) => {
 
   //! newPrice
   const productsNewPrice = priceNewProducts(products);
-  console.log(productsNewPrice);
   //! end newPrice
 
   res.render('client/pages/products/index', {
@@ -158,11 +157,12 @@ module.exports.byCategory = async (req, res, next) => {
   });
   //!end pagination
 
+  
   const products = await Product.find(find)
-    .sort(sort)
-    .skip(paginationObject.skipItems)
-    .limit(paginationObject.limitItems)
-    .lean();
+  .sort(sort)
+  .skip(paginationObject.skipItems)
+  .limit(paginationObject.limitItems)
+  .lean();
   const productCategories = await ProductCategory.find({
     deleted: false,
     status: 'active',
@@ -173,10 +173,14 @@ module.exports.byCategory = async (req, res, next) => {
     return res.redirect(`/products/${category.slug}`);
   }
 
+  //! newPrice
+  const productsNewPrice = priceNewProducts(products);
+  //! end newPrice
+  
   res.render('./client/pages/products/index.pug', {
     pageTitle: category.name,
     activeTab: 'products',
-    products,
+    products: productsNewPrice,
     paginationObject,
     productCategories,
     searchKey: req.query.search,

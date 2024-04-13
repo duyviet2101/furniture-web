@@ -186,3 +186,61 @@ if (productThumbnailsSlider) {
     splide.mount();
 }
 //! end slider
+
+//! add to cart
+const buttonAddToCart = document.querySelector('[button-add-cart]');
+if (buttonAddToCart) {
+  buttonAddToCart.addEventListener('click', async (e) => {
+    e.preventDefault();
+    const productId = buttonAddToCart.getAttribute('data-product-id');
+    const quantity = document.querySelector('.quantity #quantity').value;
+
+    const response = await fetch('/cart/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        productId,
+        quantity
+      })
+    });
+
+    if (response.status == 200) {
+      const data = await response.json();
+      const count = document.querySelector('.mini-cart-count');
+      count.innerHTML = data.count;
+
+      // ! alert
+      const alert = document.createElement("div");
+      alert.classList.add("alert", "alert-success");
+      alert.setAttribute("role", "alert");
+      alert.setAttribute("show-alert", "");
+      alert.innerHTML = `Thêm sản phẩm thành công! <span close-alert>X</span>`;
+      const closeAlert = alert.querySelector("[close-alert]");
+      document.body.appendChild(alert);
+      setTimeout(() => {
+          alert.classList.add("alert-hidden")
+      }, 5000);
+      closeAlert.addEventListener("click", () => {
+          alert.classList.add("alert-hidden")
+      })
+      // ! end alert
+    } else {
+      const alert = document.createElement("div");
+      alert.classList.add("alert", "alert-danger");
+      alert.setAttribute("role", "alert");
+      alert.setAttribute("show-alert", "");
+      alert.innerHTML = `Thêm sản phẩm thất bại! <span close-alert>X</span>`;
+      const closeAlert = alert.querySelector("[close-alert]");
+      document.body.appendChild(alert);
+      setTimeout(() => {
+          alert.classList.add("alert-hidden")
+      }, 5000);
+      closeAlert.addEventListener("click", () => {
+          alert.classList.add("alert-hidden")
+      })
+    }
+  });
+}
+//! end add to cart

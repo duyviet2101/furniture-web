@@ -11,6 +11,7 @@ module.exports.getInfoUser = async (req, res, next) => {
     refreshTokenUser
   } = cookieParser(req);
   if (!accessTokenUser || !refreshTokenUser) {
+    req.user = null;
     res.clearCookie('accessTokenUser');
     res.clearCookie('refreshTokenUser');
     return next();
@@ -27,6 +28,7 @@ module.exports.getInfoUser = async (req, res, next) => {
     }).select('-password -refreshToken -deleted -createdAt -updatedAt -__v').lean();
 
     if (!user) {
+      req.user = null;
       res.clearCookie('accessTokenUser');
       res.clearCookie('refreshTokenUser');
       return next();
@@ -47,6 +49,7 @@ module.exports.getInfoUser = async (req, res, next) => {
       });
 
       if (!user) {
+        req.user = null;
         res.clearCookie('accessTokenUser');
         res.clearCookie('refreshTokenUser');
         return next();
@@ -92,6 +95,7 @@ module.exports.getInfoUser = async (req, res, next) => {
       next();
     }
     catch (error) {
+      req.user = null;
       res.clearCookie('accessTokenUser');
       res.clearCookie('refreshTokenUser');
       return next();

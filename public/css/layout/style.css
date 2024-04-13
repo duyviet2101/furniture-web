@@ -164,6 +164,7 @@ nav a:hover {
   content: "";
   position: absolute;
   bottom: 0;
+  left: 50%;
   display: block;
   margin: auto;
   background: #f9bf29;
@@ -173,6 +174,7 @@ nav a:hover {
   opacity: 1;
   visibility: visible;
   transition: .15s all ease-out;
+  transform: translateX(-50%);
 }
 
 .navbar #navbarToggler a.nav-link.active::before {
@@ -1323,6 +1325,12 @@ input::-webkit-inner-spin-button {
   border: none;
   background-color: #3b5d50;
   color: white;
+  transition: all .3s ease;
+}
+
+.button-add-cart:hover {
+  background-color: #3b5d50ce;
+  box-shadow: 0 0 5px 0px #3b5d50;
 }
 
 @media screen and (max-width: 768px) {
