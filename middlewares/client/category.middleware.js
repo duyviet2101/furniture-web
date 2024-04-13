@@ -7,9 +7,6 @@ module.exports = async (req, res, next) => {
     status: 'active',
   });
 
-  console.log('productCategories middleware:');
-  console.log(productCategories);
-
   res.locals.productCategoriesTree = createTree(productCategories);
 
   next();

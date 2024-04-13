@@ -38,6 +38,19 @@ module.exports.checkCart = async (req, res, next) => {
       req.cart = newCart;
       res.locals.cart = newCart;
       return next();
+    } else {
+      const cart = await Cart.findOne({ _id: cartId });
+      if (cart) {
+        req.cart = cart;
+        res.locals.cart = cart;
+        return next();
+      }
+
+      const newCart = await Cart.create({ products: [] });
+      res.cookie("cartId", newCart.id);
+      req.cart = newCart;
+      res.locals.cart = newCart;
+      return next();
     }
   }
 };
