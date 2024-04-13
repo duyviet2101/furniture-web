@@ -6,8 +6,13 @@ mixin product-item(item)
       a(href=`/products/detail/${item.slug}`)
         img.product-thumbnail(src=item.thumbnail[0] alt=item.title)
         h3.product-title #{item.title}
-        strong.product-price 
-          +toCurency(item.price)
+        .price
+          span.product-oldPrice.me-1
+            +toCurency(item.price)
+          span.product-discountPercentage 
+            | -#{item.discountPercentage}%
+          .product-price 
+            +toCurency(item.newPrice)
       a(href='#')
         span.icon-add
           img(src='/img/icon_add.svg' alt='')

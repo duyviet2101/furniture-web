@@ -1,0 +1,193 @@
+extends ../../layouts/default.pug
+include ../../mixins/currencyConverter.pug
+include ../../mixins/product-layout.pug
+include ../../mixins/wall.pug
+
+block style
+  style.
+    body {
+      color: #000000;
+    }
+    .main-content {
+      padding: 112px 0;
+    }
+    
+    .wall .wall-flex {
+      text-align: center;
+      justify-content: center !important;
+    }
+
+    /* ! start product detail */
+    .review img {
+      width: 15px;
+      color: yellow;
+    }
+    
+    .product-detail > div {
+      padding-bottom: 20px;
+    }
+    
+    .product-sizes .size {
+      display: inline;
+      padding: 0 5px
+    }
+    
+    .product-colors .color {
+      display: inline;
+      padding: 0 5px;
+    }
+    
+    input[type="radio"] {
+      outline: none;
+      border: none;
+    }
+    
+    .share-on {
+      display: flex;
+    }
+    
+    .social img {
+      padding: 0 5px;
+      width: 35px;
+    }
+
+    /* ! recommend */
+    .recommend {
+      padding: 66px 0;
+    }
+    .recommend .section-title {
+      text-align: center;
+      display: block;
+      margin: auto;
+      width: fit-content;
+      position: relative;
+      z-index: 1;
+      padding: 0 20px;
+      background-color: #eff2f1;
+    }
+    .recommend .title {
+      text-align: center;
+      position: relative;
+      margin: 48px;
+    }
+    .recommend .title::before {
+      position: absolute;
+      content: "";
+      top: 50%;
+      left: 50%;
+      width: 70%;
+      height: 2px;
+      transform: translateX(-50%);
+      background-color: #000000;
+      z-index: -3;
+    }
+    /* ! end recommend */
+    .discountPercentage {
+      color: red;
+    }
+    .product-categories a {
+      color: #000000;
+      font-weight: bold;
+    }
+    .product-categories a:hover {
+      color: #3b5d50;
+    }
+
+block main 
+  +wall('Chi tiết sản phẩm', '', false)
+
+  .main-content
+    .container
+      .single-product.d-flex.gap-4
+        .product-img.product-thumbnails-slider.border.border-3.rounded-3.w-50
+          div#main-thumbnails.splide.p-2
+            .splide__track
+              ul.splide__list
+                each img in product.thumbnail
+                  li.splide__slide 
+                    img(src=`${img}` alt='Slide 01')
+
+          ul#sub-thumbnails.sub-thumbnails
+            each img in product.thumbnail
+              li.sub-thumbnail.border.m-2
+                img(src=`${img}` alt='')
+
+        .product-detail.w-50
+          h2.section-title
+            | #{product.title}
+          //- .review
+          //-   span
+          //-     img(src='/img/logo/star.svg' alt='')
+          //-   span
+          //-     img(src='/img/logo/star.svg' alt='')
+          //-   span
+          //-     img(src='/img/logo/star.svg' alt='')
+          //-   span
+          //-     img(src='/img/logo/star.svg' alt='')
+          //-   span
+          //-     img(src='/img/logo/star-half.svg' alt='')
+          //-   span (1000 reviews)
+          .product-categories
+            | Danh mục:
+            a.ms-2(href=`/products/category/${product.category.slug}`) 
+              strong 
+              | #{product.category.title}
+          .product-oldPrice
+            | Giá gốc: 
+            del.me-2
+              +toCurency(product.price)
+            span.discountPercentage
+              | -#{product.discountPercentage}%
+          .product-price(style='font-size: 30px;')
+            strong 
+              +toCurency(product.newPrice)
+          //- .product-sizes
+            strong Size:
+            .size
+              input#size-1(type='radio' name='size' checked='')
+              label(for='size-1') S
+            .size
+              input#size-2(type='radio' name='size')
+              label(for='size-2') M
+            .size
+              input#size-3(type='radio' name='size')
+              label(for='size-3') L
+          //- .product-colors
+            strong M&agrave;u s&#x1EAF;c: 
+            .color
+              input#color-1(type='radio' name='color' checked='')
+              label(for='color-1') Tr&#x1EAF;ng
+            .color
+              input#color-2(type='radio' name='color')
+              label(for='color-2') X&aacute;m
+            .color
+              input#color-3(type='radio' name='color')
+              label(for='color-3') &Dstrok;en
+          .add-cart
+            .quantity
+              .input-prepend
+                button.btn.btn-outline-black.decrease(type='button') -
+              .input-quantity
+                input#quantity(type='number' min='0' value='1' name='quantity')
+              .input-append
+                button.btn.btn-outline-black.increase(type='button') +
+            a.button-add-cart(href='cart.html')
+              span
+                img(src='/img/logo/cart-2.svg' alt='' style='width: 25px;')
+              |               Th&ecirc;m v&agrave;o gi&#x1ECF; h&agrave;ng
+          .share-on
+            | Share on: 
+            .social
+              a(href='#')
+                img(src='/img/logo/facebook-icon.svg' alt='')
+              a(href='#')
+                img(src='/img/logo/twitter.svg' alt='')
+              a(href='#')
+                img(src='/img/logo/ins.svg' alt='')
+      .product-description.pt-4
+        strong M&ocirc; t&#x1EA3;:
+        | !{product.description}
+      .recommend
+        .title
+          h2.section-title C&oacute; th&#x1EC3; b&#x1EA1;n quan t&acirc;m
+        +product-grid(relatedProducts)

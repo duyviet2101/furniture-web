@@ -9,4 +9,6 @@ router.get('/', asyncHandler(controller.index));
 
 router.get('/:slugCategory', asyncHandler(controller.byCategory));
 
+router.get('/detail/:slugProduct', asyncHandler(controller.detail));
+
 module.exports = router;

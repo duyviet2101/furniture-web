@@ -4,6 +4,7 @@ const ProductCategory = require('../../models/product-category.model.js')
 const createTree = require('../../helpers/createTree.js');
 const searchHelper = require('../../helpers/search.js');
 const pagination = require('../../helpers/pagination.js');
+const { priceNewProducts, priceNewProduct } = require('../../helpers/product.js');
 
 // [GET] /products
 module.exports.index = async (req, res, next) => {
@@ -59,10 +60,15 @@ module.exports.index = async (req, res, next) => {
     return res.redirect('/products');
   }
 
+  //! newPrice
+  const productsNewPrice = priceNewProducts(products);
+  console.log(productsNewPrice);
+  //! end newPrice
+
   res.render('client/pages/products/index', {
     pageTitle: 'Sản phẩm',
     activeTab: 'products',
-    products,
+    products: productsNewPrice,
     paginationObject,
     productCategories,
     searchKey: req.query.search,
@@ -175,5 +181,84 @@ module.exports.byCategory = async (req, res, next) => {
     productCategories,
     searchKey: req.query.search,
     categorySlug: parentCategorySlug,
+  });
+}
+
+// [GET] /products/detail/:slugProduct
+module.exports.detail = async (req, res, next) => {
+  const product = await Product.findOne({
+    slug: req.params.slugProduct,
+    deleted: false,
+    status: 'active',
+  }).lean();
+
+  if (!product) {
+    throw new Error('Sản phẩm không tồn tại!');
+  }
+
+  //! all sub category
+  const getSubCategory = async (parentId) => {
+    const subs = await ProductCategory.find({
+      parent_id: parentId,
+      deleted: false,
+      status: 'active',
+    });
+
+    let allSub = [...subs];
+
+    for (const sub of subs) {
+      allSub = [...allSub, ...await getSubCategory(sub._id)];
+    }
+
+    return allSub;
+  }
+  //! end all sub category
+
+  //! parent category
+  const getParentCategory = async (parentCategory) => {
+    if (!parentCategory.parent_id) {
+      return parentCategory._id;
+    }
+
+    const parent = await ProductCategory.findById(parentCategory.parent_id);
+
+    return getParentCategory(parent);
+  }
+  //! end parent category
+  
+  let listSubCategory = [];
+  let parentCategory = [];
+  //! category
+  if (product.product_category_id) {
+    const category = await ProductCategory.findById(product.product_category_id);
+    
+    if (category) {
+      product.category = category;
+      parentCategory = await getParentCategory(category);
+      listSubCategory = (await getSubCategory(parentCategory)).map((sub) => sub._id);
+    }
+  }
+  //! end category
+
+  const productNewPrice = priceNewProduct(product);
+
+  //! related products
+  const relatedProducts = await priceNewProducts(await Product.find({
+    deleted: false,
+    status: 'active',
+    product_category_id: {
+      $in: [product.product_category_id, ...listSubCategory],
+    },
+    _id: {
+      $ne: product._id,
+    },
+  }).limit(4).lean());
+  //! end related products
+
+  res.render('./client/pages/products/detail.pug', {
+    pageTitle: product.title,
+    activeTab: 'products',
+    product: productNewPrice,
+    relatedProducts,
   });
 }
