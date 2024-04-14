@@ -1,0 +1,99 @@
+extends ../../layouts/default.pug
+include ../../mixins/currencyConverter.pug
+include ../../mixins/wall.pug
+
+block style
+  style.
+    .quantity {
+    min-height: 40px;
+    margin: 0 auto;
+    }
+    .quantity>div {
+    height: 100%;
+    }
+    .quantity .input-quantity input {
+    height: auto;
+    }
+
+
+block main 
+  +wall('Giỏ hàng', '', false)
+
+  // content
+  .main-cart
+    .container
+      .row.mb-5
+        form.col-md-12(method='post')
+          .site-blocks-table
+            table.table
+              thead
+                tr
+                  th.product-thumbnail &#x1EA2;nh
+                  th.product-name S&#x1EA3;n ph&#x1EA9;m
+                  th Gi&aacute;
+                  th.product-quantity S&#x1ED1; l&#x1B0;&#x1EE3;ng
+                  th T&#x1ED5;ng
+                  th.product-remove G&#x1EE1;
+              tbody(update-cart)
+                each product in cart.products
+                  tr(cart-item data-product-id=product.product._id)
+                    td.product-thumbnail
+                      img.img-fluid(src=product.product.thumbnail[0] alt=product.product.title)
+                    td.product-name
+                      h2.h5.text-black= product.product.title
+                    td.product-price
+                      +toCurency(product.product.newPrice)
+                    td
+                      .quantity
+                        .input-prepend
+                          button.btn.btn-outline-black.decrease(type='button') -
+                        .input-quantity
+                          input#quantity(type='number' min='0' value=product.quantity name='quantity' data-product-id=product.product._id update-quantity)
+                        .input-append
+                          button.btn.btn-outline-black.increase(type='button') +
+                    td.product-total
+                      +toCurency(product.product.newPrice * product.quantity)
+                    td
+                      a.btn.btn-black.btn-sm(href='#' remove-from-cart data-product-id=product.product._id) X
+      .row
+        .col-md-6
+          .row.mb-5
+            .col-md-5
+              a.button-hightlight-2.button(href="/products") Tiếp tục mua
+          //- .row
+            .col-md-12
+              label.text-black.h4(for='coupon') Mã giảm giá
+              p Nhập mã giảm giá nếu có.
+            .col-md-7.mb-3.mb-md-0
+              input#coupon.form-control.py-3(type='text' placeholder='Coupon Code')
+            .col-md-5
+              button.button-hightlight-2.button.apply-button Áp dụng
+        .col-md-6.pl-5
+          .row.justify-content-end
+            .col-md-7
+              .row
+                .col-md-12.text-right.border-bottom.mb-5
+                  h3.text-black.h4.text-uppercase Tổng đơn hàng
+              .row.mb-3
+                .col-md-6
+                  span.text-black Tổng
+                .col-md-6.text-right
+                  strong.text-black.total-no-discount-cart 
+                    +toCurency(parseInt(cart.total) + parseInt(cart.discount))
+              .row.mb-3
+                .col-md-6
+                  span.text-black Giảm giá
+                .col-md-6.text-right
+                  strong.text-black.discount-cart
+                    | - 
+                    +toCurency(cart.discount)
+              .row.mb-3
+                .col-md-6
+                  span.text-black Thanh toán
+                .col-md-6.text-right
+                  strong.text-black.total-cart
+                    +toCurency(cart.total)
+              .row
+                .col-md-12
+                  button.button-hightlight-2.button(onclick="window.location='checkout.html'") Thanh to&aacute;n
+  // end content

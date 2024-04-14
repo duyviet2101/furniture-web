@@ -462,7 +462,7 @@ form.dropdown-menu {
 
 /*! wall */
 .wall {
-  padding: calc(4rem - 30px) 0 4rem 0;
+  padding: 64px 0;
   background-color: #3b5d50;
   color: #ffffff;
   position: relative;

@@ -41,3 +41,9 @@ sudo ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl restart nginx
 ```
+
+```bash
+pm2 start /home/ubuntu/actions-runner/_work/furniture-web/furniture-web/index.js --name furniture-web
+pm2 save
+sudo systemctl start mongod
+```

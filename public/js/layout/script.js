@@ -244,3 +244,137 @@ if (buttonAddToCart) {
   });
 }
 //! end add to cart
+
+//! remove from cart
+const buttonRemoveFromCart = document.querySelectorAll('[remove-from-cart]');
+if (buttonRemoveFromCart && buttonRemoveFromCart.length > 0) {
+  buttonRemoveFromCart.forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const productId = btn.getAttribute('data-product-id');
+
+      const response = await fetch(`/cart/remove/${productId}`, {
+        method: 'DELETE'
+      });
+
+      if (response.status == 200) {
+        const data = await response.json();
+        const count = document.querySelector('.mini-cart-count');
+        count.innerHTML = data.count;
+
+        const row = document.querySelector(`[cart-item][data-product-id="${productId}"]`);
+        row.remove();
+
+        // ! alert
+        const alert = document.createElement("div");
+        alert.classList.add("alert", "alert-success");
+        alert.setAttribute("role", "alert");
+        alert.setAttribute("show-alert", "");
+        alert.innerHTML = `Xóa sản phẩm thành công! <span close-alert>X</span>`;
+        const closeAlert = alert.querySelector("[close-alert]");
+        document.body.appendChild(alert);
+        setTimeout(() => {
+            alert.classList.add("alert-hidden")
+        }, 5000);
+        closeAlert.addEventListener("click", () => {
+            alert.classList.add("alert-hidden")
+        })
+        // ! end alert
+      } else {
+        const alert = document.createElement("div");
+        alert.classList.add("alert", "alert-danger");
+        alert.setAttribute("role", "alert");
+        alert.setAttribute("show-alert", "");
+        alert.innerHTML = `Xóa sản phẩm thất bại! <span close-alert>X</span>`;
+        const closeAlert = alert.querySelector("[close-alert]");
+        document.body.appendChild(alert);
+        setTimeout(() => {
+            alert.classList.add("alert-hidden")
+        }, 5000);
+        closeAlert.addEventListener("click", () => {
+            alert.classList.add("alert-hidden")
+        })
+      }
+    });
+  });
+}
+//! end remove from cart
+
+//! update quantity
+const inputQuantity = document.querySelectorAll('[update-quantity]');
+if (inputQuantity && inputQuantity.length > 0) {
+  inputQuantity.forEach(input => {
+    input.addEventListener('change', async (e) => {
+      const productId = input.getAttribute('data-product-id');
+      const quantity = parseInt(input.value);
+
+      if (isNaN(quantity) || quantity <= 0) {
+        input.value = 1;
+        return;
+      }
+
+      const response = await fetch('/cart/update', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          productId,
+          quantity
+        })
+      });
+
+      if (response.status == 200) {
+        const data = await response.json();
+        console.log(data);
+        const count = document.querySelector('.mini-cart-count');
+        count.innerHTML = data.count;
+        const row = document.querySelector(`[cart-item][data-product-id="${productId}"]`);
+        const totalProduct = row.querySelector('.product-total');
+
+        const product = data.products.find(product => product.product._id == productId);
+        totalProduct.innerHTML = `${Number((product.product.newPrice * parseInt(product.quantity)).toFixed(0)).toLocaleString(undefined, {style: 'currency', currency: 'VND'})}`;
+
+        const totalCart = document.querySelector('.total-cart');
+        totalCart.innerHTML = `${Number(data.total).toLocaleString(undefined, {style: 'currency', currency: 'VND'})}`;
+
+        const totalCartNotDiscount = document.querySelector('.total-no-discount-cart');
+        totalCartNotDiscount.innerHTML = `${Number(parseInt(data.total) + parseInt(data.discount)).toLocaleString(undefined, {style: 'currency', currency: 'VND'})}`;
+
+        const discountCart = document.querySelector('.discount-cart');
+        discountCart.innerHTML = `- ${Number(data.discount).toLocaleString(undefined, {style: 'currency', currency: 'VND'})}`;
+
+        // ! alert
+        const alert = document.createElement("div");
+        alert.classList.add("alert", "alert-success");
+        alert.setAttribute("role", "alert");
+        alert.setAttribute("show-alert", "");
+        alert.innerHTML = `Cập nhật số lượng sản phẩm thành công! <span close-alert>X</span>`;
+        const closeAlert = alert.querySelector("[close-alert]");
+        document.body.appendChild(alert);
+        setTimeout(() => {
+            alert.classList.add("alert-hidden")
+        }, 5000);
+        closeAlert.addEventListener("click", () => {
+            alert.classList.add("alert-hidden")
+        })
+        // ! end alert
+      } else {
+        const alert = document.createElement("div");
+        alert.classList.add("alert", "alert-danger");
+        alert.setAttribute("role", "alert");
+        alert.setAttribute("show-alert", "");
+        alert.innerHTML = `Cập nhật số lượng sản phẩm thất bại! <span close-alert>X</span>`;
+        const closeAlert = alert.querySelector("[close-alert]");
+        document.body.appendChild(alert);
+        setTimeout(() => {
+            alert.classList.add("alert-hidden")
+        }, 5000);
+        closeAlert.addEventListener("click", () => {
+            alert.classList.add("alert-hidden")
+        })
+      }
+    });
+  });
+}
+//! end update quantity
