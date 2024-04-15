@@ -133,9 +133,15 @@ block main
           //-   span (1000 reviews)
           .product-categories
             | Danh mục:
-            a.ms-2(href=`/products/category/${product.category.slug}`) 
+            a.ms-2(href=`/products/${product.category.slug}`) 
               strong 
               | #{product.category.title}
+          .product-stock
+            | Tình trạng: 
+            if product.stock > 0
+              span.text-success C&ograve;n h&agrave;ng
+            else
+              span.text-danger Hết h&agrave;ng
           .product-oldPrice
             | Giá gốc: 
             del.me-2
@@ -188,7 +194,7 @@ block main
                 img(src='/img/logo/twitter.svg' alt='')
               a(href='#')
                 img(src='/img/logo/ins.svg' alt='')
-      .product-description.pt-4
+      .product-description.pt-4.container
         strong M&ocirc; t&#x1EA3;:
         | !{product.description}
       .recommend

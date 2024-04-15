@@ -19,4 +19,6 @@ router.use('/products', require('./products.route.js'));
 
 router.use('/cart', require('./cart.route.js'));
 
+router.use('/checkout', require('./checkout.route.js'));
+
 module.exports = router;

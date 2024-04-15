@@ -1,0 +1,114 @@
+extends ../../layouts/default.pug
+include ../../mixins/currencyConverter.pug
+include ../../mixins/wall.pug
+
+block style
+  style.
+    .input.invalid::after {
+      content: attr(data-error);
+      color: red;
+      font-size: 12px;
+      font-style: italic;
+    }
+
+block main 
+  +wall('Thanh toán', '', false)
+  .checkout
+    .container
+      form.row.checkout-form(method='post' action='/checkout')
+        .col-md-6.mb-5.mb-md-0
+          h2.h3.mb-3.text-black Thông tin người nhận
+          .p-3.p-lg-5.border.bg-white
+            .form-group.mb-3.row
+              .input.invalid
+                label.text-black(for='fullName')
+                  | Họ tên
+                  span.text-danger *
+                input#fullName.form-control(required type='text' name='fullName' value=`${user ? user.fullName : ''}` placeholder='Họ tên...')
+            .form-group.mb-3.row
+              .col-md-6.input.invalid
+                label.text-black(for='email')
+                  | Email 
+                  span.text-danger *
+                input#email.form-control(required type='email' name='email' value=`${user ? user.email : ''}` placeholder='Nhận thông báo về đơn hàng')
+              .col-md-6.input.invalid
+                label.text-black(for='phone')
+                  | S&#x1ED1; &dstrok;i&#x1EC7;n tho&#x1EA1;i 
+                  span.text-danger *
+                input#phone.form-control(required type='text' name='phone' placeholder='Số điện thoại nhận hàng')
+            label.text-black
+              | Địa chỉ
+              span.text-danger *
+            .form-group.mb-3.row(select-address)
+              .col-md-6.input.invalid.mt-3
+                select#province.form-select.col-md-4(required name='province')
+                  option(value='') Chọn thành phố/tỉnh
+              .col-md-6.input.invalid.mt-3
+                select#district.form-select.col-md-4(required name='district')
+                  option(value='') Chọn quận/huyện
+              .col-md-12.input.invalid.mt-3
+                select#ward.form-select.col-md-4(required name='ward')
+                  option(value='') Chọn phường/xã
+              .col-md-12.input.invalid.mt-3
+                input#detailAddress.form-control(required type='text' name='detailAddress' placeholder='Địa chỉ cụ thể (số nhà, xóm, thôn...)')
+            .form-group.mb-3
+              label.text-black(for='notes') Ghi ch&uacute;
+              textarea#notes.form-control(name='notes' cols='30' rows='10' style='min-height: 100px;' placeholder='Ghi chú...')
+        .col-md-6
+          form#checkDiscountCode.row.mb-5(method='post' action='/checkout/check-discount-code')
+            .col-md-12
+              h2.h3.mb-3.text-black M&atilde; gi&#x1EA3;m gi&aacute;
+              .p-3.p-lg-5.border.bg-white
+                label.text-black.mb-3(for='discountCode') Nh&#x1EAD;p m&atilde; gi&#x1EA3;m gi&aacute;(Nhập FURNIWEB để test): 
+                .input-group.w-75.couponcode-wrap
+                  input#discountCode.form-control.me-2(type='text' name="discountCode" placeholder='Coupon' aria-label='Mã giảm giá' aria-describedby='button-addon2')
+                  .input-group-append
+                    button#button-addon2.button-couponcode(type='button') &Aacute;p d&#x1EE5;ng
+          .row.mb-5.mt-4
+            .col-md-12
+              h2.h3.mb-3.text-black &Dstrok;&#x1A1;n h&agrave;ng c&#x1EE7;a b&#x1EA1;n
+              .p-3.p-lg-5.border.bg-white
+                table.table.site-block-order-table.mb-5
+                  thead
+                    th Sản phẩm
+                    th Số lượng
+                    th Tổng
+                  tbody
+                    each product in cart.products
+                      tr 
+                        td
+                          | #{product.product.title}
+                        td 
+                          | #{product.quantity}
+                        td
+                          +toCurency(product.product.newPrice * product.quantity)
+                    tr
+                      td.text-black.font-weight-bold(colspan='2')
+                        strong T&#x1ED5;ng &dstrok;&#x1A1;n h&agrave;ng
+                      td.text-black
+                        strong
+                          +toCurency(parseInt(cart.total) + parseInt(cart.discount))
+                    tr
+                      td.text-black.font-weight-bold(colspan='2')
+                        strong Gi&#x1EA3;m gi&aacute;
+                      td.text-black
+                        strong -
+                          +toCurency(cart.discount)
+                    tr
+                      td.text-black.font-weight-bold(colspan='2')
+                        strong
+                          | Mã giảm giá
+                      td.text-black.font-weight-bold
+                        strong
+                          +toCurency(0)
+                    tr
+                      td.text-black.font-weight-bold(colspan='2')
+                        strong T&#x1ED5;ng thanh toán
+                      td.text-black.font-weight-bold
+                        strong 
+                          +toCurency(cart.total)
+                    tr
+                      td.text-black.font-weight-bold(colspan='3') Miễn phí vận chuyển
+                .form-group
+                  button.btn.btn-black.btn-lg.py-3.btn-block.submit-button(type="submit" style='background-color: black; color: white') &Dstrok;&#x1EB7;t h&agrave;ng
+      // </form>

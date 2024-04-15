@@ -1,6 +1,7 @@
 extends ../../layouts/default.pug
 include ../../mixins/currencyConverter.pug
 include ../../mixins/wall.pug
+include ../../mixins/alert.pug
 
 block style
   style.
@@ -17,6 +18,8 @@ block style
 
 
 block main 
+  +alert-success(5000)
+  +alert-error(5000)
   +wall('Giỏ hàng', '', false)
 
   // content
@@ -46,15 +49,18 @@ block main
                     td
                       .quantity
                         .input-prepend
-                          button.btn.btn-outline-black.decrease(type='button') -
+                          button.btn-quantity.btn.btn-outline-black.decrease(type='button') -
                         .input-quantity
                           input#quantity(type='number' min='0' value=product.quantity name='quantity' data-product-id=product.product._id update-quantity)
                         .input-append
-                          button.btn.btn-outline-black.increase(type='button') +
+                          button.btn-quantity.btn.btn-outline-black.increase(type='button') +
                     td.product-total
                       +toCurency(product.product.newPrice * product.quantity)
                     td
                       a.btn.btn-black.btn-sm(href='#' remove-from-cart data-product-id=product.product._id) X
+                else 
+                  tr
+                    td.text-center(colspan='6') Không có sản phẩm nào trong giỏ hàng
       .row
         .col-md-6
           .row.mb-5
@@ -68,32 +74,33 @@ block main
               input#coupon.form-control.py-3(type='text' placeholder='Coupon Code')
             .col-md-5
               button.button-hightlight-2.button.apply-button Áp dụng
-        .col-md-6.pl-5
-          .row.justify-content-end
-            .col-md-7
-              .row
-                .col-md-12.text-right.border-bottom.mb-5
-                  h3.text-black.h4.text-uppercase Tổng đơn hàng
-              .row.mb-3
-                .col-md-6
-                  span.text-black Tổng
-                .col-md-6.text-right
-                  strong.text-black.total-no-discount-cart 
-                    +toCurency(parseInt(cart.total) + parseInt(cart.discount))
-              .row.mb-3
-                .col-md-6
-                  span.text-black Giảm giá
-                .col-md-6.text-right
-                  strong.text-black.discount-cart
-                    | - 
-                    +toCurency(cart.discount)
-              .row.mb-3
-                .col-md-6
-                  span.text-black Thanh toán
-                .col-md-6.text-right
-                  strong.text-black.total-cart
-                    +toCurency(cart.total)
-              .row
-                .col-md-12
-                  button.button-hightlight-2.button(onclick="window.location='checkout.html'") Thanh to&aacute;n
+        if (cart.products.length > 0)
+          .col-md-6.pl-5
+            .row.justify-content-end
+              .col-md-7
+                .row
+                  .col-md-12.text-right.border-bottom.mb-5
+                    h3.text-black.h4.text-uppercase Tổng đơn hàng
+                .row.mb-3
+                  .col-md-6
+                    span.text-black Tổng
+                  .col-md-6.text-right
+                    strong.text-black.total-no-discount-cart 
+                      +toCurency(parseInt(cart.total) + parseInt(cart.discount))
+                .row.mb-3
+                  .col-md-6
+                    span.text-black Giảm giá
+                  .col-md-6.text-right
+                    strong.text-black.discount-cart
+                      | - 
+                      +toCurency(cart.discount)
+                .row.mb-3
+                  .col-md-6
+                    span.text-black Thanh toán
+                  .col-md-6.text-right
+                    strong.text-black.total-cart
+                      +toCurency(cart.total)
+                .row
+                  .col-md-12
+                    a.button-hightlight-2.button(href="/checkout") Thanh to&aacute;n
   // end content

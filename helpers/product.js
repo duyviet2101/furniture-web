@@ -3,7 +3,7 @@ module.exports.priceNewProducts = (products) => {
     const newPrice = (product.price - (product.price * product.discountPercentage / 100)).toFixed(0);
     return {
       ...product,
-      newPrice,
+      newPrice: Number(newPrice),
     };
   });
 }
@@ -12,6 +12,6 @@ module.exports.priceNewProduct = (product) => {
   const newPrice = (product.price - (product.price * product.discountPercentage / 100)).toFixed(0);
   return {
     ...product,
-    newPrice,
+    newPrice: Number(newPrice),
   };
 }

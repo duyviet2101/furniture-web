@@ -1,5 +1,5 @@
 //!button increase, decrease cart
-const buttons = document.querySelectorAll('.btn')
+const buttons = document.querySelectorAll('.btn-quantity')
 if (buttons && buttons.length > 0) {
   buttons.forEach((button) => {
     button.addEventListener('click', () => {
@@ -378,3 +378,67 @@ if (inputQuantity && inputQuantity.length > 0) {
   });
 }
 //! end update quantity
+
+//! checkout - select address
+const selectAddress = document.querySelector('[select-address]');
+if (selectAddress) {
+  const province = selectAddress.querySelector('#province');
+  const district = selectAddress.querySelector('#district');
+  const ward = selectAddress.querySelector('#ward');
+  const detailAddress = selectAddress.querySelector('#detailAddress');
+
+  fetch('https://raw.githubusercontent.com/daohoangson/dvhcvn/master/data/dvhcvn.json')
+  .then(async (response) => (await response.json()).data)
+  .then(data => {
+    const defaultProvince = document.createElement('option');
+    defaultProvince.value = '';
+    defaultProvince.innerHTML = 'Chọn tỉnh/thành phố';
+
+    const defaultDistrict = document.createElement('option');
+    defaultDistrict.value = '';
+    defaultDistrict.innerHTML = 'Chọn quận/huyện';
+
+    const defaultWard = document.createElement('option');
+    defaultWard.value = '';
+    defaultWard.innerHTML = 'Chọn phường/xã';
+
+    data.forEach(provinceData => {
+      const option = document.createElement('option');
+      option.value = provinceData.name;
+      option.innerHTML = provinceData.name;
+      option.setAttribute('data-province-id', provinceData.level1_id);
+      province.appendChild(option);
+    });
+
+    province.addEventListener('change', () => {
+      const provinceId = province.options[province.selectedIndex].getAttribute('data-province-id');
+      district.innerHTML = '';
+      district.appendChild(defaultDistrict);
+      ward.innerHTML = '';
+      ward.appendChild(defaultWard);
+
+      data.find(provinceData => provinceData.level1_id == provinceId).level2s.forEach(districtData => {
+        const option = document.createElement('option');
+        option.value = districtData.name;
+        option.innerHTML = districtData.name;
+        option.setAttribute('data-district-id', districtData.level2_id);
+        district.appendChild(option);
+
+        district.addEventListener('change', () => {
+          const districtId = district.options[district.selectedIndex].getAttribute('data-district-id');
+          ward.innerHTML = '';
+          ward.appendChild(defaultWard);
+
+          data.find(provinceData => provinceData.level1_id == provinceId).level2s.find(districtData => districtData.level2_id == districtId).level3s.forEach(wardData => {
+            const option = document.createElement('option');
+            option.value = wardData.name;
+            option.innerHTML = wardData.name;
+            option.setAttribute('data-ward-id', wardData.level3_id);
+            ward.appendChild(option);
+          });
+        });
+      });
+    });
+  });
+}
+//! end checkout - select address
