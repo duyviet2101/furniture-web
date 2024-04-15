@@ -6,4 +6,8 @@ const controller = require('../../controllers/client/user.controller.js');
 
 router.get('/', asyncHandler(controller.index));
 
+router.get('/edit', asyncHandler(controller.edit));
+
+router.patch('/edit', asyncHandler(controller.patchEdit));
+
 module.exports = router;

@@ -48,6 +48,8 @@ block style
     }
 
 block main
+  +alert-success(5000)
+  +alert-error(5000)
   +wall('Thông tin tài khoản', '', false)
   .main-content
     .container
@@ -62,6 +64,7 @@ block main
                   | H&#x1ECD; t&ecirc;n:
                 td
                   | #{user.fullName}
+                  //- input.form-control(type='text' name='fullName' value=`${user.fullName}` disabled)
               tr
                 td.first-item
                   | Email:
@@ -78,9 +81,9 @@ block main
                 td
                   | #{user.address ? user.address.detailAddress + ', ' + user.address.ward + ', ' + user.address.district + ', ' + user.address.province : 'Chưa cập nhật'}
         .actions
-          button.button.button-hightlight-2
+          a.button.button-hightlight-2(href='/user/edit').me-2
             | Ch&#x1EC9;nh s&#x1EED;a th&ocirc;ng tin
-          button.button.button-hightlight-2
+          a.button.button-hightlight-2
             | &Dstrok;&#x1ED5;i m&#x1EAD;t kh&#x1EA9;u
       .orders
         h3.section-title

@@ -1,0 +1,101 @@
+extends ../../layouts/default.pug
+include ../../mixins/currencyConverter.pug
+include ../../mixins/wall.pug
+include ../../mixins/alert.pug
+include ../../mixins/moment.pug
+
+block style
+  style.
+    .wall-flex {
+      justify-content: center !important;
+    }
+
+    .content-wall {
+      text-align: center;
+    }
+
+    .main {
+      padding-bottom: 150px;
+    }
+    td.first-item {
+      width: 30%;
+      font-weight: bold;
+    }
+    td {
+      background-color: transparent !important;
+    }
+    #main {
+      padding-bottom: 66px;
+    }
+    .main-content {
+      padding: 66px 0;
+    }
+    .orders {
+      padding-bottom: 100px;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .actions button {
+      margin: 12px 12px 0 0 !important;
+    }
+    #block-orders.content a {
+      color: black;
+    }
+    #block-orders.content a:hover {
+      color: #3b5d50;
+    }
+
+block main
+  +wall('Thông tin tài khoản', '', false)
+  .main-content
+    .container
+      #main
+        h3.section-title
+          | Th&ocirc;ng tin kh&aacute;ch h&agrave;ng
+        form#form-edit-info-user.content(action='/user/edit?_method=PATCH', method='POST')
+          table.std.table
+            tbody
+              tr
+                td.first-item
+                  | H&#x1ECD; t&ecirc;n:
+                td
+                  input.form-control(type='text' name='fullName' value=`${user.fullName}`)
+              tr
+                td.first-item
+                  | Email:
+                td
+                  input.form-control(type='text' name='email' value=`${user.email}`)
+              tr
+                td.first-item
+                  | &Dstrok;i&#x1EC7;n tho&#x1EA1;i:
+                td
+                  input.form-control(type='text' name='phone' value=`${user.phone}`)
+              tr
+                td.first-item
+                  | &Dstrok;&#x1ECB;a ch&#x1EC9;:
+                td
+                  .form-group.mb-3.row(select-address)
+                    .col-md-6.input.invalid
+                      select#province.form-select.col-md-4(required name='province')
+                        option(value='') Chọn thành phố/tỉnh
+                        if (user && user.address && user.address.province)
+                          option(value=user.address.province selected) #{user.address.province}
+                    .col-md-6.input.invalid
+                      select#district.form-select.col-md-4(required name='district')
+                        option(value='') Chọn quận/huyện
+                        if (user && user.address && user.address.district)
+                          option(value=user.address.district selected) #{user.address.district}
+                    .col-md-12.input.invalid.mt-3
+                      select#ward.form-select.col-md-4(required name='ward')
+                        option(value='') Chọn phường/xã
+                        if (user && user.address && user.address.ward)
+                          option(value=user.address.ward selected) #{user.address.ward}
+                    .col-md-12.input.invalid.mt-3
+                      input#detailAddress.form-control(required type='text' name='detailAddress' value=`${user ? (user.address ? user.address.detailAddress : '') : ''}` placeholder='Địa chỉ cụ thể (số nhà, xóm, thôn...)')
+        .actions
+          button.button.button-hightlight-2(type="submit" form="form-edit-info-user")
+            | Lưu
+          button.button.button-hightlight-2(type="button" onclick="window.history.back();")
+            | Huỷ

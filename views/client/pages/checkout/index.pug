@@ -43,14 +43,20 @@ block main
               .col-md-6.input.invalid.mt-3
                 select#province.form-select.col-md-4(required name='province')
                   option(value='') Chọn thành phố/tỉnh
+                  if (user && user.address && user.address.province)
+                    option(value=user.address.province selected) #{user.address.province}
               .col-md-6.input.invalid.mt-3
                 select#district.form-select.col-md-4(required name='district')
                   option(value='') Chọn quận/huyện
+                  if (user && user.address && user.address.district)
+                    option(value=user.address.district selected) #{user.address.district}
               .col-md-12.input.invalid.mt-3
                 select#ward.form-select.col-md-4(required name='ward')
                   option(value='') Chọn phường/xã
+                  if (user && user.address && user.address.ward)
+                    option(value=user.address.ward selected) #{user.address.ward}
               .col-md-12.input.invalid.mt-3
-                input#detailAddress.form-control(required type='text' name='detailAddress' placeholder='Địa chỉ cụ thể (số nhà, xóm, thôn...)')
+                input#detailAddress.form-control(required type='text' name='detailAddress' value=`${user ? (user.address ? user.address.detailAddress : '') : ''}` placeholder='Địa chỉ cụ thể (số nhà, xóm, thôn...)')
             .form-group.mb-3
               label.text-black(for='notes') Ghi ch&uacute;
               textarea#notes.form-control(name='notes' cols='30' rows='10' style='min-height: 100px;' placeholder='Ghi chú...')
