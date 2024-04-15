@@ -14,4 +14,6 @@ router.patch('/status/:id/:status', grantAccess('updateAny', 'Orders'), asyncHan
 
 router.patch('/change-multi', grantAccess('updateAny', 'Orders'), asyncHandler(controller.changeMulti));
 
+router.get('/detail/:id', grantAccess('readAny', 'Orders'), asyncHandler(controller.detail));
+
 module.exports = router;

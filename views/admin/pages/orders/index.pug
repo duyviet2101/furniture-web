@@ -83,3 +83,4 @@ block main
                     option(value="shipping" selected = (order.status == "shipping")) Shipping
                 td
                   a.btn.btn-sm.btn-primary.me-1(href=`/${prefixAdmin}/orders/detail/${order._id}`) Chi tiết
+      +pagination(paginationObject)

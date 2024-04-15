@@ -1,0 +1,108 @@
+extends ../../layouts/default.pug
+include ../../mixins/moment.pug
+include ../../mixins/pagination.pug
+include ../../mixins/alert.pug
+include ../../mixins/currencyConverter.pug
+include ../../mixins/select-tree.pug
+include ../../mixins/search.pug
+include ../../mixins/sort.pug
+
+block main
+  +alert-error(5000)
+  +alert-success(5000)
+  .container-fluid.pt-4.px-4
+    .bg-light.text-center.rounded.p-4
+      .table-responsive
+        table.table.text-start.align-middle.table-bordered.table-hover.mb-0.items-table
+          thead
+            tr.text-dark
+              th(scope='col') STT
+              th(scope='col') Hình ảnh
+              th(scope='col') Sản phẩm
+              th(scope='col') Giá
+              th(scope='col') Số lượng
+              th(scope='col') Tổng tiền
+          tbody
+            each product, index in order.products
+              tr
+                td #{index}
+                td.item-thumb
+                  a.text-dark(href=`/${prefixAdmin}/products/detail/${product.product._id}`)
+                    img(src=product.product.thumbnail[0] alt='')
+                td
+                  a.text-dark(href=`/${prefixAdmin}/products/detail/${product.product._id}`)
+                    | #{product.product.title}
+                td
+                  +toCurency(product.price)
+                td
+                  | #{product.quantity}
+                td
+                  +toCurency(product.price * product.quantity)
+            else
+              tr
+                td(colspan='5').text-center 
+                  | Không có sản phẩm nào
+    .bg-light.rounded.p-4.mt-4.row.justify-content-between
+      .col-md-4
+        .row
+          .col-md-12.text-right.border-bottom.mb-5
+            h3.text-black.h4.text-uppercase Tổng đơn hàng
+        .row.mb-3
+          .col-md-6
+            span.text-black Tổng
+          .col-md-6.text-right
+            strong.text-black.total-no-discount-cart 
+              +toCurency(parseInt(order.total) + parseInt(order.discount))
+        .row.mb-3
+          .col-md-6
+            span.text-black Giảm giá
+          .col-md-6.text-right
+            strong.text-black.discount-cart
+              | - 
+              +toCurency(order.discount)
+        .row.mb-3
+          .col-md-6
+            span.text-black Thanh toán
+          .col-md-6.text-right
+            strong.text-black.total-cart
+              +toCurency(order.total)
+        .row.mb-3
+          .col-md-6
+            span.text-black Trạng thái
+          .col-md-6.text-right
+            select.form-select(name='status' aria-label='' change-status-select data-path=`/${prefixAdmin}/orders/status` data-id=order._id)
+              option(value="pending" selected = (order.status == "pending")) Pending
+              option(value="processing" selected = (order.status == "processing")) Processing
+              option(value="completed" selected = (order.status == "completed")) Completed
+              option(value="cancelled" selected = (order.status == "cancelled")) Cancelled
+              option(value="shipping" selected = (order.status == "shipping")) Shipping
+      .col-md-7
+        .row
+          .col-md-12.text-right.border-bottom.mb-5
+            h3.text-black.h4.text-uppercase Thông tin khách hàng
+        .row.mb-3
+          .col-md-6
+            span.text-black Họ tên
+          .col-md-6.text-right
+            strong.text-black= order.userInfo.fullName
+        .row.mb-3
+          .col-md-6
+            span.text-black Địa chỉ
+          .col-md-6.text-right
+            strong.text-black
+              | #{order.userInfo.address.detailAddress}, #{order.userInfo.address.ward}, #{order.userInfo.address.district}, #{order.userInfo.address.province}
+        .row.mb-3
+          .col-md-6
+            span.text-black Số điện thoại
+          .col-md-6.text-right
+            strong.text-black= order.userInfo.phone
+        .row.mb-3
+          .col-md-6
+            span.text-black Email
+          .col-md-6.text-right
+            strong.text-black= order.userInfo.email
+        .row.mb-3
+          .col-md-6
+            span.text-black Ghi chú
+          .col-md-6.text-right
+            strong.text-black= order.notes

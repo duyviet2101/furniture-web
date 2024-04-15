@@ -1,6 +1,8 @@
 const Order = require('../../models/order.model');
 const pagination = require('../../helpers/pagination.js');
 
+const {priceNewProduct} = require('../../helpers/product.js');
+
 // [GET] /admin/orders
 module.exports.index = async (req, res, next) => {
 
@@ -39,7 +41,8 @@ module.exports.index = async (req, res, next) => {
     orders,
     filter: {
       status: req.query.status
-    }
+    },
+    paginationObject
   });
 };
 
@@ -76,4 +79,31 @@ module.exports.changeMulti = async (req, res, next) => {
 
   req.flash('success', `Cập nhật trạng thái ${ids.length} đơn hàng thành công!`);
   res.redirect('/admin/orders');
+};
+
+// [GET] /admin/orders/detail/:id
+module.exports.detail = async (req, res, next) => {
+  const order = await Order.findById(req.params.id)
+    .populate({
+      path: 'products.product',
+      select: 'title price thumbnail discountPercentage'
+    })
+    .lean();
+
+  if (!order) {
+    req.flash('error', 'Đơn hàng không tồn tại!');
+    return res.redirect('/admin/orders');
+  }
+
+  order.products.forEach(item => {
+    item.product = priceNewProduct(item.product);
+  });
+
+  // return res.json(order);
+
+  res.render('admin/pages/orders/detail', {
+    pageTitle: 'Chi tiết đơn hàng',
+    activeTab: 'orders',
+    order
+  });
 };
