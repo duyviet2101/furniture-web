@@ -18,8 +18,8 @@ nav.navbar.navbar-expand-lg.sticky-top(data-bs-theme="dark")
             +sub-menu(productCategoriesTree, '/products')
         li.nav-item
           a#introduction.nav-link(class=`${activeTab == "introduction" ? 'active' : ''}` href='/introduction') Giới thiệu
-        li.nav-item(class=`${activeTab == "contact" ? 'active' : ''}`)
-          a#contact.nav-link(href='/contact') Liên hệ
+        li.nav-item
+          a#contact.nav-link(class=`${activeTab == "contact" ? 'active' : ''}` href='/contact') Liên hệ
         .dropdown.nav-item.text-center.btn-group
           button.btn.dropdown-toggle.p-2(type='button' data-bs-toggle='dropdown' aria-expanded='false' data-bs-auto-close='outside')
             img(src='/img/logo/search.svg' alt='' style='width: 24px; padding: 0')

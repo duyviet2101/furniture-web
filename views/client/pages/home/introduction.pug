@@ -1,0 +1,178 @@
+extends ../../layouts/default.pug
+include ../../mixins/wall.pug
+include ../../mixins/product-item.pug
+include ../../mixins/product-layout.pug
+
+block main 
+  +wall('Giới thiệu', "Chào mừng bạn đến với cửa hàng nội thất của chúng tôi! Chúng tôi cung cấp những sản phẩm tinh tế và đa dạng, từ hiện đại đến cổ điển, để biến không gian sống của bạn thành một tác phẩm nghệ thuật sống động. Hãy khám phá bộ sưu tập của chúng tôi và bắt đầu hành trình tạo ra không gian sống lý tưởng của bạn ngay hôm nay.")
+
+  // why choose us
+  .why-choose
+    .container.why-choose-flex
+      .column.column-1
+        h2.section-title
+          | T&#x1EA1;i sao b&#x1EA1;n n&ecirc;n ch&#x1ECD;n ch&uacute;ng t&ocirc;i?
+        p.sub-content-dark
+          | Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Quisquam, voluptatum.
+        .container-flex-4-item
+          .item
+            .content-item
+              .icon
+                img(src='/img/truck.svg' alt='')
+              h6
+                b V&#x1EAD;n chuy&#x1EC3;n nhanh &amp; mi&#x1EC5;n ph&iacute;
+              p.sub-content-dark
+                | Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet laboriosam,
+                | libero molestias accusantium sit ullam rerum maxime.
+          .item
+            .content-item
+              .icon
+                img(src='/img/bag.svg' alt='')
+              h6
+                b D&#x1EC5; d&agrave;ng mua s&#x1EAF;m
+              p.sub-content-dark
+                | Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet laboriosam,
+                | libero molestias accusantium sit ullam rerum maxime.
+          .item
+            .content-item
+              .icon
+                img(src='/img/support.svg' alt='')
+              h6
+                b H&#x1ED7; tr&#x1EE3; 24/7
+              p.sub-content-dark
+                | Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet laboriosam,
+                | libero molestias accusantium sit ullam rerum maxime.
+          .item
+            .content-item
+              .icon
+                img(src='/img/return.svg' alt='')
+              h6
+                b &Dstrok;&#x1ED5;i tr&#x1EA3; mi&#x1EC5;n ph&iacute;
+              p.sub-content-dark
+                | Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet laboriosam,
+                | libero molestias accusantium sit ullam rerum maxime.
+      .column.column-2
+        .img-decor
+          img(src='/img/why-choose-us-img.jpg' alt='')
+  // end why choose us
+  // our team
+  .our-team
+    .container
+      h2.section-title(style='text-align: center') &Dstrok;&#x1ED9;i ng&utilde; c&#x1EE7;a ch&uacute;ng t&ocirc;i
+      .our-team-flex
+        .item
+          .avatar
+            img(src='/img/our-team-1.jpg' alt='')
+          .name
+            h3 Kathryn Ryan
+          .position
+            p CEO &amp; Founder
+          .info
+            p.sub-content-dark
+              | Separated they live in. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large
+              | language ocean.
+          .social
+            a(href='')
+              img(src='/img/logo/facebook-icon.svg' alt='' style='width: 25px;')
+            a(href='')
+              img(src='/img/logo/twitter.svg' alt='' style='width: 25px;')
+            a(href='')
+              img(src='/img/logo/ins.svg' alt='' style='width: 25px;')
+        .item
+          .avatar
+            img(src='/img/our-team-2.jpg' alt='')
+          .name
+            h3 Patrik White
+          .position
+            p CEO &amp; Founder
+          .info
+            p.sub-content-dark
+              | Separated they live in. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large
+              | language ocean.
+          .social
+            a(href='')
+              img(src='/img/logo/facebook-icon.svg' alt='' style='width: 25px;')
+            a(href='')
+              img(src='/img/logo/twitter.svg' alt='' style='width: 25px;')
+            a(href='')
+              img(src='/img/logo/ins.svg' alt='' style='width: 25px;')
+        .item
+          .avatar
+            img(src='/img/our-team-3.jpg' alt='')
+          .name
+            h3 Jeremy Walker
+          .position
+            p CEO &amp; Founder
+          .info
+            p.sub-content-dark
+              | Separated they live in. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large
+              | language ocean.
+          .social
+            a(href='')
+              img(src='/img/logo/facebook-icon.svg' alt='' style='width: 25px;')
+            a(href='')
+              img(src='/img/logo/twitter.svg' alt='' style='width: 25px;')
+            a(href='')
+              img(src='/img/logo/ins.svg' alt='' style='width: 25px;')
+        .item
+          .avatar
+            img(src='/img/our-team-4.jpg' alt='')
+          .name
+            h3 Lawson Arnold
+          .position
+            p CEO &amp; Founder
+          .info
+            p.sub-content-dark
+              | Separated they live in. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large
+              | language ocean.
+          .social
+            a(href='')
+              img(src='/img/logo/facebook-icon.svg' alt='' style='width: 25px;')
+            a(href='')
+              img(src='/img/logo/twitter.svg' alt='' style='width: 25px;')
+            a(href='')
+              img(src='/img/logo/ins.svg' alt='' style='width: 25px;')
+  // end our team
+  // feedback
+  .feedback
+    .container
+      .title
+        h2.section-title Ph&#x1EA3;n h&#x1ED3;i c&#x1EE7;a kh&aacute;ch h&agrave;ng
+      .feedback-flex
+        .item
+          .avatar
+            img(src='/img/avatar-1.jpg' alt='')
+          .review
+            p.sub-content-dark
+              | Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem repudiandae aperiam dicta dolorum velit
+              | iusto saepe amet perspiciatis.
+            span.sub-content-dark.author
+              p Nguy&#x1EC5;n V&abreve;n A
+        .item
+          .avatar
+            img(src='/img/avatar-2.jpg' alt='')
+          .review
+            p.sub-content-dark
+              | Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem repudiandae aperiam dicta dolorum velit
+              | iusto saepe amet perspiciatis.
+            span.sub-content-dark.author
+              p Nguy&#x1EC5;n V&abreve;n A
+        .item
+          .avatar
+            img(src='/img/avatar-3.jpg' alt='')
+          .review
+            p.sub-content-dark
+              | Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem repudiandae aperiam dicta dolorum velit
+              | iusto saepe amet perspiciatis.
+            span.sub-content-dark.author
+              p Nguy&#x1EC5;n V&abreve;n A
+        .item
+          .avatar
+            img(src='/img/avatar-4.jpg' alt='')
+          .review
+            p.sub-content-dark
+              | Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem repudiandae aperiam dicta dolorum velit
+              | iusto saepe amet perspiciatis.
+            span.sub-content-dark.author
+              p Nguy&#x1EC5;n V&abreve;n A
+  // end feedback

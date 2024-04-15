@@ -23,3 +23,19 @@ module.exports.index = async (req, res, next) => {
         activeTab: 'home',
     });
 }
+
+// [GET] /introduction
+module.exports.introduction = (req, res, next) => {
+    res.render('client/pages/home/introduction', {
+        pageTitle: 'Giới thiệu',
+        activeTab: 'introduction',
+    });
+}
+
+// [GET] /contact
+module.exports.contact = (req, res, next) => {
+    res.render('client/pages/home/contact', {
+        pageTitle: 'Liên hệ',
+        activeTab: 'contact',
+    });
+}

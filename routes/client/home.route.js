@@ -7,4 +7,8 @@ const {requiredAuth} = require('../../middlewares/client/auth.middleware.js');
 
 router.get('/', asyncHandler(controller.index));
 
+router.get('/introduction', asyncHandler(controller.introduction));
+
+router.get('/contact', asyncHandler(controller.contact));
+
 module.exports = router;
