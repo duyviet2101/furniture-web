@@ -651,7 +651,7 @@ if (checkboxMulti) {
             }
         });
 
-        input.closest("tr").querySelector(".item-thumb").addEventListener("click", () => {
+        input.closest("tr").querySelector(".item-thumb")?.addEventListener("click", () => {
             input.click();
         });
     });

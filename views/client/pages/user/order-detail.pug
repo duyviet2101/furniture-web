@@ -20,7 +20,7 @@ block style
 block main 
   +alert-success(5000)
   +alert-error(5000)
-  +wall(`Chi tiết đơn hàng: ${order._id}`, '', false)
+  +wall(`Chi tiết đơn hàng: ${order.code}`, '', false)
 
   // content
   .main-cart
@@ -76,6 +76,21 @@ block main
                 .col-md-6.text-right
                   strong.text-black.total-cart
                     +toCurency(order.total)
+              .row.mb-3
+                .col-md-6
+                  span.text-black Trạng thái
+                .col-md-6.text-right
+                  strong.text-black
+                    if order.status == "pending"
+                      | Đang chờ xử lý
+                    else if order.status == "shipping"
+                      | Đang giao hàng
+                    else if order.status == "completed"
+                      | Đã giao hàng
+                    else if order.status == "cancelled"
+                      | Đã hủy
+                    else if order.status == "processing"
+                      | Đang xử lý
             .col-md-7
               .row
                 .col-md-12.text-right.border-bottom.mb-5

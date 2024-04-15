@@ -106,13 +106,22 @@ block main
               each order in orders
                 tr
                   td 
-                    | #{order._id}
+                    | #{order.code}
                   td 
                     +formatDateTime(order.createdAt)
                   td 
                     +toCurency(order.total)
                   td
-                    | #{order.status}
+                    if order.status == "pending"
+                      | Đang chờ xử lý
+                    else if order.status == "shipping"
+                      | Đang giao hàng
+                    else if order.status == "completed"
+                      | Đã giao hàng
+                    else if order.status == "cancelled"
+                      | Đã hủy
+                    else if order.status == "processing"
+                      | Đang xử lý
                   td
                     a(href=`/user/orders/${order._id}`) Xem chi tiết
               else

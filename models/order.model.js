@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
+const crypto = require('crypto-js')
 
 const orderSchema = new mongoose.Schema({
+  code: {
+    type: String,
+    default: crypto.lib.WordArray.random(5).toString()
+  },
   cart: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Cart"
@@ -38,7 +43,7 @@ const orderSchema = new mongoose.Schema({
   total: Number,
   status: {
     type: String,
-    enum: ["pending", "processing", "completed", "cancelled"],
+    enum: ["pending", "processing", "completed", "cancelled" ,"shipping"],
     default: "pending"
   },
   paymentMethod: {

@@ -5,10 +5,10 @@ nav.navbar.navbar-expand.bg-light.navbar-light.sticky-top.px-4.py-0
       i.fa.fa-hashtag
   a.sidebar-toggler.flex-shrink-0(href='#')
     i.fa.fa-bars
-  form.d-none.d-md-flex.ms-4
+  //- form.d-none.d-md-flex.ms-4
     input.form-control.border-0(type='search' placeholder='Search')
   .navbar-nav.align-items-center.ms-auto
-    .nav-item.dropdown
+    //- .nav-item.dropdown
       a.nav-link.dropdown-toggle(href='#' data-bs-toggle='dropdown')
         i.fa.fa-envelope.me-lg-2
         span.d-none.d-lg-inline-flex Message
@@ -35,7 +35,7 @@ nav.navbar.navbar-expand.bg-light.navbar-light.sticky-top.px-4.py-0
               small 15 minutes ago
         hr.dropdown-divider
         a.dropdown-item.text-center(href='#') See all message
-    .nav-item.dropdown
+    //- .nav-item.dropdown
       a.nav-link.dropdown-toggle(href='#' data-bs-toggle='dropdown')
         i.fa.fa-bell.me-lg-2
         span.d-none.d-lg-inline-flex Notificatin
@@ -59,5 +59,5 @@ nav.navbar.navbar-expand.bg-light.navbar-light.sticky-top.px-4.py-0
         span.d-none.d-lg-inline-flex #{admin.fullName}
       .dropdown-menu.dropdown-menu-end.bg-light.border-0.rounded-0.rounded-bottom.m-0
         a.dropdown-item(href='/admin/myAccount') My Profile
-        a.dropdown-item(href='#') Settings
+        //- a.dropdown-item(href='#') Settings
         a.dropdown-item(href='/admin/auth/logout') Log Out

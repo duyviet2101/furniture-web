@@ -20,4 +20,6 @@ router.use('/rbac', require('./rbac.route.js'))
 
 router.use('/accounts', require('./accounts.route.js'))
 
+router.use('/orders', require('./orders.route.js'))
+
 module.exports = router;
