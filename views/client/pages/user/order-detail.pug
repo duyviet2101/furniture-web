@@ -1,0 +1,109 @@
+extends ../../layouts/default.pug
+include ../../mixins/currencyConverter.pug
+include ../../mixins/wall.pug
+include ../../mixins/alert.pug
+
+block style
+  style.
+    .quantity {
+    min-height: 40px;
+    margin: 0 auto;
+    }
+    .quantity>div {
+    height: 100%;
+    }
+    .quantity .input-quantity input {
+    height: auto;
+    }
+
+
+block main 
+  +alert-success(5000)
+  +alert-error(5000)
+  +wall(`Chi tiết đơn hàng: ${order._id}`, '', false)
+
+  // content
+  .main-cart
+    .container
+      button.button-hightlight-2.button(onclick="window.history.back()") Quay lại
+      .row.mb-5
+        form.col-md-12(method='post')
+          .site-blocks-table
+            table.table
+              thead
+                tr
+                  th.product-thumbnail &#x1EA2;nh
+                  th.product-name S&#x1EA3;n ph&#x1EA9;m
+                  th Gi&aacute;
+                  th.product-quantity S&#x1ED1; l&#x1B0;&#x1EE3;ng
+                  th T&#x1ED5;ng
+              tbody(update-cart)
+                each product in order.products
+                  tr(cart-item data-product-id=product.product._id)
+                    td.product-thumbnail
+                      img.img-fluid(src=product.product.thumbnail[0] alt=product.product.title)
+                    td.product-name
+                      h2.h5.text-black= product.product.title
+                    td.product-price
+                      +toCurency(product.price)
+                    td
+                      | #{product.quantity}
+                    td.product-total
+                      +toCurency(product.totalProduct)
+      .row
+        .col-md-12.pl-5
+          .row.justify-content-between
+            .col-md-4
+              .row
+                .col-md-12.text-right.border-bottom.mb-5
+                  h3.text-black.h4.text-uppercase Tổng đơn hàng
+              .row.mb-3
+                .col-md-6
+                  span.text-black Tổng
+                .col-md-6.text-right
+                  strong.text-black.total-no-discount-cart 
+                    +toCurency(parseInt(order.total) + parseInt(order.discount))
+              .row.mb-3
+                .col-md-6
+                  span.text-black Giảm giá
+                .col-md-6.text-right
+                  strong.text-black.discount-cart
+                    | - 
+                    +toCurency(order.discount)
+              .row.mb-3
+                .col-md-6
+                  span.text-black Thanh toán
+                .col-md-6.text-right
+                  strong.text-black.total-cart
+                    +toCurency(order.total)
+            .col-md-7
+              .row
+                .col-md-12.text-right.border-bottom.mb-5
+                  h3.text-black.h4.text-uppercase Thông tin khách hàng
+              .row.mb-3
+                .col-md-6
+                  span.text-black Họ tên
+                .col-md-6.text-right
+                  strong.text-black= order.userInfo.fullName
+              .row.mb-3
+                .col-md-6
+                  span.text-black Địa chỉ
+                .col-md-6.text-right
+                  strong.text-black
+                    | #{order.userInfo.address.detailAddress}, #{order.userInfo.address.ward}, #{order.userInfo.address.district}, #{order.userInfo.address.province}
+              .row.mb-3
+                .col-md-6
+                  span.text-black Số điện thoại
+                .col-md-6.text-right
+                  strong.text-black= order.userInfo.phone
+              .row.mb-3
+                .col-md-6
+                  span.text-black Email
+                .col-md-6.text-right
+                  strong.text-black= order.userInfo.email
+              .row.mb-3
+                .col-md-6
+                  span.text-black Ghi chú
+                .col-md-6.text-right
+                  strong.text-black= order.notes
+  // end content

@@ -10,7 +10,7 @@ const orderSchema = new mongoose.Schema({
     phone: String,
     email: String,
     address: {
-      procvince: String,
+      province: String,
       district: String,
       ward: String,
       detailAddress: String

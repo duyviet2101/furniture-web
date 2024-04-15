@@ -1,6 +1,8 @@
 const User = require('../../models/user.model');
 const Order = require('../../models/order.model');
 
+const {priceNewProduct} = require('../../helpers/product.js')
+
 // [GET] /user
 module.exports.index = async (req, res, next) => {
   let orders = [];
@@ -69,4 +71,29 @@ module.exports.patchEdit = async (req, res, next) => {
 
   req.flash('success', 'Cập nhật thành công!');
   res.redirect('/user');
+}
+
+// [GET] /user/orders/:orderId
+module.exports.orderDetail = async (req, res, next) => {
+  const order = await Order.findById(req.params.orderId)
+    .populate({
+      path: 'products.product',
+      select: 'title thumbnail'
+    }).lean();
+
+  if (!order) {
+    req.flash('error', 'Đơn hàng không tồn tại!');
+    return res.redirect('/user');
+  }
+
+  order.products.forEach((item) => {
+    item.totalProduct = item.price * item.quantity;
+  });
+
+  // return res.json(order)
+
+  res.render('client/pages/user/order-detail', {
+    title: 'Order Detail',
+    order
+  });
 }

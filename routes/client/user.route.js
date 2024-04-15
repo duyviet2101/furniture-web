@@ -10,4 +10,6 @@ router.get('/edit', asyncHandler(controller.edit));
 
 router.patch('/edit', asyncHandler(controller.patchEdit));
 
+router.get('/orders/:orderId', asyncHandler(controller.orderDetail));
+
 module.exports = router;
