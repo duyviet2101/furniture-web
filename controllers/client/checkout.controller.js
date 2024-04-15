@@ -1,6 +1,7 @@
 const Cart = require('../../models/cart.model');
 const Order = require('../../models/order.model');
 const Product = require('../../models/product.model');
+const User = require('../../models/user.model');
 const { priceNewProduct } = require('../../helpers/product');
 
 // [GET] /checkout
@@ -117,6 +118,29 @@ module.exports.order = async (req, res, next) => {
   cart.products = [];
   cart.count = 0;
   await cart.save();
+
+  //! save user info
+  if (req.user) {
+    const user = await User.findOne({
+      _id: req.user._id,
+    });
+
+    if (!user.phone) {
+      user.phone = phone;
+    }
+
+    if (!user.address.province || !user.address.district || !user.address.ward || !user.address.detailAddress) {
+      user.address = {
+        province,
+        district,
+        ward,
+        detailAddress
+      };
+    }
+
+    await user.save();
+  }
+  //! end save user info
 
   res.render('client/pages/checkout/success', {
     pageTitle: 'Đặt hàng thành công',

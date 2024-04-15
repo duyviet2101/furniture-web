@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const {getInfoUser} = require('../../middlewares/client/user.middleware.js');
+const {requiredAuth} = require('../../middlewares/client/auth.middleware.js');
 const categoryMiddleware = require('../../middlewares/client/category.middleware.js');
 const cartMiddleware = require('../../middlewares/client/cart.middleware.js');
 
@@ -20,5 +21,9 @@ router.use('/products', require('./products.route.js'));
 router.use('/cart', require('./cart.route.js'));
 
 router.use('/checkout', require('./checkout.route.js'));
+
+router.use(requiredAuth);
+
+router.use('/user', require('./user.route.js'));
 
 module.exports = router;

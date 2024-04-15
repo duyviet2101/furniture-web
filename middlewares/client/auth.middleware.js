@@ -8,6 +8,7 @@ module.exports.requiredAuth = async (req, res, next) => {
   if (!accessTokenUser || !refreshTokenUser) {
     res.clearCookie('accessTokenUser');
     res.clearCookie('refreshTokenUser');
+    req.flash('error', 'Vui lòng đăng nhập để tiếp tục');
     return res.redirect('/auth/login');
   }
 
@@ -24,6 +25,7 @@ module.exports.requiredAuth = async (req, res, next) => {
     if (!user) {
       res.clearCookie('accessTokenUser');
       res.clearCookie('refreshTokenUser');
+      req.flash('error', 'Vui lòng đăng nhập để tiếp tục');
       return res.redirect('/auth/login');
     }
 
@@ -45,6 +47,7 @@ module.exports.requiredAuth = async (req, res, next) => {
       if (!user) {
         res.clearCookie('accessTokenUser');
         res.clearCookie('refreshTokenUser');
+        req.flash('error', 'Vui lòng đăng nhập để tiếp tục');
         return res.redirect('/auth/login');
       }
 
@@ -68,6 +71,7 @@ module.exports.requiredAuth = async (req, res, next) => {
     } catch (error) {
       res.clearCookie('accessTokenUser');
       res.clearCookie('refreshTokenUser');
+      req.flash('error', 'Vui lòng đăng nhập để tiếp tục');
       res.redirect('/auth/login');
     }
   }

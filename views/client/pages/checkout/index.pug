@@ -35,7 +35,7 @@ block main
                 label.text-black(for='phone')
                   | S&#x1ED1; &dstrok;i&#x1EC7;n tho&#x1EA1;i 
                   span.text-danger *
-                input#phone.form-control(required type='text' name='phone' placeholder='Số điện thoại nhận hàng')
+                input#phone.form-control(required type='text' name='phone' value=`${user ? (user.phone ? user.phone : '') : ''}` placeholder='Số điện thoại nhận hàng')
             label.text-black
               | Địa chỉ
               span.text-danger *

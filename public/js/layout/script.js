@@ -379,7 +379,7 @@ if (inputQuantity && inputQuantity.length > 0) {
 }
 //! end update quantity
 
-//! checkout - select address
+//! select address
 const selectAddress = document.querySelector('[select-address]');
 if (selectAddress) {
   const province = selectAddress.querySelector('#province');
@@ -441,4 +441,4 @@ if (selectAddress) {
     });
   });
 }
-//! end checkout - select address
+//! end select address

@@ -1,0 +1,118 @@
+extends ../../layouts/default.pug
+include ../../mixins/currencyConverter.pug
+include ../../mixins/wall.pug
+include ../../mixins/alert.pug
+include ../../mixins/moment.pug
+
+block style
+  style.
+    .wall-flex {
+      justify-content: center !important;
+    }
+
+    .content-wall {
+      text-align: center;
+    }
+
+    .main {
+      padding-bottom: 150px;
+    }
+    td.first-item {
+      width: 30%;
+      font-weight: bold;
+    }
+    td {
+      background-color: transparent !important;
+    }
+    #main {
+      padding-bottom: 66px;
+    }
+    .main-content {
+      padding: 66px 0;
+    }
+    .orders {
+      padding-bottom: 100px;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .actions button {
+      margin: 12px 12px 0 0 !important;
+    }
+    #block-orders.content a {
+      color: black;
+    }
+    #block-orders.content a:hover {
+      color: #3b5d50;
+    }
+
+block main
+  +wall('Thông tin tài khoản', '', false)
+  .main-content
+    .container
+      #main
+        h3.section-title
+          | Th&ocirc;ng tin kh&aacute;ch h&agrave;ng
+        #block-history.content
+          table.std.table
+            tbody
+              tr
+                td.first-item
+                  | H&#x1ECD; t&ecirc;n:
+                td
+                  | #{user.fullName}
+              tr
+                td.first-item
+                  | Email:
+                td
+                  | #{user.email}
+              tr
+                td.first-item
+                  | &Dstrok;i&#x1EC7;n tho&#x1EA1;i:
+                td
+                  | #{user.phone ? user.phone : 'Chưa cập nhật'}
+              tr
+                td.first-item
+                  | &Dstrok;&#x1ECB;a ch&#x1EC9;:
+                td
+                  | #{user.address ? user.address.detailAddress + ', ' + user.address.ward + ', ' + user.address.district + ', ' + user.address.province : 'Chưa cập nhật'}
+        .actions
+          button.button.button-hightlight-2
+            | Ch&#x1EC9;nh s&#x1EED;a th&ocirc;ng tin
+          button.button.button-hightlight-2
+            | &Dstrok;&#x1ED5;i m&#x1EAD;t kh&#x1EA9;u
+      .orders
+        h3.section-title
+          | L&#x1ECB;ch s&#x1EED; &dstrok;&#x1A1;n h&agrave;ng
+        #block-orders.content
+          table.std.table
+            thead
+              tr
+                th
+                  | M&atilde; &dstrok;&#x1A1;n h&agrave;ng
+                th
+                  | Ng&agrave;y đặt
+                th
+                  | Tổng tiền
+                th
+                  | Trạng th&aacute;i
+                th
+                  | H&agrave;nh động
+            tbody
+              each order in orders
+                tr
+                  td 
+                    | #{order._id}
+                  td 
+                    +formatDateTime(order.createdAt)
+                  td 
+                    +toCurency(order.total)
+                  td
+                    | #{order.status}
+                  td
+                    a(href=`/user/orders/${order._id}`) Xem chi tiết
+              else
+                tr
+                  td(colspan='5')
+                    | Bạn chưa có đơn hàng nào

@@ -176,11 +176,11 @@ block main
           .add-cart
             .quantity
               .input-prepend
-                button.btn.btn-outline-black.decrease(type='button') -
+                button.btn.btn-outline-black.decrease.btn-quantity(type='button') -
               .input-quantity
                 input#quantity(type='number' min='0' value='1' name='quantity')
               .input-append
-                button.btn.btn-outline-black.increase(type='button') +
+                button.btn.btn-outline-black.increase.btn-quantity(type='button') +
             button.button-add-cart(href='cart.html' button-add-cart data-product-id=`${product._id}`)
               span
                 img(src='/img/logo/cart-2.svg' alt='' style='width: 25px;')

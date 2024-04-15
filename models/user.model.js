@@ -10,7 +10,16 @@ const userSchema = new mongoose.Schema(
       default: null,
     },
     phone: String,
-    avatar: String,
+    avatar: {
+      type: String,
+      default: "https://avatar.iran.liara.run/public",
+    },
+    address: {
+      province: String,
+      district: String,
+      ward: String,
+      detailAddress: String
+    },
     status: {
       type: String,
       default: "active",
