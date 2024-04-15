@@ -5,206 +5,52 @@ block main
   .container-fluid.pt-4.px-4
     .row.g-4
       .col-sm-6.col-xl-3
-        .bg-light.rounded.d-flex.align-items-center.justify-content-between.p-4
+        .bg-light.rounded.d-flex.justify-content-between.p-4
+          .ms-3
+            p.mb-2 Sản phẩm
+            ul
+              li
+                h6.mb-0 Tổng sản phẩm: #{productCount}
+              li
+                h6.mb-0 Đang kinh doanh: #{activeProductCount}
+              li
+                h6.mb-0 Đã ngừng kinh doanh: #{inactiveProductCount}
           i.fa.fa-chart-line.fa-3x.text-primary
-          .ms-3
-            p.mb-2 Today Sale
-            h6.mb-0 $1234
       .col-sm-6.col-xl-3
         .bg-light.rounded.d-flex.align-items-center.justify-content-between.p-4
+          .ms-3
+            p.mb-2 Danh mục sản phẩm
+            ul
+              li
+                h6.mb-0 Tổng danh mục: #{categoryCount}
+              li
+                h6.mb-0 Active: #{activeCategoryCount}
+              li
+                h6.mb-0 Inactive: #{inactiveCategoryCount}
+            
           i.fa.fa-chart-bar.fa-3x.text-primary
-          .ms-3
-            p.mb-2 Total Sale
-            h6.mb-0 $1234
       .col-sm-6.col-xl-3
         .bg-light.rounded.d-flex.align-items-center.justify-content-between.p-4
+          .ms-3
+            p.mb-2 Tài khoản
+            ul
+              li
+                h6.mb-0 Tổng tài khoản: #{userCount}
+              li
+                h6.mb-0 Active: #{activeUserCount}
+              li
+                h6.mb-0 Inactive: #{inactiveUserCount}
           i.fa.fa-chart-area.fa-3x.text-primary
-          .ms-3
-            p.mb-2 Today Revenue
-            h6.mb-0 $1234
       .col-sm-6.col-xl-3
         .bg-light.rounded.d-flex.align-items-center.justify-content-between.p-4
-          i.fa.fa-chart-pie.fa-3x.text-primary
           .ms-3
-            p.mb-2 Total Revenue
-            h6.mb-0 $1234
+            p.mb-2 Đơn hàng
+            ul
+              li
+                h6.mb-0 Tổng đơn hàng: #{orderCount}
+              li
+                h6.mb-0 Đang chờ xử lý: #{pendingOrderCount}
+              li
+                h6.mb-0 Đã hoàn thành: #{completedOrderCount}
+          i.fa.fa-chart-pie.fa-3x.text-primary
   // Sale & Revenue End
-  // Sales Chart Start
-  .container-fluid.pt-4.px-4
-    .row.g-4
-      .col-sm-12.col-xl-6
-        .bg-light.text-center.rounded.p-4
-          .d-flex.align-items-center.justify-content-between.mb-4
-            h6.mb-0 Worldwide Sales
-            a(href='') Show All
-          canvas#worldwide-sales
-      .col-sm-12.col-xl-6
-        .bg-light.text-center.rounded.p-4
-          .d-flex.align-items-center.justify-content-between.mb-4
-            h6.mb-0 Salse &amp; Revenue
-            a(href='') Show All
-          canvas#salse-revenue
-  // Sales Chart End
-
-
-
-  // Recent Sales Start
-  .container-fluid.pt-4.px-4
-    .bg-light.text-center.rounded.p-4
-      .d-flex.align-items-center.justify-content-between.mb-4
-        h6.mb-0 Recent Salse
-        a(href='') Show All
-      .table-responsive
-        table.table.text-start.align-middle.table-bordered.table-hover.mb-0
-          thead
-            tr.text-dark
-              th(scope='col')
-                input.form-check-input(type='checkbox')
-              th(scope='col') Date
-              th(scope='col') Invoice
-              th(scope='col') Customer
-              th(scope='col') Amount
-              th(scope='col') Status
-              th(scope='col') Action
-          tbody
-            tr
-              td
-                input.form-check-input(type='checkbox')
-              td 01 Jan 2045
-              td INV-0123
-              td Jhon Doe
-              td $123
-              td Paid
-              td
-                a.btn.btn-sm.btn-primary(href='') Detail
-            tr
-              td
-                input.form-check-input(type='checkbox')
-              td 01 Jan 2045
-              td INV-0123
-              td Jhon Doe
-              td $123
-              td Paid
-              td
-                a.btn.btn-sm.btn-primary(href='') Detail
-            tr
-              td
-                input.form-check-input(type='checkbox')
-              td 01 Jan 2045
-              td INV-0123
-              td Jhon Doe
-              td $123
-              td Paid
-              td
-                a.btn.btn-sm.btn-primary(href='') Detail
-            tr
-              td
-                input.form-check-input(type='checkbox')
-              td 01 Jan 2045
-              td INV-0123
-              td Jhon Doe
-              td $123
-              td Paid
-              td
-                a.btn.btn-sm.btn-primary(href='') Detail
-            tr
-              td
-                input.form-check-input(type='checkbox')
-              td 01 Jan 2045
-              td INV-0123
-              td Jhon Doe
-              td $123
-              td Paid
-              td
-                a.btn.btn-sm.btn-primary(href='') Detail
-  // Recent Sales End
-
-
-
-  // Widgets Start
-  .container-fluid.pt-4.px-4
-    .row.g-4
-      .col-sm-12.col-md-6.col-xl-4
-        .h-100.bg-light.rounded.p-4
-          .d-flex.align-items-center.justify-content-between.mb-2
-            h6.mb-0 Messages
-            a(href='') Show All
-          .d-flex.align-items-center.border-bottom.py-3
-            img.rounded-circle.flex-shrink-0(src='/admin/img/user.jpg' alt='' style='width: 40px; height: 40px;')
-            .w-100.ms-3
-              .d-flex.w-100.justify-content-between
-                h6.mb-0 Jhon Doe
-                small 15 minutes ago
-              span Short message goes here...
-          .d-flex.align-items-center.border-bottom.py-3
-            img.rounded-circle.flex-shrink-0(src='/admin/img/user.jpg' alt='' style='width: 40px; height: 40px;')
-            .w-100.ms-3
-              .d-flex.w-100.justify-content-between
-                h6.mb-0 Jhon Doe
-                small 15 minutes ago
-              span Short message goes here...
-          .d-flex.align-items-center.border-bottom.py-3
-            img.rounded-circle.flex-shrink-0(src='/admin/img/user.jpg' alt='' style='width: 40px; height: 40px;')
-            .w-100.ms-3
-              .d-flex.w-100.justify-content-between
-                h6.mb-0 Jhon Doe
-                small 15 minutes ago
-              span Short message goes here...
-          .d-flex.align-items-center.pt-3
-            img.rounded-circle.flex-shrink-0(src='/admin/img/user.jpg' alt='' style='width: 40px; height: 40px;')
-            .w-100.ms-3
-              .d-flex.w-100.justify-content-between
-                h6.mb-0 Jhon Doe
-                small 15 minutes ago
-              span Short message goes here...
-      .col-sm-12.col-md-6.col-xl-4
-        .h-100.bg-light.rounded.p-4
-          .d-flex.align-items-center.justify-content-between.mb-4
-            h6.mb-0 Calender
-            a(href='') Show All
-          #calender
-      .col-sm-12.col-md-6.col-xl-4
-        .h-100.bg-light.rounded.p-4
-          .d-flex.align-items-center.justify-content-between.mb-4
-            h6.mb-0 To Do List
-            a(href='') Show All
-          .d-flex.mb-2
-            input.form-control.bg-transparent(type='text' placeholder='Enter task')
-            button.btn.btn-primary.ms-2(type='button') Add
-          .d-flex.align-items-center.border-bottom.py-2
-            input.form-check-input.m-0(type='checkbox')
-            .w-100.ms-3
-              .d-flex.w-100.align-items-center.justify-content-between
-                span Short task goes here...
-                button.btn.btn-sm
-                  i.fa.fa-times
-          .d-flex.align-items-center.border-bottom.py-2
-            input.form-check-input.m-0(type='checkbox')
-            .w-100.ms-3
-              .d-flex.w-100.align-items-center.justify-content-between
-                span Short task goes here...
-                button.btn.btn-sm
-                  i.fa.fa-times
-          .d-flex.align-items-center.border-bottom.py-2
-            input.form-check-input.m-0(type='checkbox' checked='')
-            .w-100.ms-3
-              .d-flex.w-100.align-items-center.justify-content-between
-                span
-                  del Short task goes here...
-                button.btn.btn-sm.text-primary
-                  i.fa.fa-times
-          .d-flex.align-items-center.border-bottom.py-2
-            input.form-check-input.m-0(type='checkbox')
-            .w-100.ms-3
-              .d-flex.w-100.align-items-center.justify-content-between
-                span Short task goes here...
-                button.btn.btn-sm
-                  i.fa.fa-times
-          .d-flex.align-items-center.pt-2
-            input.form-check-input.m-0(type='checkbox')
-            .w-100.ms-3
-              .d-flex.w-100.align-items-center.justify-content-between
-                span Short task goes here...
-                button.btn.btn-sm
-                  i.fa.fa-times
-  // Widgets End

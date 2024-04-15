@@ -13,9 +13,9 @@
         h6.mb-0 #{admin.fullName}
         span admin
     .navbar-nav.w-100
-      //- a.nav-item.nav-link(href=`/${prefixAdmin}/dashboard` class = `${activeTab === 'dashboard' ? 'active' : ''}`)
-      //-   i.fa.fa-tachometer-alt.me-2
-      //-   | Dashboard
+      a.nav-item.nav-link(href=`/${prefixAdmin}/dashboard` class = `${activeTab === 'dashboard' ? 'active' : ''}`)
+        i.fa.fa-tachometer-alt.me-2
+        | Dashboard
       a.nav-item.nav-link(href=`/${prefixAdmin}/products` class = `${activeTab === 'products' ? 'active' : ''}`)
         i.fa.fa-shopping-cart.me-2
         | Products
