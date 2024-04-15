@@ -807,3 +807,64 @@ if (tablePermissions) {
     });
 }
 //! end default permissions
+
+//! change status select
+const changeStatusSelect = document.querySelectorAll('[change-status-select]');
+if (changeStatusSelect && changeStatusSelect.length > 0) {
+    changeStatusSelect.forEach(select => {
+        select.addEventListener('change', async (e) => {
+            select.disabled = true;
+            const path = select.getAttribute('data-path');
+            const status = select.value;
+            const id = select.getAttribute('data-id');
+
+            console.log(path + `/${id}/${status}`);
+
+            const response = await fetch(path + `/${id}/${status}`, {
+                method: 'PATCH'
+            });
+            let dataResponse = {};
+            try {
+                dataResponse = await response.json();
+            } catch (error) {
+                dataResponse.message = 'Có lỗi xảy ra, vui lòng thử lại sau';
+            }
+
+            if (response.status === 200) {
+                // ! alert
+                const alert = document.createElement("div");
+                alert.classList.add("alert", "alert-success");
+                alert.setAttribute("role", "alert");
+                alert.setAttribute("show-alert", "");
+                alert.innerHTML = `${dataResponse.message} <span close-alert>X</span>`;
+                const closeAlert = alert.querySelector("[close-alert]");
+                document.body.appendChild(alert);
+                setTimeout(() => {
+                    alert.classList.add("alert-hidden")
+                }, 5000);
+                closeAlert.addEventListener("click", () => {
+                    alert.classList.add("alert-hidden")
+                })
+                // ! end alert
+            } else {
+                // ! alert
+                const alert = document.createElement("div");
+                alert.classList.add("alert", "alert-danger");
+                alert.setAttribute("role", "alert");
+                alert.setAttribute("show-alert", "");
+                alert.innerHTML = `${dataResponse.message} <span close-alert>X</span>`;
+                const closeAlert = alert.querySelector("[close-alert]");
+                document.body.appendChild(alert);
+                setTimeout(() => {
+                    alert.classList.add("alert-hidden")
+                }, 5000);
+                closeAlert.addEventListener("click", () => {
+                    alert.classList.add("alert-hidden")
+                })
+                // ! end alert
+            }
+            select.disabled = false;
+        });
+    });
+}
+//! end change status select

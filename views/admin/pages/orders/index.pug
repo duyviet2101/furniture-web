@@ -75,7 +75,7 @@ block main
                 td
                   +toCurency(order.total)
                 td
-                  select.form-select(name='status' aria-label='')
+                  select.form-select(name='status' aria-label='' change-status-select data-path=`/${prefixAdmin}/orders/status` data-id=order._id)
                     option(value="pending" selected = (order.status == "pending")) Pending
                     option(value="processing" selected = (order.status == "processing")) Processing
                     option(value="completed" selected = (order.status == "completed")) Completed
