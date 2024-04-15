@@ -14,4 +14,8 @@ router.post('/login', asyncHandler(controller.postLogin));
 
 router.get('/logout', asyncHandler(controller.logout));
 
+router.get('/change-password', asyncHandler(controller.changePassword));
+
+router.post('/change-password', asyncHandler(controller.postChangePassword));
+
 module.exports = router;

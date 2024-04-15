@@ -131,3 +131,40 @@ module.exports.logout = async (req, res, next) => {
   res.clearCookie('refreshTokenUser');
   res.redirect('/');
 }
+
+// [GET] /auth/change-password
+module.exports.changePassword = async (req, res, next) => {
+  res.render("client/pages/auth/change-password");
+}
+
+// [POST] /auth/change-password
+module.exports.postChangePassword = async (req, res, next) => {
+  const { oldPassword, newPassword, confirmPassword } = req.body;
+  const user = await User.findOne({
+    _id: req.user._id
+  });
+
+  const checkPassword = bcrypt.compare(oldPassword, user.password);
+  if (!checkPassword) {
+    req.flash('error', 'Mật khẩu cũ không đúng!');
+    return res.redirect("back");
+  }
+
+  if (newPassword !== confirmPassword) {
+    req.flash('error', 'Mật khẩu mới không khớp!');
+    return res.redirect("back");
+  }
+
+  if (newPassword.length < 8) {
+    req.flash('error', 'Mật khẩu mới phải có ít nhất 8 ký tự!');
+    return res.redirect("back");
+  }
+
+  const hashPassword = await bcrypt.hash(newPassword, 10);
+  user.password = hashPassword;
+  await user.save();
+
+  req.flash('success', 'Đổi mật khẩu thành công!');
+  res.redirect('/user');
+
+}
