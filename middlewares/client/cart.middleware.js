@@ -34,6 +34,22 @@ module.exports.checkCart = async (req, res, next) => {
       res.locals.cart = cart;
       return next();
     }
+
+    if (!cart) {
+      const cart = await Cart.findOne({ user: req.user._id });
+      if (cart) {
+        res.cookie("cartId", cart.id);
+        req.cart = cart;
+        res.locals.cart = cart;
+        return next();
+      }
+
+      const newCart = await Cart.create({ products: [], user: req.user._id });
+      res.cookie("cartId", newCart.id);
+      req.cart = newCart;
+      res.locals.cart = newCart;
+      return next();
+    }
   } else if (req.user && !cartId) {
     const cart = await Cart.findOne({ user: req.user._id });
     if (cart) {

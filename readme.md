@@ -18,7 +18,7 @@ sudo certbot renew --dry-run
 ## config nginx for new website
 
 ```bash
-sudo nano /etc/nginx/sites-available/example.com
+sudo nano /etc/nginx/sites-enabled/example.com
 ```
 
 ```nginx
