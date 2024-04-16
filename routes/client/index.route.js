@@ -22,8 +22,6 @@ router.use('/cart', require('./cart.route.js'));
 
 router.use('/checkout', require('./checkout.route.js'));
 
-router.use(requiredAuth);
-
-router.use('/user', require('./user.route.js'));
+router.use('/user', requiredAuth, require('./user.route.js'));
 
 module.exports = router;
