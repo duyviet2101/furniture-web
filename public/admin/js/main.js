@@ -868,3 +868,10 @@ if (changeStatusSelect && changeStatusSelect.length > 0) {
     });
 }
 //! end change status select
+
+//! viewer.js
+const mainThumbnails = document.querySelector('#main-thumbnails');
+if (mainThumbnails) {
+  const gallery = new Viewer(mainThumbnails)
+}
+//! end viewer.js

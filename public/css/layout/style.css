@@ -1616,4 +1616,8 @@ input::-webkit-inner-spin-button {
   height: auto;
 }
 
+#main-thumbnails img {
+  cursor: pointer;
+}
+
 /* end slider */

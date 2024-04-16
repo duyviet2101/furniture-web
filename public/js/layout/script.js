@@ -442,3 +442,10 @@ if (selectAddress) {
   });
 }
 //! end select address
+
+//! viewer.js
+const mainThumbnails = document.querySelector('#main-thumbnails');
+if (mainThumbnails) {
+  const gallery = new Viewer(mainThumbnails)
+}
+//! end viewer.js

@@ -407,4 +407,8 @@ opacity: 1;
 width: 100%;
 height: auto;
 }
+
+#main-thumbnails img {
+    cursor: pointer;
+}
 /* end slider */
