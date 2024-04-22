@@ -21,7 +21,6 @@ const updateCart = async (input) => {
 
   if (response.status == 200) {
     const data = await response.json();
-    console.log(data);
     const count = document.querySelector('.mini-cart-count');
     count.innerHTML = data.count;
     const row = document.querySelector(`[cart-item][data-product-id="${productId}"]`);
@@ -212,21 +211,22 @@ if (priceFilter && priceFilter.length > 0) {
 //! end price filter
 
 //! search
-const search = document.querySelector('[search]');
-if (search) {
+const searchs = document.querySelectorAll('[search]');
+if (searchs && searchs.length > 0) {
   const url = new URL(window.location.href);
-  const input = search.querySelector('#searchInput');
 
-  search.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const searchValue = input.value.trim();
-    if (searchValue) {
-      url.searchParams.set('search', searchValue);
-      window.location.href = url.href;
-    } else {
-      url.searchParams.delete('search');
-      window.location.href = url.href;
-    }
+  searchs.forEach(search => {
+    const input = search.querySelector('#searchInput');
+    search.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const searchValue = input.value.trim();
+      if (!searchValue) {
+        url.searchParams.delete('search');
+        window.location.href = url.href;
+      } else {
+        search.submit();
+      }
+    });
   });
 }
 //! end search
@@ -273,10 +273,11 @@ const buttonAddToCart = document.querySelector('[button-add-cart]');
 if (buttonAddToCart) {
   buttonAddToCart.addEventListener('click', async (e) => {
     e.preventDefault();
+    console.log('click');
     const productId = buttonAddToCart.getAttribute('data-product-id');
     const quantity = document.querySelector('.quantity #quantity').value;
 
-    const response = await fetch('/cart/add', {
+  const response = await fetch('/cart/add', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -325,6 +326,66 @@ if (buttonAddToCart) {
   });
 }
 //! end add to cart
+
+//! add to cart products
+const buttonAddToCartProducts = document.querySelectorAll('[button-add-cart-products]');
+if (buttonAddToCartProducts && buttonAddToCartProducts.length > 0) {
+  buttonAddToCartProducts.forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.preventDefault();
+      const productId = btn.getAttribute('data-product-id');
+      const quantity = 1;
+      
+      const response = await fetch('/cart/add', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          productId,
+          quantity
+        })
+      });
+
+      if (response.status == 200) {
+        const data = await response.json();
+        const count = document.querySelector('.mini-cart-count');
+        count.innerHTML = data.count;
+
+        // ! alert
+        const alert = document.createElement("div");
+        alert.classList.add("alert", "alert-success");
+        alert.setAttribute("role", "alert");
+        alert.setAttribute("show-alert", "");
+        alert.innerHTML = `Thêm sản phẩm thành công! <span close-alert>X</span>`;
+        const closeAlert = alert.querySelector("[close-alert]");
+        document.body.appendChild(alert);
+        setTimeout(() => {
+          alert.classList.add("alert-hidden")
+        }, 5000);
+        closeAlert.addEventListener("click", () => {
+          alert.classList.add("alert-hidden")
+        })
+        // ! end alert
+      } else {
+        const alert = document.createElement("div");
+        alert.classList.add("alert", "alert-danger");
+        alert.setAttribute("role", "alert");
+        alert.setAttribute("show-alert", "");
+        alert.innerHTML = `Thêm sản phẩm thất bại! <span close-alert>X</span>`;
+        const closeAlert = alert.querySelector("[close-alert]");
+        document.body.appendChild(alert);
+        setTimeout(() => {
+          alert.classList.add("alert-hidden")
+        }, 5000);
+        closeAlert.addEventListener("click", () => {
+          alert.classList.add("alert-hidden")
+        })
+      }
+    });
+  });
+}
+//! end add to cart products
 
 //! remove from cart
 const buttonRemoveFromCart = document.querySelectorAll('[remove-from-cart]');
@@ -385,7 +446,9 @@ if (buttonRemoveFromCart && buttonRemoveFromCart.length > 0) {
 const inputQuantity = document.querySelectorAll('[update-quantity]');
 if (inputQuantity && inputQuantity.length > 0) {
   inputQuantity.forEach(input => {
-    input.addEventListener('change', updateCart);
+    input.addEventListener('input', () => {
+      updateCart(input);
+    });
   });
 }
 //! end update quantity

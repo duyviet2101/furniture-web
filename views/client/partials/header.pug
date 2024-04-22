@@ -18,14 +18,14 @@ nav.navbar.navbar-expand-lg.sticky-top(data-bs-theme="dark")
             +sub-menu(productCategoriesTree, '/products')
         li.nav-item
           a#introduction.nav-link(class=`${activeTab == "introduction" ? 'active' : ''}` href='/introduction') Giới thiệu
-        li.nav-item
-          a#contact.nav-link(class=`${activeTab == "contact" ? 'active' : ''}` href='/contact') Liên hệ
         .dropdown.nav-item.text-center.btn-group
           button.btn.dropdown-toggle.p-2(type='button' data-bs-toggle='dropdown' aria-expanded='false' data-bs-auto-close='outside')
             img(src='/img/logo/search.svg' alt='' style='width: 24px; padding: 0')
-          form.dropdown-menu.p-0.bg-transparent.border.border-0.dropdown-menu-end
+          form#search-navbar.dropdown-menu.p-0.bg-transparent.border.border-0.dropdown-menu-end(search action='/products' method='GET')
             .mb-3
-              input.form-control.me-2(type='search' placeholder='Search' aria-label='Search')
+              //- input#searchInput(type='text' placeholder='Tìm kiếm sản phẩm' name='searchKeyWord' value=searchKey)
+              input#searchInput.form-control.me-2(type='text' placeholder='Tìm kiếm sản phẩm' name='search' value=searchKey)
+              //- butto(type="submit") submit
         if (user)
           .nav-item.dropdown.d-flex.align-items-center.justify-content-center
             a.dropdown-toggle.d-flex.align-items-center.me-2(href='#' data-bs-toggle='dropdown')

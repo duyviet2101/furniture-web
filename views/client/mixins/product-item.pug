@@ -13,6 +13,5 @@ mixin product-item(item)
             | -#{item.discountPercentage}%
           .product-price 
             +toCurency(item.newPrice)
-      a(href='#')
-        span.icon-add
-          img(src='/img/icon_add.svg' alt='')
+      span.icon-add(button-add-cart-products data-product-id=item._id)
+        img(src='/img/icon_add.svg' alt='')

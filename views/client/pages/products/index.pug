@@ -32,8 +32,8 @@ block main
       .aside
         div.aside-content
           .search-input
-            form(search)
-              input#searchInput(type='text' placeholder='Tìm kiếm sản phẩm' name='searchKeyWord' value=searchKey)
+            form#search-products(search action='/products' method='GET')
+              input#searchInput(type='text' placeholder='Tìm kiếm sản phẩm' name='search' value=searchKey)
               button(type="submit")
                 a.search-button
                   img(src='/img/logo/search.svg' alt='' style='width: 24px; padding: 0')
