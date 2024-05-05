@@ -18,7 +18,7 @@ module.exports.index = async (req, res, next) => {
     //! end newPrice
 
     res.render('client/pages/home/index', {
-        pageTitle: 'Trang chủ',
+        pageTitle: 'Furniture shop',
         featuredProducts: productsNewPrice,
         activeTab: 'home',
     });
