@@ -22,7 +22,8 @@ app.use(express.urlencoded({ extended: true }));
 // Tạo một token tùy chỉnh cho morgan để log địa chỉ IP
 morgan.token('client-ip', (req) => {
     const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    return ip === '::1' ? '127.0.0.1' : ip;
+    // return ip === '::1' ? '127.0.0.1' : ip;
+    return ip;
 });
 
 morgan.token('JSON', (req) => {
@@ -38,7 +39,7 @@ morgan.token('JSON', (req) => {
 const format = 'IP::client-ip \n:method :url :status - :response-time ms\n\n:JSON\n';
 app.use(morgan(format, {
     skip: (req, res) => {
-        if (req.url.startsWith('/img') || req.url.startsWith('/css') || req.url.startsWith('/js') || req.url.startsWith('/bootstrap')) {
+        if (req.url.includes('/img') || req.url.includes('/css') || req.url.includes('/js') || req.url.includes('/bootstrap')) {
             return true;
         }
         return req.statusCode == 304;
