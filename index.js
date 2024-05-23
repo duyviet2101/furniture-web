@@ -39,7 +39,7 @@ morgan.token('JSON', (req) => {
 const format = 'IP::client-ip \n:method :url :status - :response-time ms\n\n:JSON\n';
 app.use(morgan(format, {
     skip: (req, res) => {
-        if (req.url.includes('/img') || req.url.includes('/css') || req.url.includes('/js') || req.url.includes('/bootstrap')) {
+        if (req.url.includes('/img') || req.url.includes('/css') || req.url.includes('/js') || req.url.includes('/bootstrap') || req.url.includes('/favicon.ico') || req.url.includes('/tinymce')){
             return true;
         }
         return req.statusCode == 304;
