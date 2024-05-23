@@ -40,4 +40,6 @@ jobs:
         echo "ACCESS_TOKEN_LIFE=${{ secrets.ACCESS_TOKEN_LIFE }}" >> .env
         echo "REFRESH_TOKEN_LIFE=${{ secrets.REFRESH_TOKEN_LIFE }}" >> .env
         echo "SECRET_KEY_COOKIE=${{ secrets.SECRET_KEY_COOKIE }}" >> .env
+        echo "TELEGRAM_BOT_TOKEN=${{ secrets.TELEGRAM_BOT_TOKEN }}" >> .env
+        echo "TELEGRAM_CHAT_ID=${{ secrets.TELEGRAM_CHAT_ID }}" >> .env
     - run: pm2 restart furniture-web

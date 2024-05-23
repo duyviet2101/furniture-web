@@ -5,6 +5,9 @@ const {getInfoUser} = require('../../middlewares/client/user.middleware.js');
 const {requiredAuth} = require('../../middlewares/client/auth.middleware.js');
 const categoryMiddleware = require('../../middlewares/client/category.middleware.js');
 const cartMiddleware = require('../../middlewares/client/cart.middleware.js');
+// const {pushLogToTelegram} = require('../../middlewares/index.js');
+
+// router.use(pushLogToTelegram);
 
 router.use(getInfoUser);
 
