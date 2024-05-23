@@ -1,4 +1,5 @@
 const { Telegraf, Format } = require('telegraf');
+const {Agent} = require('https');
 
 // const {
 //     TELEGRAM_BOT_TOKEN,
@@ -11,7 +12,14 @@ const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 class TelegramLogger {
     constructor() {
         try {
-            this.bot = new Telegraf(TELEGRAM_BOT_TOKEN);
+            this.bot = new Telegraf(TELEGRAM_BOT_TOKEN, {
+                telegram: {
+                    agent: new Agent({
+                        keepAlive: false
+                    })
+                }
+            
+            });
             this.chatId = TELEGRAM_CHAT_ID;
     
             this.bot.start((ctx) => {
