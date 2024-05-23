@@ -15,7 +15,8 @@ class TelegramLogger {
             this.bot = new Telegraf(TELEGRAM_BOT_TOKEN, {
                 telegram: {
                     agent: new Agent({
-                        keepAlive: false
+                        keepAlive: false,
+                        family: 4
                     })
                 }
             
